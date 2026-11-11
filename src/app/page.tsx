@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import AmbientBackground from "@/components/AmbientBackground";
 import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
@@ -13,6 +13,18 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash) {
+      setTimeout(() => {
+        const id = window.location.hash.replace("#", "");
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "instant" });
+        }
+      }, 100);
+    }
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-[#050505] text-white selection:bg-[#e9b45b]/30 selection:text-white">
       {/* Ambient background with aurora blobs, mouse spotlight, particles, dot grid & grain */}

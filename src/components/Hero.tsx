@@ -116,7 +116,7 @@ export default function Hero() {
     <section
       id="home"
       onMouseMove={handleMouseMove}
-      className="relative min-h-[100svh] w-full flex flex-col justify-between overflow-hidden bg-[#050505] pt-24 pb-8 px-4 sm:px-10"
+      className="relative h-[100svh] min-h-[650px] max-h-[960px] w-full flex flex-col justify-between overflow-hidden bg-[#050505] pt-24 pb-8 px-4 sm:px-10"
     >
       {/* =========================================
           1. FULL-BLEED HERO BACKGROUND (IMAGE 1)
