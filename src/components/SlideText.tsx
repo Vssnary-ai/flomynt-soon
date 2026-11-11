@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 
 interface SlideTextProps {
   tag: string;
@@ -32,7 +32,7 @@ function renderHeadline(headline: string) {
   });
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
   enter: {
     transition: {
       staggerChildren: 0.06,
@@ -45,21 +45,21 @@ const containerVariants = {
   },
 };
 
-const itemVariantsNormal = {
+const itemVariantsNormal: Variants = {
   initial: { opacity: 0, y: 16 },
   enter: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
   exit: {
     opacity: 0,
     y: -12,
-    transition: { duration: 0.3, ease: [0.55, 0.06, 0.68, 0.19] },
+    transition: { duration: 0.3, ease: [0.55, 0.06, 0.68, 0.19] as const },
   },
 };
 
-const itemVariantsReduced = {
+const itemVariantsReduced: Variants = {
   initial: { opacity: 0 },
   enter: { opacity: 1, transition: { duration: 0.4 } },
   exit: { opacity: 0, transition: { duration: 0.2 } },
@@ -75,11 +75,11 @@ export default function SlideText({
   const itemVariants = reducedMotion ? itemVariantsReduced : itemVariantsNormal;
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={slideKey}
         variants={containerVariants}
-        initial="initial"
+        initial={slideKey === 0 ? false : "initial"}
         animate="enter"
         exit="exit"
         className="flex flex-col gap-3"
@@ -103,9 +103,9 @@ export default function SlideText({
         {/* Headline */}
         <motion.h2
           variants={itemVariants}
-          className="text-white font-medium leading-[1.08] tracking-[-0.02em]"
+          className="text-white font-medium leading-[1.1] tracking-[-0.02em] max-w-[420px]"
           style={{
-            fontSize: "clamp(36px, 5vw, 56px)",
+            fontSize: "clamp(32px, 3.6vw, 46px)",
           }}
         >
           {renderHeadline(headline)}
@@ -123,3 +123,4 @@ export default function SlideText({
     </AnimatePresence>
   );
 }
+

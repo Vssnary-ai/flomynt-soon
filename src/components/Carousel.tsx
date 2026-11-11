@@ -8,7 +8,7 @@ import React, {
   useMemo,
 } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { slides, AUTOPLAY_MS } from "@/config/slides";
 import Logo from "./Logo";
 import SlideText from "./SlideText";
@@ -129,6 +129,14 @@ export default function Carousel() {
     return () => document.removeEventListener("visibilitychange", handler);
   }, []);
 
+  // Preload all slide images cleanly in memory
+  useEffect(() => {
+    slides.forEach((s) => {
+      const img = new window.Image();
+      img.src = s.image;
+    });
+  }, []);
+
   const handleImageError = useCallback((index: number) => {
     setImageErrors((prev) => ({ ...prev, [index]: true }));
   }, []);
@@ -136,7 +144,7 @@ export default function Carousel() {
   const slide = slides[current];
   const showFallback = imageErrors[current];
 
-  const imageVariants = reducedMotion
+  const imageVariants: Variants = reducedMotion
     ? {
         initial: { opacity: 0 },
         animate: { opacity: 1, transition: { duration: 0.4 } },
@@ -147,17 +155,17 @@ export default function Carousel() {
         animate: {
           opacity: 1,
           scale: 1,
-          transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
+          transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const },
         },
         exit: {
           opacity: 0,
-          transition: { duration: 0.4, ease: [0.55, 0.06, 0.68, 0.19] },
+          transition: { duration: 0.4, ease: [0.55, 0.06, 0.68, 0.19] as const },
         },
       };
 
   return (
     <div
-      className="relative w-full rounded-[28px] overflow-hidden border border-white/[0.08]"
+      className="relative w-full h-full rounded-[28px] overflow-hidden border border-white/[0.08]"
       style={{
         aspectRatio: "4 / 5",
         boxShadow: "0 0 80px 8px rgba(25, 195, 230, 0.06), 0 0 40px 4px rgba(255, 255, 255, 0.02)",
@@ -173,12 +181,12 @@ export default function Carousel() {
       aria-label="Feature showcase"
     >
       {/* Background images / fallback */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={current}
           className="absolute inset-0"
           variants={imageVariants}
-          initial="initial"
+          initial={current === 0 ? false : "initial"}
           animate="animate"
           exit="exit"
           style={{ willChange: "transform, opacity" }}
@@ -192,6 +200,7 @@ export default function Carousel() {
                 src={slide.image}
                 alt={`Slide ${slide.id}: ${slide.tag}`}
                 fill
+                unoptimized
                 className="object-cover"
                 priority={current === 0}
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -259,21 +268,8 @@ export default function Carousel() {
         />
       </div>
 
-      {/* Preload all images (hidden) */}
-      {slides.map((s, i) =>
-        i !== 0 && !imageErrors[i] ? (
-          <Image
-            key={`preload-${s.id}`}
-            src={s.image}
-            alt=""
-            fill
-            className="opacity-0 pointer-events-none absolute"
-            aria-hidden="true"
-            sizes="1px"
-            onError={() => handleImageError(i)}
-          />
-        ) : null
-      )}
+      {/* Preload images in browser cache */}
     </div>
   );
 }
+

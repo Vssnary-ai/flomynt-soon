@@ -35,10 +35,10 @@ function Toast({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 16 }}
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 rounded-xl bg-red-500/90 px-5 py-3 text-sm text-white shadow-lg backdrop-blur-md"
+      initial={{ opacity: 0, y: -16, x: "-50%" }}
+      animate={{ opacity: 1, y: 0, x: "-50%" }}
+      exit={{ opacity: 0, y: -16, x: "-50%" }}
+      className="fixed top-6 left-1/2 z-50 max-w-[90vw] rounded-xl border border-white/10 bg-[#141414]/95 px-5 py-3 text-sm text-white shadow-2xl backdrop-blur-xl"
       role="alert"
     >
       {message}
@@ -152,6 +152,20 @@ export default function WaitlistForm() {
       source: string = "email"
     ) => {
       const emailKey = emailVal.toLowerCase().trim();
+      const isConfigured =
+        process.env.NEXT_PUBLIC_FIREBASE_API_KEY &&
+        !process.env.NEXT_PUBLIC_FIREBASE_API_KEY.includes("Dummy");
+
+      if (!isConfigured) {
+        // Fallback for local preview when Firebase credentials have not been supplied in .env.local
+        console.info(
+          `[Flomynt Demo] Registered ${emailKey}. Add real Firebase credentials to .env.local to persist in Cloud Firestore.`
+        );
+        setPosition(42);
+        setFormState("success");
+        return;
+      }
+
       const docRef = doc(db, "waitlist", emailKey);
 
       // Check if already exists
@@ -238,8 +252,18 @@ export default function WaitlistForm() {
         );
       }
     } catch (err: unknown) {
-      const firebaseError = err as { code?: string };
+      const firebaseError = err as { code?: string; message?: string };
       if (firebaseError.code === "auth/popup-closed-by-user") {
+        setFormState("idle");
+        return;
+      }
+      if (
+        firebaseError.code === "auth/invalid-api-key" ||
+        firebaseError.code === "auth/api-key-not-valid" ||
+        !process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
+        process.env.NEXT_PUBLIC_FIREBASE_API_KEY.includes("Dummy")
+      ) {
+        setToast("Please configure real Firebase credentials in .env.local to enable Google sign-in.");
         setFormState("idle");
         return;
       }
@@ -330,7 +354,7 @@ export default function WaitlistForm() {
       {/* Email form */}
       <form onSubmit={handleEmailSubmit} className="w-full flex flex-col gap-3">
         {/* Honeypot */}
-        <div className="absolute opacity-0 pointer-events-none" aria-hidden="true">
+        <div style={{ display: "none" }} aria-hidden="true">
           <label htmlFor="website">Website</label>
           <input
             type="text"
@@ -398,3 +422,4 @@ export default function WaitlistForm() {
     </div>
   );
 }
+

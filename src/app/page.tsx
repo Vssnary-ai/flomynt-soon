@@ -1,12 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import GlassButton from "@/components/GlassButton";
-
-const Carousel = dynamic(() => import("@/components/Carousel"), { ssr: false });
-const WaitlistForm = dynamic(() => import("@/components/WaitlistForm"), {
-  ssr: false,
-});
+import Carousel from "@/components/Carousel";
+import WaitlistForm from "@/components/WaitlistForm";
 
 const visitSiteUrl =
   process.env.NEXT_PUBLIC_VISIT_SITE_URL || "https://flomynt.com";
@@ -15,30 +11,36 @@ const sparkleUrl =
 
 export default function Home() {
   return (
-    <main className="relative min-h-[100dvh] bg-black flex flex-col">
-      {/* Main content area */}
-      <div className="flex-1 flex items-center justify-center px-6 py-8 lg:px-8">
-        <div className="w-full max-w-[1200px] flex flex-col lg:flex-row items-center lg:items-center gap-10 lg:gap-16">
-          {/* LEFT: Carousel card */}
-          <div className="w-full lg:w-auto lg:flex-1 flex justify-center">
-            <div
-              className="w-full max-w-[440px] lg:max-w-none"
-              style={{
-                maxHeight: "min(80dvh, 680px)",
-              }}
-            >
+    <main className="relative bg-black text-white w-full min-h-[100dvh] lg:h-[100dvh] lg:overflow-hidden flex flex-col justify-between">
+      {/* Background ambient lighting */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-40"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 30% 50%, rgba(25, 195, 230, 0.08), transparent 70%)",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Main content grid: Vertically centered two columns on desktop */}
+      <div className="relative z-10 flex-1 flex items-center justify-center px-6 pt-8 pb-32 lg:px-8 lg:py-0">
+        <div className="w-full max-w-[1200px] mx-auto flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16">
+          {/* LEFT: Showcase carousel card */}
+          <div className="w-full max-w-[400px] sm:max-w-[440px] lg:max-w-none lg:w-auto flex items-center justify-center flex-shrink-0">
+            <div className="w-full lg:w-auto h-auto lg:h-[min(80vh,700px)] aspect-[4/5] flex">
               <Carousel />
             </div>
           </div>
 
-          {/* RIGHT: Waitlist form */}
-          <div className="w-full lg:w-auto lg:flex-shrink-0 flex justify-center">
+          {/* RIGHT: Waitlist panel */}
+          <div className="w-full max-w-[420px] flex items-center justify-center flex-shrink-0">
             <WaitlistForm />
           </div>
         </div>
       </div>
 
-      {/* Bottom-left: Visit site button */}
+      {/* Bottom controls on desktop & mobile */}
+      {/* Bottom-left: Visit site glass button */}
       <div className="fixed bottom-6 left-6 z-30">
         <GlassButton href={visitSiteUrl} ariaLabel="Visit Flomynt website">
           <svg
@@ -59,7 +61,7 @@ export default function Home() {
         </GlassButton>
       </div>
 
-      {/* Bottom-right: Sparkle icon button */}
+      {/* Bottom-right: Sparkle glass button */}
       <div className="fixed bottom-6 right-6 z-30">
         <GlassButton href={sparkleUrl} round ariaLabel="Explore Flomynt AI">
           <svg
@@ -78,9 +80,9 @@ export default function Home() {
         </GlassButton>
       </div>
 
-      {/* Footer */}
-      <footer className="pb-8 pt-4 text-center">
-        <p className="text-white/30 text-xs">Built by Flomynt</p>
+      {/* Bottom-center: Footer text */}
+      <footer className="relative lg:fixed lg:bottom-6 lg:left-1/2 lg:-translate-x-1/2 z-20 pb-8 pt-4 lg:py-0 text-center pointer-events-none">
+        <p className="text-white/40 text-xs tracking-wide">Built by Flomynt</p>
       </footer>
     </main>
   );
