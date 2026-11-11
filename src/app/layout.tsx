@@ -2,22 +2,22 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Flomynt | Join the Waitlist",
+  title: "Flomynt — Autonomous Workflows That Build, Verify, and Heal Themselves",
   description:
-    "Flomynt is an AI workflow-automation platform with stronger privacy, white-labeling, voice-driven building and self-healing automations. Join the waitlist.",
+    "The AI-native automation platform built for modern agencies. Turn plain English into resilient workflows, white-label them into client apps, and let autonomous agents fix runtime errors before your clients even notice.",
   openGraph: {
-    title: "Flomynt | Join the Waitlist",
+    title: "Flomynt — Autonomous Workflows That Build, Verify, and Heal",
     description:
-      "AI workflow automation with zero data leaks, white-labeling, voice-driven building and self-healing automations.",
+      "Autonomous workflows that build, verify, and heal themselves. Built for modern agencies.",
     type: "website",
     siteName: "Flomynt",
     url: "https://flomynt.com",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Flomynt | Join the Waitlist",
+    title: "Flomynt — Autonomous Workflows",
     description:
-      "AI workflow automation with zero data leaks, white-labeling, voice-driven building and self-healing automations.",
+      "Autonomous workflows that build, verify, and heal themselves. Built for modern agencies.",
   },
   robots: {
     index: true,
@@ -31,9 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
-        {/* Load Inter & Instrument Serif via standard link tags so build does not need network */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -41,11 +40,11 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-black text-white antialiased font-sans">
+      <body className="antialiased selection:bg-[#e9b45b]/30 selection:text-white">
         {children}
       </body>
     </html>
