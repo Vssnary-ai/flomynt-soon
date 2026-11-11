@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import PillButton from "./PillButton";
+import BrandLogo from "./BrandLogo";
 
 const NAV_LINKS = [
   { name: "HOME", href: "#home" },
@@ -61,27 +62,10 @@ export default function Navbar() {
               e.preventDefault();
               scrollTo("#home");
             }}
-            className="flex items-center gap-2.5 text-white hover:opacity-80 transition-opacity"
+            className="hover:opacity-85 transition-opacity"
             aria-label="Flomynt Home"
           >
-            {/* Minimalist geometric wireframe logo mark */}
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              className="text-[#e9b45b]"
-              aria-hidden="true"
-            >
-              <polygon points="12 2 2 7 12 12 22 7 12 2" stroke="white" strokeWidth="1.2" />
-              <polyline points="2 17 12 22 22 17" stroke="#e9b45b" strokeWidth="1.2" />
-              <polyline points="2 12 12 17 22 12" stroke="white" strokeOpacity="0.4" strokeWidth="1.2" />
-            </svg>
-            <span className="font-light tracking-[-0.03em] text-[19px] text-white">
-              Flomynt
-            </span>
+            <BrandLogo size={24} />
           </a>
 
           {/* Desktop Nav links */}

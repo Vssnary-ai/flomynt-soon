@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import BrandLogo from "./BrandLogo";
 
 export default function Footer() {
   const scrollTo = (id: string) => {
@@ -24,11 +25,7 @@ export default function Footer() {
         {/* Top Footer Row */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-14 border-b border-white/[0.08]">
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="font-light tracking-[-0.03em] text-2xl text-white">
-                Flomynt
-              </span>
-            </div>
+            <BrandLogo size={26} />
             <p className="mono-label text-[11px] text-[#8a8a8a]">
               AUTONOMOUS WORKFLOW INFRASTRUCTURE FOR AGENCIES
             </p>

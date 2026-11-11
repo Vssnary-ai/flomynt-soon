@@ -1097,6 +1097,9 @@
       background-color: color-mix(in oklab, var(--color-white) 8%, transparent);
     }
   }
+  .object-contain {
+    object-fit: contain;
+  }
   .object-cover {
     object-fit: cover;
   }
@@ -1810,9 +1813,6 @@
     }
     .hover\:text-white:hover {
       color: var(--color-white);
-    }
-    .hover\:opacity-80:hover {
-      opacity: 80%;
     }
     .hover\:opacity-85:hover {
       opacity: 85%;

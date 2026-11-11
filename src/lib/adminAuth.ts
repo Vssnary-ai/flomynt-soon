@@ -201,3 +201,4 @@ export const demoWishlist: WishlistEntry[] = [
     createdAt: new Date(Date.now() - 3600000 * 18).toISOString(),
   },
 ];
+

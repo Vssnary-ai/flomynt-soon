@@ -27,6 +27,15 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Leads collection: allow create for contact inquiries
+    match /leads/{leadId} {
+      allow create: if
+        request.resource.data.keys().hasAll(['name', 'email', 'message', 'createdAt'])
+        && request.resource.data.email is string
+        && request.resource.data.name is string;
+      allow read, update, delete: if false;
+    }
+
     // Deny everything else
     match /{document=**} {
       allow read, write: if false;

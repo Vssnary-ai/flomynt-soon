@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import SectionLabel from "@/components/SectionLabel";
 import PillButton from "@/components/PillButton";
+import BrandLogo from "@/components/BrandLogo";
 
 interface Lead {
   id: string;
@@ -221,23 +222,8 @@ export default function AdminPage() {
 
         <div className="relative z-10 w-full max-w-[420px] glass-card rounded-2xl p-8 sm:p-10 text-center">
           {/* Logo mark */}
-          <div className="flex justify-center items-center gap-2 mb-4">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              className="text-[#e9b45b]"
-            >
-              <polygon points="12 2 2 7 12 12 22 7 12 2" stroke="white" strokeWidth="1.2" />
-              <polyline points="2 17 12 22 22 17" stroke="#e9b45b" strokeWidth="1.2" />
-              <polyline points="2 12 12 17 22 12" stroke="white" strokeOpacity="0.4" strokeWidth="1.2" />
-            </svg>
-            <span className="font-light tracking-[-0.03em] text-2xl text-white">
-              Flomynt
-            </span>
+          <div className="flex justify-center items-center mb-4">
+            <BrandLogo size={28} />
           </div>
 
           <SectionLabel text="ADMIN ACCESS" />
@@ -299,9 +285,7 @@ export default function AdminPage() {
       <header className="sticky top-0 z-40 bg-[#050505]/85 backdrop-blur-xl border-b border-white/[0.14] px-6 sm:px-10 py-4">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="font-light tracking-[-0.03em] text-xl text-white">
-              Flomynt
-            </span>
+            <BrandLogo size={22} />
             <span className="mono-label text-[10px] px-2 py-0.5 rounded border border-[#e9b45b]/40 text-[#e9b45b] bg-[#e9b45b]/10">
               CONSOLE
             </span>
