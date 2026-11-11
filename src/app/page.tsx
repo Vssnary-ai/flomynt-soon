@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import AmbientBackground from "@/components/AmbientBackground";
 import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -14,6 +15,9 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-[#050505] text-white selection:bg-[#e9b45b]/30 selection:text-white">
+      {/* Ambient background with aurora blobs, mouse spotlight, particles, dot grid & grain */}
+      <AmbientBackground />
+
       {/* Top scroll progress indicator */}
       <ScrollProgress />
 

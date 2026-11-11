@@ -49,7 +49,7 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#050505]/85 backdrop-blur-md border-b border-white/[0.14] py-3.5"
+            ? "bg-[#050505]/75 backdrop-blur-xl border-b border-white/[0.14] py-3.5 shadow-xl"
             : "bg-transparent py-5"
         }`}
       >
@@ -175,3 +175,4 @@ export default function Navbar() {
     </>
   );
 }
+

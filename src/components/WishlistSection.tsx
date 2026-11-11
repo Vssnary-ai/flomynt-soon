@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionLabel from "./SectionLabel";
-import PillButton from "./PillButton";
 import { signInWithPopup } from "firebase/auth";
 import {
   doc,
@@ -15,61 +14,61 @@ import {
 } from "firebase/firestore";
 import { auth, googleProvider, db } from "@/lib/firebase";
 
-interface SlideData {
-  id: number;
+interface WishlistFeature {
+  id: string;
   tag: string;
-  title: string;
-  subtitle: string;
   metric: string;
   metricLabel: string;
-  accent: string;
+  title: string;
+  description: string;
+  iconPath: string;
 }
 
-const SLIDES: SlideData[] = [
+const WISHLIST_PILLARS: WishlistFeature[] = [
   {
-    id: 1,
-    tag: "DATA PRIVACY",
-    title: "Zero-Trust Private Vault",
-    subtitle: "Your client data stays locked and never trains any external model.",
+    id: "privacy",
+    tag: "ZERO-TRUST VAULT",
     metric: "0%",
     metricLabel: "DATA EXPOSURE",
-    accent: "#e9b45b",
+    title: "Client Data Privacy",
+    description: "AES-256 encrypted keys and private enclaves. Your data never trains external AI models.",
+    iconPath: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z",
   },
   {
-    id: 2,
+    id: "whitelabel",
     tag: "WHITE-LABEL",
-    title: "Instant Branded Client Apps",
-    subtitle: "Turn raw workflows into bespoke portals with custom domains and logos.",
     metric: "1-CLICK",
-    metricLabel: "CLIENT DEPLOYMENT",
-    accent: "#ffffff",
+    metricLabel: "CLIENT DEPLOY",
+    title: "Branded Client Portals",
+    description: "Wrap any automated flow in custom domain, logo, and client dashboards in seconds.",
+    iconPath: "M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6",
   },
   {
-    id: 3,
+    id: "voice",
     tag: "VOICE AI",
-    title: "Jarvis Agentic Architect",
-    subtitle: "Speak or type your workflow in plain English; watch the canvas build live.",
     metric: "10x",
     metricLabel: "BUILD SPEED",
-    accent: "#e9b45b",
+    title: "Jarvis Agentic Architect",
+    description: "Speak or type natural specifications; autonomous agents construct node graphs live.",
+    iconPath: "M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v4 M8 23h8",
   },
   {
-    id: 4,
-    tag: "AI ROUTING",
-    title: "Multi-Model Intelligent Routing",
-    subtitle: "Automatic failover across OpenAI, Anthropic, Gemini, Groq, and OpenRouter.",
+    id: "routing",
+    tag: "SMART ROUTER",
     metric: "99.9%",
     metricLabel: "UPTIME TARGET",
-    accent: "#ffffff",
+    title: "Multi-Model Failover",
+    description: "Dynamic routing across OpenAI, Anthropic, Gemini, Groq, and OpenRouter.",
+    iconPath: "M16 3h5v5 M4 20L21 3 M21 16v5h-5 M15 15l6 6 M4 4l5 5",
   },
   {
-    id: 5,
+    id: "selfhealing",
     tag: "SELF-HEALING",
-    title: "Autonomous Error Recovery",
-    subtitle: "Instant mobile alerts with synthetic replayed patches for 1-click healing.",
     metric: "<1.2s",
     metricLabel: "RESOLVE TIME",
-    accent: "#e9b45b",
+    title: "Autonomous Recovery",
+    description: "Instant mobile alerts on Telegram with verified synthetic replayed patches.",
+    iconPath: "M13 2L3 14h9l-1 8 10-12h-9l1-8z",
   },
 ];
 
@@ -80,29 +79,34 @@ function isValidEmail(email: string): boolean {
 type FormState = "idle" | "loading" | "success" | "already";
 
 export default function WishlistSection() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [activePillar, setActivePillar] = useState<string>("selfhealing");
 
   // Form states
   const [email, setEmail] = useState("");
+  const [idea, setIdea] = useState("");
   const [error, setError] = useState("");
   const [formState, setFormState] = useState<FormState>("idle");
   const [toast, setToast] = useState("");
   const [position, setPosition] = useState<number | null>(null);
   const lastSubmit = useRef(0);
 
-  // Autoplay carousel
+  // Listen to pre-filled idea from Hero glass command bar
   useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [isPaused]);
+    const handleSetIdea = (e: Event) => {
+      const customEvent = e as CustomEvent<{ idea: string }>;
+      if (customEvent.detail?.idea) {
+        setIdea(customEvent.detail.idea);
+      }
+    };
+
+    window.addEventListener("flomynt:set-wishlist-idea", handleSetIdea);
+    return () => window.removeEventListener("flomynt:set-wishlist-idea", handleSetIdea);
+  }, []);
 
   const saveToFirestore = useCallback(
     async (
       emailVal: string,
+      ideaVal?: string,
       uid?: string,
       name?: string,
       source: string = "email"
@@ -113,8 +117,8 @@ export default function WishlistSection() {
         !process.env.NEXT_PUBLIC_FIREBASE_API_KEY.includes("Dummy");
 
       if (!isConfigured) {
-        // Fallback for local preview
-        console.info(`[Flomynt Demo] Registered ${emailKey}`);
+        // Fallback demo mode for local preview
+        console.info(`[Flomynt Demo] Registered ${emailKey} with idea: "${ideaVal || ""}"`);
         setPosition(42);
         setFormState("success");
         return;
@@ -129,6 +133,7 @@ export default function WishlistSection() {
 
       await setDoc(docRef, {
         email: emailKey,
+        ...(ideaVal && { idea: ideaVal }),
         ...(uid && { uid }),
         ...(name && { name }),
         source,
@@ -176,14 +181,14 @@ export default function WishlistSection() {
 
       setFormState("loading");
       try {
-        await saveToFirestore(email);
+        await saveToFirestore(email, idea);
       } catch (err) {
         console.error(err);
         setToast("Something went wrong. Please try again.");
         setFormState("idle");
       }
     },
-    [email, saveToFirestore]
+    [email, idea, saveToFirestore]
   );
 
   const handleGoogleSignIn = useCallback(async () => {
@@ -195,6 +200,7 @@ export default function WishlistSection() {
       if (user.email) {
         await saveToFirestore(
           user.email,
+          idea,
           user.uid,
           user.displayName || undefined,
           "google"
@@ -220,7 +226,7 @@ export default function WishlistSection() {
       setToast("Google sign-in failed. Please try email instead.");
       setFormState("idle");
     }
-  }, [saveToFirestore]);
+  }, [idea, saveToFirestore]);
 
   const handleShare = useCallback(async () => {
     try {
@@ -232,138 +238,132 @@ export default function WishlistSection() {
     }
   }, []);
 
-  const slide = SLIDES[currentSlide];
-
   return (
     <section
       id="wishlist"
-      className="relative w-full bg-[#050505] py-28 px-6 sm:px-10 border-t border-white/[0.14]"
+      className="relative w-full bg-[#050505] py-28 sm:py-32 px-6 sm:px-10 border-t border-white/[0.14]"
     >
       <div className="max-w-[1340px] mx-auto">
-        {/* Header */}
-        <div className="mb-14 sm:mb-20 text-center max-w-[700px] mx-auto">
+        {/* Section Header */}
+        <div className="mb-14 sm:mb-20 text-center max-w-[720px] mx-auto">
           <SectionLabel text="WISHLIST" />
           <h2 className="mt-4 font-light text-3xl sm:text-5xl text-white tracking-[-0.03em] leading-tight">
             Join the Flomynt Wishlist
           </h2>
           <p className="mt-4 text-[#8a8a8a] text-sm sm:text-base leading-relaxed">
-            Be first in line for early developer beta access and private white-labeling agency slots.
+            Be first in line for early developer beta access, private white-labeling agency slots, and autonomous infrastructure updates.
           </p>
         </div>
 
         {/* 2-Column Showcase & Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
-          {/* Left: 16:10 Aspect Ratio Showcase Carousel */}
-          <div
-            className="lg:col-span-7 flex flex-col justify-between bg-[#0a0a0a] border border-white/[0.14] rounded-2xl p-6 sm:p-10 relative overflow-hidden"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            {/* Top Indicator */}
-            <div className="flex items-center justify-between z-10">
-              <span className="mono-label text-[10px] text-[#e9b45b]">
-                [ {slide.tag} ]
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          {/* Left Column: Redesigned Glass Showcase of Core Pillars */}
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
+            <div className="flex items-center justify-between pb-2">
+              <span className="mono-label text-[11px] text-[#e9b45b]">
+                [ ARCHITECTURE PILLARS ]
               </span>
-              <div className="flex items-center gap-1.5">
-                {SLIDES.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentSlide(idx)}
-                    className={`h-1 rounded-full transition-all ${
-                      currentSlide === idx
-                        ? "w-6 bg-[#e9b45b]"
-                        : "w-2 bg-white/20 hover:bg-white/40"
-                    }`}
-                    aria-label={`Jump to slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Slide Visual Content (16:10 Container) */}
-            <div className="relative aspect-[16/10] my-8 flex items-center justify-center border border-white/[0.08] rounded-xl bg-black/60 overflow-hidden p-6 text-center">
-              {/* Subtle background glow */}
-              <div
-                className="pointer-events-none absolute inset-0 opacity-20 blur-2xl"
-                style={{
-                  background: `radial-gradient(circle at 50% 50%, ${slide.accent}, transparent 70%)`,
-                }}
-              />
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={slide.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.4 }}
-                  className="relative z-10 flex flex-col items-center justify-center max-w-[420px]"
-                >
-                  <p className="font-sans text-4xl sm:text-5xl font-light text-white tracking-tight mb-2">
-                    {slide.metric}
-                  </p>
-                  <p className="mono-label text-[11px] text-[#e9b45b] mb-4">
-                    {slide.metricLabel}
-                  </p>
-                  <h4 className="text-xl sm:text-2xl font-light text-white mb-2">
-                    {slide.title}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#8a8a8a] leading-relaxed">
-                    {slide.subtitle}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Bottom Carousel Controls */}
-            <div className="flex items-center justify-between pt-2 border-t border-white/[0.08] z-10">
               <span className="font-mono text-xs text-white/40">
-                0{slide.id} / 0{SLIDES.length}
+                05 CORE INNOVATIONS
               </span>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() =>
-                    setCurrentSlide((prev) => (prev - 1 + SLIDES.length) % SLIDES.length)
-                  }
-                  className="w-8 h-8 rounded-full border border-white/[0.14] hover:border-white flex items-center justify-center text-white/70 hover:text-white transition-colors"
-                  aria-label="Previous slide"
-                >
-                  ←
-                </button>
-                <button
-                  onClick={() =>
-                    setCurrentSlide((prev) => (prev + 1) % SLIDES.length)
-                  }
-                  className="w-8 h-8 rounded-full border border-white/[0.14] hover:border-white flex items-center justify-center text-white/70 hover:text-white transition-colors"
-                  aria-label="Next slide"
-                >
-                  →
-                </button>
-              </div>
+            </div>
+
+            {/* Pillar Grid with Glass Cards & Equal Heights */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+              {WISHLIST_PILLARS.map((pillar, idx) => {
+                const isSelected = activePillar === pillar.id;
+                return (
+                  <button
+                    key={pillar.id}
+                    type="button"
+                    onClick={() => setActivePillar(pillar.id)}
+                    className={`glass-card text-left p-5 sm:p-6 rounded-2xl flex flex-col justify-between cursor-pointer transition-all ${
+                      isSelected
+                        ? "border-[#e9b45b]/60 bg-white/[0.08] shadow-[0_0_30px_rgba(233,180,91,0.12)]"
+                        : "border-white/[0.12] hover:border-white/30"
+                    } ${idx === 4 ? "sm:col-span-2" : ""}`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="mono-label text-[10px] text-[#e9b45b]">
+                          {pillar.tag}
+                        </span>
+                        {/* 1px line wireframe SVG icon */}
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={isSelected ? "text-[#e9b45b]" : "text-white/40"}
+                        >
+                          <path d={pillar.iconPath} />
+                        </svg>
+                      </div>
+
+                      <div className="flex items-baseline gap-2 mb-1.5">
+                        <span className="font-sans text-2xl font-light text-white tracking-tight">
+                          {pillar.metric}
+                        </span>
+                        <span className="mono-label text-[9.5px] text-white/50">
+                          {pillar.metricLabel}
+                        </span>
+                      </div>
+
+                      <h4 className="text-base font-normal text-white mb-1.5">
+                        {pillar.title}
+                      </h4>
+
+                      <p className="text-xs text-[#8a8a8a] leading-relaxed">
+                        {pillar.description}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono">
+                      <span className="text-white/40">STATUS</span>
+                      <span className={isSelected ? "text-[#e9b45b]" : "text-white/60"}>
+                        {isSelected ? "ACTIVE FOCUS" : "DEPLOYED"}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Right: Wishlist Form Container */}
-          <div className="lg:col-span-5 flex flex-col justify-center bg-[#0a0a0a] border border-white/[0.14] rounded-2xl p-6 sm:p-10">
+          {/* Right Column: Wishlist Request Form inside Glass Container */}
+          <div className="lg:col-span-5 glass-card rounded-2xl p-6 sm:p-10 flex flex-col justify-center">
             {formState === "success" || formState === "already" ? (
               <div className="text-center py-8 space-y-4">
-                <div className="w-12 h-12 rounded-full border border-[#e9b45b] text-[#e9b45b] flex items-center justify-center mx-auto text-xl font-mono">
+                <div className="w-14 h-14 rounded-full border border-[#e9b45b] text-[#e9b45b] flex items-center justify-center mx-auto text-2xl font-mono shadow-[0_0_20px_rgba(233,180,91,0.25)]">
                   ✓
                 </div>
                 <h3 className="text-2xl font-light text-white">
                   {formState === "already"
-                    ? "You're already on the list"
+                    ? "You're already registered"
                     : "You're on the Wishlist!"}
                 </h3>
                 {position && formState === "success" && (
                   <p className="font-mono text-xs text-[#e9b45b]">
-                    PRIORITY POSITION #{position}
+                    PRIORITY QUEUE POSITION #{position}
                   </p>
                 )}
-                <p className="text-sm text-[#8a8a8a] max-w-[320px] mx-auto leading-relaxed">
-                  We&apos;ll notify you immediately when early access invitations roll out.
+                {idea && (
+                  <div className="bg-black/50 p-3 rounded-lg border border-white/[0.08] text-left">
+                    <p className="mono-label text-[9px] text-[#e9b45b] mb-1">
+                      LOGGED WORKFLOW SPEC:
+                    </p>
+                    <p className="text-xs text-white/80 italic">&ldquo;{idea}&rdquo;</p>
+                  </div>
+                )}
+                <p className="text-xs text-[#8a8a8a] max-w-[320px] mx-auto leading-relaxed">
+                  We&apos;ll notify you immediately when early access beta invites roll out.
                 </p>
                 <button
+                  type="button"
                   onClick={handleShare}
                   className="pill-btn mt-4 w-full py-3"
                 >
@@ -377,7 +377,7 @@ export default function WishlistSection() {
                     Request Early Access
                   </h3>
                   <p className="text-xs text-[#8a8a8a] mt-1 font-mono">
-                    Join founders and automation engineers on the priority waitlist.
+                    Join agency founders and automation engineers on the priority waitlist.
                   </p>
                 </div>
 
@@ -386,7 +386,7 @@ export default function WishlistSection() {
                   type="button"
                   onClick={handleGoogleSignIn}
                   disabled={formState === "loading"}
-                  className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-white/[0.14] hover:border-white/40 bg-white/[0.02] rounded-xl text-xs font-mono text-white transition-all disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-white/[0.14] hover:border-white/40 bg-white/[0.03] hover:bg-white/[0.07] rounded-xl text-xs font-mono text-white transition-all disabled:opacity-50 cursor-pointer min-h-[44px]"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                     <path
@@ -429,8 +429,8 @@ export default function WishlistSection() {
                   </div>
 
                   <div>
-                    <label htmlFor="wishlist-email" className="sr-only">
-                      Email Address
+                    <label htmlFor="wishlist-email" className="block mono-label text-[10px] text-white/50 mb-1.5">
+                      WORK EMAIL *
                     </label>
                     <input
                       id="wishlist-email"
@@ -440,7 +440,7 @@ export default function WishlistSection() {
                         setEmail(e.target.value);
                         if (error) setError("");
                       }}
-                      placeholder="Enter work email address..."
+                      placeholder="alex@agency.com"
                       className="w-full bg-black/60 border border-white/[0.14] focus:border-white/50 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-colors"
                     />
                     {error && (
@@ -450,10 +450,25 @@ export default function WishlistSection() {
                     )}
                   </div>
 
+                  {/* Optional Workflow Idea / Requirement Field */}
+                  <div>
+                    <label htmlFor="wishlist-idea" className="block mono-label text-[10px] text-white/50 mb-1.5">
+                      WORKFLOW IDEA OR SPEC (OPTIONAL)
+                    </label>
+                    <input
+                      id="wishlist-idea"
+                      type="text"
+                      value={idea}
+                      onChange={(e) => setIdea(e.target.value)}
+                      placeholder="e.g. Telegram alerts on Stripe invoice failure"
+                      className="w-full bg-black/60 border border-white/[0.14] focus:border-white/50 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 outline-none transition-colors"
+                    />
+                  </div>
+
                   <button
                     type="submit"
                     disabled={formState === "loading"}
-                    className="w-full py-3 bg-white hover:bg-[#e9b45b] text-black font-semibold rounded-xl text-xs font-mono tracking-wider uppercase transition-colors disabled:opacity-50"
+                    className="w-full py-3 bg-white hover:bg-[#e9b45b] text-black font-semibold rounded-xl text-xs font-mono tracking-wider uppercase transition-colors disabled:opacity-50 cursor-pointer min-h-[44px]"
                   >
                     {formState === "loading"
                       ? "RESERVING..."

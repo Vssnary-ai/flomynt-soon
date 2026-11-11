@@ -268,3 +268,4 @@ export function MarketplaceWireframe({ className = "" }: WireframeProps) {
     </svg>
   );
 }
+

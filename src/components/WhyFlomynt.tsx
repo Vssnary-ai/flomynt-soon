@@ -51,7 +51,7 @@ export default function WhyFlomynt() {
   return (
     <section
       id="why"
-      className="relative w-full bg-[#050505] py-28 px-6 sm:px-10 border-t border-white/[0.14]"
+      className="relative w-full bg-[#050505] py-24 sm:py-28 px-4 sm:px-10 border-t border-white/[0.14] overflow-hidden"
     >
       <div className="max-w-[1340px] mx-auto">
         {/* Header */}
@@ -66,16 +66,16 @@ export default function WhyFlomynt() {
         </div>
 
         {/* Comparison Table / Grid with Hairline Borders */}
-        <div className="border border-white/[0.14] divide-y divide-white/[0.14]">
-          {/* Header Row */}
-          <div className="grid grid-cols-1 md:grid-cols-12 bg-[#0a0a0a] text-xs font-mono">
-            <div className="md:col-span-3 p-4 sm:p-6 text-white/40 uppercase tracking-widest border-b md:border-b-0 md:border-r border-white/[0.14]">
+        <div className="w-full border border-white/[0.14] divide-y divide-white/[0.14]">
+          {/* Desktop Header Row */}
+          <div className="hidden md:grid md:grid-cols-12 bg-[#0a0a0a] text-xs font-mono">
+            <div className="md:col-span-3 p-4 sm:p-6 text-white/40 uppercase tracking-wider border-r border-white/[0.14]">
               CAPABILITY
             </div>
-            <div className="md:col-span-4 p-4 sm:p-6 text-[#8a8a8a] uppercase tracking-widest border-b md:border-b-0 md:border-r border-white/[0.14]">
-              LEGACY AUTOMATIONS (ZAPIER / MAKE)
+            <div className="md:col-span-4 p-4 sm:p-6 text-[#8a8a8a] uppercase tracking-wider border-r border-white/[0.14]">
+              LEGACY (ZAPIER / MAKE)
             </div>
-            <div className="md:col-span-5 p-4 sm:p-6 text-[#e9b45b] uppercase tracking-widest flex items-center justify-between">
+            <div className="md:col-span-5 p-4 sm:p-6 text-[#e9b45b] uppercase tracking-wider flex items-center justify-between">
               <span>FLOMYNT AUTONOMOUS ENGINE</span>
               <span className="text-[10px] text-white/30 hidden sm:inline">NEXT-GEN</span>
             </div>
@@ -88,17 +88,23 @@ export default function WhyFlomynt() {
               className="grid grid-cols-1 md:grid-cols-12 hover:bg-[#080808] transition-colors"
             >
               {/* Capability */}
-              <div className="md:col-span-3 p-5 sm:p-6 font-mono text-[11px] text-[#e9b45b] border-b md:border-b-0 md:border-r border-white/[0.14] flex items-center">
+              <div className="md:col-span-3 p-4 sm:p-6 font-mono text-[11px] text-[#e9b45b] border-b md:border-b-0 md:border-r border-white/[0.14] flex items-center bg-[#070707] md:bg-transparent">
                 <span>[ {row.topic} ]</span>
               </div>
 
               {/* Legacy Tools */}
-              <div className="md:col-span-4 p-5 sm:p-6 text-xs sm:text-[13px] text-[#8a8a8a] leading-relaxed border-b md:border-b-0 md:border-r border-white/[0.14] flex items-center">
+              <div className="md:col-span-4 p-4 sm:p-6 text-xs sm:text-[13px] text-[#8a8a8a] leading-relaxed border-b md:border-b-0 md:border-r border-white/[0.14] flex flex-col justify-center">
+                <span className="md:hidden font-mono text-[10px] text-white/40 uppercase mb-1">
+                  LEGACY AUTOMATIONS:
+                </span>
                 <p>{row.traditional}</p>
               </div>
 
               {/* Flomynt Engine */}
-              <div className="md:col-span-5 p-5 sm:p-6 text-xs sm:text-[13px] text-white leading-relaxed bg-[#0d0d0d]/40 flex items-center">
+              <div className="md:col-span-5 p-4 sm:p-6 text-xs sm:text-[13px] text-white leading-relaxed bg-[#0d0d0d]/40 flex flex-col justify-center">
+                <span className="md:hidden font-mono text-[10px] text-[#e9b45b] uppercase mb-1">
+                  FLOMYNT ENGINE:
+                </span>
                 <p className="font-normal">{row.flomynt}</p>
               </div>
             </div>
@@ -127,3 +133,4 @@ export default function WhyFlomynt() {
     </section>
   );
 }
+

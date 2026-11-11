@@ -10,16 +10,34 @@ export default function ContactSection() {
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, agency, message }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to transmit message");
+      }
+
       setSubmitted(true);
-    }, 800);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Network error";
+      setErrorMessage(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,8 +75,8 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Right Column: Hairline Form */}
-          <div className="lg:col-span-7 bg-[#0a0a0a] border border-white/[0.14] rounded-2xl p-6 sm:p-10">
+          {/* Right Column: Hairline Glass Form */}
+          <div className="lg:col-span-7 glass-card rounded-2xl p-6 sm:p-10">
             {submitted ? (
               <div className="text-center py-12 space-y-4">
                 <div className="w-12 h-12 rounded-full border border-[#e9b45b] text-[#e9b45b] flex items-center justify-center mx-auto text-xl font-mono">
@@ -169,3 +187,4 @@ export default function ContactSection() {
     </section>
   );
 }
+
