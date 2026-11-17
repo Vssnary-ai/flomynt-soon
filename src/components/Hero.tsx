@@ -18,85 +18,214 @@ const PLACEHOLDERS = [
   "Build a multi-agent lead research pipeline",
 ];
 
-const SUGGESTION_CHIPS = [
-  { label: "TELEGRAM ALERT", text: "Send a Telegram alert when a payment fails" },
-  { label: "CLIENT PORTAL", text: "Turn new leads into a branded client portal" },
-  { label: "SELF-HEALING ENGINE", text: "Fix broken workflow steps automatically" },
-];
-
-/* Line icons (24px grid, 1.6 stroke) */
-const ICONS: Record<string, string> = {
-  mic: "M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v3",
-  heal: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z M9 12l2 2 4-4",
-  route: "M6 3v12 M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M18 9a9 9 0 0 1-9 9",
-  flask: "M10 2v7.5L4.5 19a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9.5V2 M8.5 2h7 M7 16h10",
-  lock: "M5 11h14v10H5z M8 11V7a4 4 0 0 1 8 0v4",
-  window: "M3 4h18v16H3z M3 9h18 M9 9v11",
-  store: "M3 9l1-5h16l1 5 M3 9v11h18V9 M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0 M9 20v-6h6v6",
-};
-
-const FEATURE_CARDS = [
-  { id: "talktobuild", icon: "mic", title: "Talk-to-Build", meta: "10x build speed" },
-  { id: "selfhealing", icon: "heal", title: "Self-Healing", meta: "1-click approval" },
-  { id: "routing", icon: "route", title: "Smart Routing", meta: "5 AI providers" },
-  { id: "verification", icon: "flask", title: "Sandbox", meta: "Confidence score" },
-  { id: "privacy", icon: "lock", title: "Zero-Trust", meta: "AES-256 vault" },
-  { id: "whitelabel", icon: "window", title: "White-Label", meta: "Client portals" },
-  { id: "marketplace", icon: "store", title: "Marketplace", meta: "Keys stripped" },
-];
-
-function Icon({ name, size = 20 }: { name: string; size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d={ICONS[name]} />
-    </svg>
-  );
-}
-
+/* ---------- Mouse-parallax layer ---------- */
 function Layer({
   mx,
   my,
   depth,
   className,
+  style,
   children,
 }: {
   mx: MotionValue<number>;
   my: MotionValue<number>;
   depth: number;
   className?: string;
+  style?: React.CSSProperties;
   children: React.ReactNode;
 }) {
   const x = useTransform(mx, (v) => v * depth);
   const y = useTransform(my, (v) => v * depth);
   return (
-    <motion.div style={{ x, y }} className={className}>
+    <motion.div style={{ ...style, x, y }} className={className}>
       {children}
     </motion.div>
   );
 }
 
-/** A puffy cloud made from overlapping soft ellipses. */
-function Cloud({ className, scale = 1, opacity = 1 }: { className?: string; scale?: number; opacity?: number }) {
-  const puffs = [
-    [0, 30, 46, 70], [18, 6, 44, 80], [38, 0, 50, 90], [60, 10, 46, 80], [78, 28, 40, 66], [30, 34, 62, 62],
+/* ---------- Floating product cards that showcase real Flomynt capabilities ---------- */
+
+function CardNodeGraph() {
+  return (
+    <div className="glass-pane-strong rounded-2xl p-4 w-[280px]">
+      <div className="flex items-center justify-between mb-3">
+        <span className="font-mono text-[9.5px] tracking-[0.12em] text-[#0b1b3a]/60">
+          AUTONOMOUS CANVAS
+        </span>
+        <span className="flex items-center gap-1 font-mono text-[9px] text-emerald-700">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> LIVE
+        </span>
+      </div>
+      <svg viewBox="0 0 240 110" className="w-full h-auto">
+        <defs>
+          <linearGradient id="hero-wire" x1="0" x2="1">
+            <stop offset="0" stopColor="#0b1b3a" />
+            <stop offset="1" stopColor="#bff02e" />
+          </linearGradient>
+        </defs>
+        <path d="M70 30 L115 30" stroke="url(#hero-wire)" strokeWidth="1.6" strokeDasharray="4 4" />
+        <path d="M165 30 L205 55" stroke="url(#hero-wire)" strokeWidth="1.6" strokeDasharray="4 4" />
+        <path d="M140 54 L140 82" stroke="url(#hero-wire)" strokeWidth="1.6" strokeDasharray="4 4" />
+        {[
+          { x: 10, y: 15, w: 60, l: "Stripe" },
+          { x: 115, y: 15, w: 50, l: "Logic" },
+          { x: 205, y: 42, w: 32, l: "TG" },
+          { x: 110, y: 70, w: 60, l: "Heal" },
+        ].map((n) => (
+          <g key={n.l}>
+            <rect
+              x={n.x}
+              y={n.y}
+              width={n.w}
+              height="24"
+              rx="7"
+              fill="rgba(11,27,58,0.92)"
+              stroke="rgba(11,27,58,0.6)"
+            />
+            <text
+              x={n.x + n.w / 2}
+              y={n.y + 16}
+              textAnchor="middle"
+              fontSize="9.5"
+              fill="#bff02e"
+              fontFamily="Geist Mono, monospace"
+            >
+              {n.l}
+            </text>
+          </g>
+        ))}
+      </svg>
+      <div className="mt-3 flex items-center justify-between font-mono text-[9px] text-[#0b1b3a]/60">
+        <span>Verified · 98/100</span>
+        <span className="text-[#0b1b3a]">↗</span>
+      </div>
+    </div>
+  );
+}
+
+function CardSelfHeal() {
+  return (
+    <div className="glass-pane-strong rounded-2xl p-4 w-[240px]">
+      <div className="flex items-center gap-2 mb-2">
+        <span className="relative flex w-2.5 h-2.5">
+          <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-60" />
+          <span className="relative w-2.5 h-2.5 rounded-full bg-emerald-500" />
+        </span>
+        <span className="font-mono text-[9.5px] tracking-[0.12em] text-[#0b1b3a]/70">
+          SELF-HEALING
+        </span>
+      </div>
+      <p className="text-[12.5px] font-medium text-[#0b1b3a] leading-snug">
+        Step failed — patch drafted &amp; verified against real input.
+      </p>
+      <div className="mt-3 flex items-center gap-1.5">
+        <span className="px-3 py-1.5 rounded-full bg-[#0b1b3a] text-[#bff02e] text-[9.5px] font-mono tracking-wider">
+          APPROVE
+        </span>
+        <span className="px-3 py-1.5 rounded-full bg-white/80 text-[#0b1b3a] text-[9.5px] font-mono tracking-wider border border-[#0b1b3a]/10">
+          REVIEW
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function CardRouter() {
+  const providers = [
+    { c: "#10a37f", n: "OpenAI" },
+    { c: "#d97757", n: "Anthropic" },
+    { c: "#4285f4", n: "Gemini" },
+    { c: "#f55036", n: "Groq" },
+    { c: "#0b1b3a", n: "OpenRouter" },
   ];
   return (
-    <div className={className} style={{ opacity, transform: `scale(${scale})` }} aria-hidden="true">
-      <div className="relative w-[34vw] min-w-[260px] max-w-[560px] aspect-[2.4/1]">
-        {puffs.map(([l, t, w, h], i) => (
+    <div className="glass-pane-strong rounded-2xl p-4 w-[220px]">
+      <div className="flex items-center justify-between mb-2.5">
+        <span className="font-mono text-[9.5px] tracking-[0.12em] text-[#0b1b3a]/70">
+          SMART ROUTER
+        </span>
+        <span className="font-mono text-[9px] text-[#0b1b3a]/50">99.9%</span>
+      </div>
+      <div className="flex items-center gap-1.5 mb-3">
+        {providers.map((p) => (
           <span
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              left: `${l}%`,
-              top: `${t}%`,
-              width: `${w}%`,
-              height: `${h}%`,
-              background: "radial-gradient(closest-side, rgba(255,255,255,0.98) 30%, rgba(255,255,255,0.55) 70%, rgba(255,255,255,0) 100%)",
-              filter: "blur(5px)",
-            }}
+            key={p.n}
+            className="w-6 h-6 rounded-full border border-white/70"
+            style={{ background: p.c, boxShadow: `0 4px 10px -2px ${p.c}66` }}
           />
         ))}
+      </div>
+      <p className="text-[11.5px] text-[#0b1b3a]/80 leading-snug">
+        Failed over to <span className="font-medium text-[#0b1b3a]">Anthropic</span> in 82ms.
+      </p>
+    </div>
+  );
+}
+
+function CardTelegram() {
+  return (
+    <div className="glass-pane-strong rounded-full pl-2 pr-5 py-2 flex items-center gap-3 shadow-lg">
+      <span className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4aa3ff] to-[#0b1b3a] flex items-center justify-center text-white text-sm font-medium">
+        ✈
+      </span>
+      <div className="text-left">
+        <p className="font-mono text-[9px] tracking-[0.12em] text-[#0b1b3a]/55">
+          TELEGRAM
+        </p>
+        <p className="text-[12px] text-[#0b1b3a] font-medium leading-tight">
+          Alert delivered · 840ms
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function CardVault() {
+  return (
+    <div className="glass-pane-strong rounded-2xl p-4 w-[220px]">
+      <div className="flex items-center justify-between mb-2">
+        <span className="font-mono text-[9.5px] tracking-[0.12em] text-[#0b1b3a]/70">
+          ZERO-TRUST VAULT
+        </span>
+        <span className="font-mono text-[9px] text-emerald-700">SIGNED</span>
+      </div>
+      <div className="space-y-1.5 font-mono text-[10px] text-[#0b1b3a]/70">
+        <div className="flex items-center justify-between bg-white/60 rounded px-2 py-1">
+          <span>stripe_sk</span>
+          <span className="text-[#0b1b3a]/40">••••••</span>
+        </div>
+        <div className="flex items-center justify-between bg-white/60 rounded px-2 py-1">
+          <span>openai_key</span>
+          <span className="text-[#0b1b3a]/40">••••••</span>
+        </div>
+      </div>
+      <div className="mt-2 pt-2 border-t border-[#0b1b3a]/10 flex items-center justify-between font-mono text-[9px]">
+        <span className="text-[#0b1b3a]/50">AES-256</span>
+        <span className="text-[#0b1b3a]">0 egress</span>
+      </div>
+    </div>
+  );
+}
+
+function CardPortal() {
+  return (
+    <div className="glass-pane-strong rounded-2xl p-4 w-[220px]">
+      <div className="flex items-center justify-between mb-2.5">
+        <span className="font-mono text-[9.5px] tracking-[0.12em] text-[#0b1b3a]/70">
+          WHITE-LABEL
+        </span>
+        <span className="px-2 py-0.5 rounded-full bg-[#bff02e] text-[#0b1b3a] font-mono text-[8.5px] font-semibold">
+          LIVE
+        </span>
+      </div>
+      <div className="rounded-xl bg-[#0b1b3a] p-3">
+        <p className="font-mono text-[9px] text-[#bff02e] tracking-wider mb-1.5">
+          CLIENT · APEXDASH
+        </p>
+        <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+          <div className="h-full w-[82%] rounded-full bg-gradient-to-r from-[#bff02e] to-white" />
+        </div>
+        <p className="mt-2 text-[10px] text-white/70 font-mono">82 flows · 12 clients</p>
       </div>
     </div>
   );
@@ -111,38 +240,44 @@ export default function Hero() {
   const inputRef = useRef<HTMLInputElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
+  // Cursor-driven parallax
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
   const mx = useSpring(rawX, { stiffness: 60, damping: 20, mass: 0.7 });
   const my = useSpring(rawY, { stiffness: 60, damping: 20, mass: 0.7 });
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  // Scroll-driven exit
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.1]);
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, 160]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.1]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.12]);
 
   useEffect(() => {
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(motionQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    motionQuery.addEventListener("change", handler);
-    return () => motionQuery.removeEventListener("change", handler);
+    const q = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(q.matches);
+    const h = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    q.addEventListener("change", h);
+    return () => q.removeEventListener("change", h);
   }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       if (reducedMotion || window.innerWidth < 1024) return;
-      rawX.set((e.clientX / window.innerWidth - 0.5) * 2 * 30);
-      rawY.set((e.clientY / window.innerHeight - 0.5) * 2 * 20);
+      rawX.set((e.clientX / window.innerWidth - 0.5) * 2 * 24);
+      rawY.set((e.clientY / window.innerHeight - 0.5) * 2 * 16);
     },
     [reducedMotion, rawX, rawY]
   );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIndex((prev) => (prev + 1) % PLACEHOLDERS.length);
+    const id = setInterval(() => {
+      setPlaceholderIndex((p) => (p + 1) % PLACEHOLDERS.length);
     }, 4200);
-    return () => clearInterval(interval);
+    return () => clearInterval(id);
   }, []);
 
   const scrollTo = (id: string) => {
@@ -155,7 +290,9 @@ export default function Hero() {
     if (isShimmering) return;
     setIsShimmering(true);
     const ideaText = inputValue.trim() || PLACEHOLDERS[placeholderIndex];
-    window.dispatchEvent(new CustomEvent("flomynt:set-wishlist-idea", { detail: { idea: ideaText } }));
+    window.dispatchEvent(
+      new CustomEvent("flomynt:set-wishlist-idea", { detail: { idea: ideaText } })
+    );
     setTimeout(() => {
       setIsShimmering(false);
       scrollTo("wishlist");
@@ -167,231 +304,289 @@ export default function Hero() {
     setTimeout(() => setMicActive(false), 1500);
   };
 
-  const handleChipClick = (text: string) => {
-    setInputValue(text);
-    inputRef.current?.focus();
-  };
-
-  const goToFeature = (id: string) => {
-    const el = document.getElementById(`bento-${id}`) || document.getElementById("features");
-    el?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
-
-  const line1 = ["Autonomous", "Workflows", "That"];
-  const line2 = ["Build,", "Verify,", "and", "Heal", "Themselves."];
-  const mid = FEATURE_CARDS.length / 2 - 0.5;
-
   return (
     <section
       id="home"
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full overflow-hidden min-h-[100svh] flex flex-col pt-28 sm:pt-32 pb-10 px-4 sm:px-8"
+      className="relative w-full overflow-hidden min-h-[100svh] flex flex-col pt-28 sm:pt-32 pb-8 px-4 sm:px-8"
     >
-      {/* ============ SKY ============ */}
-      <motion.div style={{ y: bgY }} className="absolute inset-x-0 -top-10 -bottom-10 pointer-events-none" aria-hidden="true">
+      {/* ============================================================
+          SKY BACKGROUND — the user-provided photograph
+         ============================================================ */}
+      <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
+        <motion.div
+          style={{ y: bgY, scale: bgScale }}
+          className="absolute inset-0 will-change-transform"
+        >
+          <picture>
+            <img
+              src="/images/hero-sky.jpg"
+              alt=""
+              className="w-full h-full object-cover object-center"
+              draggable={false}
+              style={{ pointerEvents: "none" }}
+            />
+          </picture>
+        </motion.div>
+
+        {/* subtle depth wash at the top for nav legibility */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-x-0 top-0 h-[40%]"
           style={{
             background:
-              "linear-gradient(180deg, #0d5bd6 0%, #1f78ea 22%, #4a9df2 45%, #8cc4f8 68%, #cde5fb 86%, #f2f8ff 100%)",
+              "linear-gradient(180deg, rgba(5, 60, 140, 0.35) 0%, rgba(5, 60, 140, 0.12) 50%, rgba(5, 60, 140, 0) 100%)",
           }}
         />
-        <div className="absolute left-1/2 top-[-10%] -translate-x-1/2 w-[90vw] max-w-[1200px] aspect-[2/1] rounded-full bg-[#7fd0ff]/40 blur-[110px]" />
+        {/* soft white vignette at the bottom to meet the next section */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-[45%]"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(240, 248, 255, 0.55) 55%, #f2f8ff 100%)",
+          }}
+        />
+        {/* faint grain for photographic feel */}
+        <div
+          className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+            backgroundSize: "128px 128px",
+          }}
+        />
+      </div>
 
-        <Layer mx={mx} my={my} depth={-0.6} className="absolute inset-0">
-          <Cloud className="absolute top-[40%] -left-[6%]" opacity={0.85} />
-          <Cloud className="absolute top-[34%] -right-[8%]" scale={1.15} opacity={0.9} />
-        </Layer>
-        <Layer mx={mx} my={my} depth={-1.4} className="absolute inset-0">
-          <Cloud className="absolute top-[58%] left-[18%]" scale={1.3} />
-          <Cloud className="absolute top-[62%] right-[14%]" scale={1.1} />
-          <Cloud className="absolute top-[70%] -left-[10%]" scale={1.5} />
-        </Layer>
-        <Layer mx={mx} my={my} depth={-2.4} className="absolute inset-x-0 bottom-0">
-          <div className="absolute -bottom-10 left-[-10%] right-[-10%] h-[34%]" style={{ background: "radial-gradient(ellipse at 50% 100%, #fff 35%, rgba(255,255,255,0) 72%)", filter: "blur(10px)" }} />
-        </Layer>
-      </motion.div>
-
-      {/* ============ CENTER CONTENT ============ */}
+      {/* ============================================================
+          CENTER COLUMN
+         ============================================================ */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 flex-1 flex flex-col items-center justify-center w-full max-w-[1200px] mx-auto text-center"
+        className="relative z-10 flex-1 flex flex-col items-center justify-center w-full max-w-[1200px] mx-auto text-center pt-4"
       >
+        {/* Status chip */}
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 border border-white/40 backdrop-blur-md mb-6"
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/22 border border-white/50 backdrop-blur-md mb-7"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c8f43a] shadow-[0_0_8px_#c8f43a]" />
-          <span className="font-mono text-[10.5px] tracking-[0.12em] text-white">PRIVATE BETA · WISHLIST OPEN</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#bff02e] shadow-[0_0_8px_#bff02e]" />
+          <span className="font-mono text-[10px] tracking-[0.14em] text-white/95 font-medium">
+            PRIVATE BETA · WISHLIST OPEN
+          </span>
         </motion.div>
 
+        {/* ============ HEADLINE ============ */}
         <h1
-          className="font-light tracking-[-0.04em] leading-[1.06] text-white text-[clamp(30px,4.3vw,66px)] max-w-[1120px]"
-          style={{ textShadow: "0 4px 40px rgba(8,50,140,0.35)" }}
+          className="font-light text-white max-w-[1000px]"
+          style={{
+            textShadow: "0 4px 40px rgba(6, 36, 100, 0.45)",
+            lineHeight: 1.03,
+            letterSpacing: "-0.035em",
+            fontSize: "clamp(40px, 6.4vw, 92px)",
+          }}
         >
-          {line1.map((w, i) => (
-            <motion.span
-              key={w}
-              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.9, delay: 0.25 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="inline-block mr-[0.2em]"
-            >
-              {w}
-            </motion.span>
-          ))}
-          {line2.map((w, i) => (
-            <motion.span
-              key={w}
-              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.9, delay: 0.5 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className={`inline-block mr-[0.2em] ${i === 2 ? "" : "text-[#d4f85a]"}`}
-            >
-              {w}
-            </motion.span>
-          ))}
+          <motion.span
+            initial={{ opacity: 0, y: 36, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.95, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="block"
+          >
+            Build{" "}
+            <span className="font-display text-[#d8ff6b]" style={{ fontStyle: "italic" }}>
+              Without Limits
+            </span>
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 36, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.95, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="block"
+          >
+            Keep Your{" "}
+            <span className="font-display text-[#d8ff6b]" style={{ fontStyle: "italic" }}>
+              Data Locked
+            </span>
+            .
+          </motion.span>
         </h1>
 
-        {/* Centered glass wishlist box */}
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
+        {/* Supporting line */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full max-w-[700px] mx-auto mt-9"
+          transition={{ duration: 0.8, delay: 0.75 }}
+          className="mt-7 max-w-[560px] text-[15px] sm:text-[16.5px] text-white/92 leading-relaxed"
+          style={{ textShadow: "0 2px 18px rgba(6,36,100,0.35)" }}
         >
-          <form
-            onSubmit={handleJoinWishlist}
-            className={`relative flex flex-col sm:flex-row items-stretch sm:items-center rounded-[26px] sm:rounded-full p-2 sm:p-2.5 bg-white/25 backdrop-blur-2xl border border-white/60 shadow-[0_30px_70px_-20px_rgba(8,50,140,0.55),inset_0_1px_0_rgba(255,255,255,0.7)] transition-all duration-300 focus-within:bg-white/45 focus-within:shadow-[0_0_0_4px_rgba(212,248,90,0.35),0_30px_70px_-20px_rgba(8,50,140,0.6)] ${
-              isShimmering ? "shimmer-active" : ""
-            }`}
+          Autonomous workflow infrastructure for modern agencies — resilient by design,
+          private by default.
+        </motion.p>
+
+        {/* ============ CTAs ============ */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.95 }}
+          className="mt-8 flex flex-col sm:flex-row items-center gap-3"
+        >
+          <button
+            onClick={() => scrollTo("features")}
+            className="min-h-[48px] px-6 rounded-full bg-white/18 hover:bg-white/35 backdrop-blur-md text-white border border-white/55 font-mono text-[11px] tracking-[0.14em] uppercase transition-all"
           >
-            <div className="flex items-center flex-1 w-full min-w-0 min-h-[48px]">
-              <div className="flex items-center pl-3 pr-1 text-[#0b1b3a] flex-shrink-0">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                  <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="rgba(11,27,58,0.12)" />
-                </svg>
-              </div>
+            View Demo
+          </button>
+          <button
+            onClick={() => handleJoinWishlist()}
+            disabled={isShimmering}
+            className="group min-h-[48px] pl-6 pr-2 rounded-full bg-[#bff02e] hover:bg-[#d4f85a] text-[#0b1b3a] font-mono text-[11px] tracking-[0.14em] uppercase font-semibold flex items-center gap-3 transition-all shadow-[0_18px_40px_-12px_rgba(140,200,10,0.65),inset_0_1px_0_rgba(255,255,255,0.6)] disabled:opacity-80"
+          >
+            <span>{isShimmering ? "Building…" : "Get Started"}</span>
+            <span className="w-9 h-9 rounded-full bg-[#0b1b3a] text-[#bff02e] flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+          </button>
+        </motion.div>
 
-              <div className="relative flex-1 min-w-0 flex items-center min-h-[48px] px-2 overflow-hidden">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  aria-label="Workflow request or idea"
-                  placeholder=""
-                  className="w-full min-w-0 bg-transparent text-[#0b1b3a] text-sm sm:text-[15px] outline-none pr-1 text-left"
-                />
-                {!inputValue && (
-                  <div className="absolute inset-0 pointer-events-none flex items-center px-2 overflow-hidden text-left">
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={placeholderIndex}
-                        initial={{ opacity: 0, y: 7 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -7 }}
-                        transition={{ duration: 0.3 }}
-                        className="text-[#0b1b3a]/60 text-[12.5px] sm:text-[14.5px] truncate"
-                      >
-                        {PLACEHOLDERS[placeholderIndex]}
-                      </motion.span>
-                    </AnimatePresence>
-                  </div>
-                )}
-              </div>
+        {/* Hidden command-bar surface so the wishlist pre-fill still works */}
+        <form onSubmit={handleJoinWishlist} className="sr-only">
+          <input
+            ref={inputRef}
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            aria-label="Workflow idea"
+          />
+          <button type="submit">submit</button>
+        </form>
 
-              <button
-                type="button"
-                onClick={handleMicClick}
-                className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center transition-all mr-1 ${
-                  micActive
-                    ? "bg-[#c8f43a] text-[#0b1b3a] ring-2 ring-white scale-105"
-                    : "text-[#0b1b3a]/70 hover:text-[#0b1b3a] hover:bg-white/60"
-                }`}
-                title="Voice workflow dictation (Jarvis Architect)"
-                aria-label="Voice input"
-              >
-                <span className={micActive ? "animate-pulse" : ""}>
-                  <Icon name="mic" size={17} />
-                </span>
-              </button>
-            </div>
-
-            <div className="w-full sm:w-auto mt-2 sm:mt-0 sm:pl-1">
-              <button
-                type="submit"
-                disabled={isShimmering}
-                className="b-btn-primary w-full sm:w-auto min-h-[48px] font-mono text-[11px] sm:text-xs uppercase tracking-wider disabled:opacity-80"
-              >
-                <span>{isShimmering ? "BUILDING WORKFLOW..." : "JOIN WISHLIST"}</span>
-                <span aria-hidden>↗</span>
-              </button>
-            </div>
-          </form>
-
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-            {SUGGESTION_CHIPS.map((chip) => (
-              <button
-                key={chip.label}
-                type="button"
-                onClick={() => handleChipClick(chip.text)}
-                className="font-mono text-[10px] sm:text-[10.5px] tracking-wider text-[#0b1b3a] px-3 py-1.5 rounded-full bg-white/45 hover:bg-white/80 border border-white/70 backdrop-blur-md hover:-translate-y-0.5 transition-all"
-              >
-                {chip.label}
-              </button>
+        {/* Social proof row */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.15, duration: 0.6 }}
+          className="mt-8 flex flex-col items-center gap-2"
+        >
+          <div className="flex items-center gap-1 text-[#bff02e]">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l2.95 6.78L22 10.27l-5 5.1 1.2 7.03L12 18.9l-6.2 3.5L7 15.37l-5-5.1 7.05-1.49L12 2z" />
+              </svg>
             ))}
           </div>
+          <p className="font-mono text-[10.5px] tracking-[0.14em] text-white/92">
+            Rated 4.9 / 5 · 4,900+ early-access agencies
+          </p>
         </motion.div>
+
+        {/* Rotating placeholder preview — small, below rating */}
+        <motion.button
+          onClick={handleMicClick}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.3, duration: 0.6 }}
+          className="mt-6 inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/15 hover:bg-white/30 border border-white/40 backdrop-blur-md transition-all"
+          aria-label="Voice-dictate a workflow idea"
+        >
+          <span className={`w-2 h-2 rounded-full ${micActive ? "bg-[#bff02e]" : "bg-white/90"}`} />
+          <span className="font-mono text-[10px] tracking-[0.1em] text-white/85">TRY:</span>
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={placeholderIndex}
+              initial={{ opacity: 0, y: 7 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -7 }}
+              transition={{ duration: 0.3 }}
+              className="text-[12px] text-white/95 max-w-[260px] truncate"
+            >
+              “{PLACEHOLDERS[placeholderIndex]}”
+            </motion.span>
+          </AnimatePresence>
+        </motion.button>
       </motion.div>
 
-      {/* ============ GLASS FEATURE FAN ============ */}
-      <motion.div
-        initial={{ opacity: 0, y: 80 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, delay: 1.3, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 w-full max-w-[1240px] mx-auto mt-10"
+      {/* ============================================================
+          FLOATING WORKFLOW CARDS (desktop — fan arrangement)
+         ============================================================ */}
+      <div
+        className="hidden lg:block absolute inset-0 pointer-events-none z-[2]"
+        aria-hidden="true"
       >
-        <Layer mx={mx} my={my} depth={0.6}>
-          <ul
-            className="flex gap-3 sm:gap-4 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:justify-center py-6 px-1 -mx-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            style={{ perspective: 1400 }}
+        <Layer mx={mx} my={my} depth={1.4} className="absolute left-[4%] top-[32%]">
+          <motion.div
+            animate={reducedMotion ? {} : { y: [0, -12, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transform: "rotate(-5deg)" }}
           >
-            {FEATURE_CARDS.map((c, i) => {
-              const off = i - mid;
-              return (
-                <li
-                  key={c.id}
-                  className="snap-center shrink-0 lg:shrink"
-                  style={{ transform: `rotateY(${off * -5}deg) translateY(${Math.abs(off) * 10}px)` }}
-                >
-                  <button
-                    onClick={() => goToFeature(c.id)}
-                    className="group w-[148px] sm:w-[158px] lg:w-[148px] xl:w-[160px] text-left rounded-[22px] p-4 bg-white/30 hover:bg-white/55 backdrop-blur-2xl border border-white/70 shadow-[0_20px_40px_-18px_rgba(8,50,140,0.45),inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-300 hover:-translate-y-2"
-                    aria-label={`View ${c.title}`}
-                  >
-                    <span className="flex items-center justify-between mb-5">
-                      <span className="w-10 h-10 rounded-xl bg-[#0b1b3a] text-[#d4f85a] flex items-center justify-center shadow-[0_8px_18px_-6px_rgba(11,27,58,0.6)] group-hover:bg-[#c8f43a] group-hover:text-[#0b1b3a] transition-colors">
-                        <Icon name={c.icon} size={19} />
-                      </span>
-                      <span className="font-mono text-[10px] text-[#0b1b3a]/50">0{i + 1}</span>
-                    </span>
-                    <span className="block text-[14px] font-medium text-[#0b1b3a] leading-tight">{c.title}</span>
-                    <span className="block mt-1 font-mono text-[10px] text-[#0b1b3a]/60 tracking-wide">{c.meta}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+            <CardNodeGraph />
+          </motion.div>
         </Layer>
-      </motion.div>
 
-      <p className="sr-only">Autonomous Workflows That Build, Verify, and Heal Themselves.</p>
+        <Layer mx={mx} my={my} depth={0.9} className="absolute right-[4%] top-[30%]">
+          <motion.div
+            animate={reducedMotion ? {} : { y: [0, 14, 0] }}
+            transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transform: "rotate(6deg)" }}
+          >
+            <CardSelfHeal />
+          </motion.div>
+        </Layer>
 
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#f2f8ff] pointer-events-none z-[5]" />
+        <Layer mx={mx} my={my} depth={1.9} className="absolute left-[9%] bottom-[24%]">
+          <motion.div
+            animate={reducedMotion ? {} : { y: [0, -10, 0] }}
+            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transform: "rotate(-3deg)" }}
+          >
+            <CardRouter />
+          </motion.div>
+        </Layer>
+
+        <Layer mx={mx} my={my} depth={1.1} className="absolute right-[7%] bottom-[22%]">
+          <motion.div
+            animate={reducedMotion ? {} : { y: [0, 12, 0] }}
+            transition={{ duration: 7.8, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transform: "rotate(4deg)" }}
+          >
+            <CardVault />
+          </motion.div>
+        </Layer>
+
+        <Layer mx={mx} my={my} depth={2.2} className="absolute left-[18%] top-[18%]">
+          <motion.div
+            animate={reducedMotion ? {} : { y: [0, -8, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transform: "rotate(-8deg)" }}
+          >
+            <CardTelegram />
+          </motion.div>
+        </Layer>
+
+        <Layer mx={mx} my={my} depth={1.6} className="absolute right-[18%] top-[16%]">
+          <motion.div
+            animate={reducedMotion ? {} : { y: [0, 10, 0] }}
+            transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
+            style={{ transform: "rotate(7deg)" }}
+          >
+            <CardPortal />
+          </motion.div>
+        </Layer>
+      </div>
+
+      {/* Mobile: compact row of three real cards below the CTAs */}
+      <div className="lg:hidden relative z-10 mt-10 flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="snap-center shrink-0"><CardNodeGraph /></div>
+        <div className="snap-center shrink-0"><CardSelfHeal /></div>
+        <div className="snap-center shrink-0"><CardRouter /></div>
+        <div className="snap-center shrink-0"><CardVault /></div>
+        <div className="snap-center shrink-0"><CardPortal /></div>
+      </div>
+
+      <p className="sr-only">Build Without Limits. Keep Your Data Locked.</p>
     </section>
   );
 }

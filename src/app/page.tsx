@@ -12,6 +12,7 @@ import WishlistSection from "@/components/WishlistSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import CursorAura from "@/components/CursorAura";
+import ContentGuard from "@/components/ContentGuard";
 
 export default function Home() {
   useEffect(() => {
@@ -36,6 +37,9 @@ export default function Home() {
 
       {/* Interactive cursor aura (desktop pointers only) */}
       <CursorAura />
+
+      {/* Site-wide content protection (disables copy / drag / devtools shortcuts) */}
+      <ContentGuard />
 
       {/* Sticky Navbar */}
       <Navbar />
