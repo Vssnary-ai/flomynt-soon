@@ -18,10 +18,10 @@ export default function ScrollProgress() {
         top: 0,
         left: 0,
         right: 0,
-        height: "2px",
-        background: "var(--accent)",
+        height: "3px",
+        background: "linear-gradient(90deg,#6d4cff,#2f8cff,#ff5fa8)",
         transformOrigin: "0%",
-        zIndex: 50,
+        zIndex: 70,
       }}
     />
   );

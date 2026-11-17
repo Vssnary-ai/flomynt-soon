@@ -62,3 +62,4 @@ export default function MarketplaceDemo({ isPowered = true }: { isPowered?: bool
     </div>
   );
 }
+

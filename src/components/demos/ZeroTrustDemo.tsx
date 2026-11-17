@@ -52,3 +52,4 @@ export default function ZeroTrustDemo({ isPowered = true }: { isPowered?: boolea
     </div>
   );
 }
+

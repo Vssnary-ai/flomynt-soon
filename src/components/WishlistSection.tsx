@@ -241,9 +241,12 @@ export default function WishlistSection() {
   return (
     <section
       id="wishlist"
-      className="relative w-full bg-[#050505] py-28 sm:py-32 px-6 sm:px-10 border-t border-white/[0.14]"
+      className="b-dark-panel relative w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-[1500px] mx-auto bg-[#07060f] rounded-[32px] sm:rounded-[56px] py-24 sm:py-32 px-5 sm:px-10 overflow-hidden shadow-[0_60px_140px_-40px_rgba(60,30,200,0.7)]"
     >
-      <div className="max-w-[1340px] mx-auto">
+      <div className="pointer-events-none absolute -top-40 left-1/4 w-[620px] h-[620px] rounded-full bg-[#6d4cff]/35 blur-[150px]" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-48 right-0 w-[560px] h-[560px] rounded-full bg-[#ff5fa8]/20 blur-[150px]" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-32 left-0 w-[420px] h-[420px] rounded-full bg-[#e9b45b]/15 blur-[130px]" aria-hidden="true" />
+      <div className="max-w-[1340px] mx-auto relative">
         {/* Section Header */}
         <div className="mb-14 sm:mb-20 text-center max-w-[720px] mx-auto">
           <SectionLabel text="WISHLIST" />

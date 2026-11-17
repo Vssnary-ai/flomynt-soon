@@ -92,3 +92,4 @@ export default function SmartRoutingDemo({ isPowered = true }: { isPowered?: boo
     </div>
   );
 }
+

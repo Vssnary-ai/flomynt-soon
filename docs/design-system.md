@@ -147,3 +147,4 @@ space-32: 128px
 - ❌ No touch targets smaller than 44px x 44px on mobile.
 - ❌ No flat black backgrounds with zero refraction (ensure ambient lighting blobs shine through glass).
 - ❌ No layout shift on card hovers.
+

@@ -11,6 +11,7 @@ import WhyFlomynt from "@/components/WhyFlomynt";
 import WishlistSection from "@/components/WishlistSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import CursorAura from "@/components/CursorAura";
 
 export default function Home() {
   useEffect(() => {
@@ -26,18 +27,21 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white selection:bg-[#e9b45b]/30 selection:text-white">
+    <div className="theme-bright relative min-h-screen overflow-x-clip selection:bg-[#6d4cff]/25 selection:text-[#14122b]">
       {/* Ambient background with aurora blobs, mouse spotlight, particles, dot grid & grain */}
       <AmbientBackground />
 
       {/* Top scroll progress indicator */}
       <ScrollProgress />
 
+      {/* Interactive cursor aura (desktop pointers only) */}
+      <CursorAura />
+
       {/* Sticky Navbar */}
       <Navbar />
 
       {/* Main Single Page Sections */}
-      <main>
+      <main className="relative z-10">
         {/* 1. Hero (#home) with giant ghosted wordmark and amber light beam */}
         <Hero />
 

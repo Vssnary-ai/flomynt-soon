@@ -321,3 +321,130 @@ textarea:-webkit-autofill {
     scroll-behavior: auto !important;
   }
 }
+
+/* =========================================================
+   BRIGHT THEME — "Aurora Day" (scoped to .theme-bright so the
+   private /admin portal keeps its dark look)
+   ========================================================= */
+.theme-bright {
+  --b-bg: #f6f5ff;
+  --b-ink: #14122b;
+  --b-ink-2: #4a4766;
+  --b-ink-3: #7b7899;
+  --b-violet: #6d4cff;
+  --b-blue: #2f8cff;
+  --b-pink: #ff5fa8;
+  --b-amber: #ffb340;
+  --b-mint: #2fd4b0;
+  --b-line: rgba(30, 20, 90, 0.10);
+  --b-glass: rgba(255, 255, 255, 0.62);
+  --b-glass-strong: rgba(255, 255, 255, 0.82);
+  --b-shadow: 0 10px 40px -12px rgba(80, 50, 200, 0.25), 0 2px 6px rgba(30, 20, 90, 0.05);
+  --b-grad: linear-gradient(120deg, #6d4cff 0%, #2f8cff 45%, #ff5fa8 100%);
+  background: var(--b-bg);
+  color: var(--b-ink);
+  /* remap the legacy tokens used by shared bits (SectionLabel, mono-label, pill-btn) */
+  --text: var(--b-ink);
+  --text-secondary: var(--b-ink-3);
+  --border: var(--b-line);
+  --accent: var(--b-violet);
+}
+html:has(.theme-bright) { background: #f6f5ff; color-scheme: light; }
+html:has(.theme-bright) ::-webkit-scrollbar-track { background: #f6f5ff; }
+html:has(.theme-bright) ::-webkit-scrollbar-thumb { background: rgba(109, 76, 255, 0.35); }
+
+.theme-bright .pill-btn { color: var(--b-ink); border-color: var(--b-line); }
+.theme-bright .pill-btn:hover { background: var(--b-ink); color: #fff; border-color: var(--b-ink); }
+
+.b-grad-text {
+  background: var(--b-grad);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: b-grad-shift 8s ease-in-out infinite;
+}
+.b-glass {
+  background: var(--b-glass);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: var(--b-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.b-card {
+  background: var(--b-glass-strong);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: var(--b-shadow), inset 0 1px 0 #fff;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
+}
+.b-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 70px -20px rgba(109, 76, 255, 0.38), 0 0 0 1px rgba(109, 76, 255, 0.2), inset 0 1px 0 #fff;
+}
+.b-btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px; border-radius: 9999px; font-weight: 500; font-size: 14px;
+  color: #fff; background: var(--b-grad); background-size: 200% 200%;
+  box-shadow: 0 10px 30px -8px rgba(109, 76, 255, 0.6), inset 0 1px 0 rgba(255,255,255,.35);
+  transition: transform .2s ease, box-shadow .2s ease, background-position .6s ease;
+  cursor: pointer; border: 0; text-decoration: none;
+}
+.b-btn-primary:hover { transform: translateY(-2px) scale(1.02); background-position: 100% 50%; box-shadow: 0 16px 40px -8px rgba(109,76,255,.7), inset 0 1px 0 rgba(255,255,255,.4); }
+.b-btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 22px; border-radius: 9999px; font-weight: 500; font-size: 14px;
+  color: var(--b-ink); background: rgba(255,255,255,.7); border: 1px solid var(--b-line);
+  backdrop-filter: blur(10px); transition: all .2s ease; cursor: pointer; text-decoration: none;
+}
+.b-btn-ghost:hover { background: #fff; transform: translateY(-2px); box-shadow: var(--b-shadow); }
+
+/* Dark "product window" used for live demos on the bright page */
+.b-screen {
+  position: relative; border-radius: 18px; overflow: hidden;
+  background: linear-gradient(160deg, #15122e 0%, #0b0a1c 100%);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 20px 50px -20px rgba(30, 10, 120, .55), inset 0 1px 0 rgba(255,255,255,.1);
+  color: #fff;
+}
+.b-screen::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(500px 200px at 20% -10%, rgba(109,76,255,.35), transparent 70%);
+}
+
+@keyframes b-grad-shift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes b-float-a { 0%,100% { transform: translate3d(0,0,0) rotate(-4deg); } 50% { transform: translate3d(0,-22px,0) rotate(3deg); } }
+@keyframes b-float-b { 0%,100% { transform: translate3d(0,0,0) rotate(5deg); } 50% { transform: translate3d(0,26px,0) rotate(-3deg); } }
+@keyframes b-float-c { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(14px,-16px,0); } }
+@keyframes b-orbit { to { transform: rotate(360deg); } }
+@keyframes b-pulse-ring { 0% { transform: scale(.8); opacity: .7; } 100% { transform: scale(2.2); opacity: 0; } }
+@keyframes b-marquee { to { transform: translateX(-50%); } }
+@keyframes b-wire-dash { to { stroke-dashoffset: -40; } }
+.b-float-a { animation: b-float-a 9s ease-in-out infinite; }
+.b-float-b { animation: b-float-b 11s ease-in-out infinite; }
+.b-float-c { animation: b-float-c 7s ease-in-out infinite; }
+
+.theme-bright {
+  --pill-ink: var(--b-ink);
+  --pill-line: rgba(30, 20, 90, 0.18);
+  --pill-hover-bg: var(--b-ink);
+  --pill-hover-ink: #ffffff;
+  --brand-ink: var(--b-ink);
+}
+/* Dark stage panel (wishlist) restores the original dark token set */
+.theme-bright .b-dark-panel {
+  --text: #ffffff; --text-secondary: #8a8a8a; --border: rgba(255,255,255,.14); --accent: #e9b45b;
+  --pill-ink: #ffffff; --pill-line: rgba(255,255,255,.14); --pill-hover-bg: #ffffff; --pill-hover-ink: #050505;
+  --brand-ink: #ffffff;
+  color: #fff;
+}
+
+.theme-bright .shimmer-active {
+  background: linear-gradient(90deg, rgba(109,76,255,.08) 0%, rgba(255,95,168,.28) 50%, rgba(109,76,255,.08) 100%);
+  background-size: 200% 100%;
+  animation: shimmer-bar 1.2s ease-in-out;
+}
+.theme-bright input:-webkit-autofill { -webkit-box-shadow: 0 0 0 50px #fff inset !important; -webkit-text-fill-color: #14122b !important; }
+.theme-bright .b-dark-panel input:-webkit-autofill { -webkit-box-shadow: 0 0 0 50px #0a0a0a inset !important; -webkit-text-fill-color: #fff !important; }

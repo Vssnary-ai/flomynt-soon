@@ -127,3 +127,4 @@ export default function SelfHealingDemo({ isPowered = true }: { isPowered?: bool
     </div>
   );
 }
+

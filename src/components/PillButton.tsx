@@ -20,17 +20,17 @@ const baseStyle: React.CSSProperties = {
   fontSize: "11px",
   letterSpacing: "0.08em",
   padding: "8px 20px",
-  border: "1px solid rgba(255,255,255,.14)",
+  border: "1px solid var(--pill-line, rgba(255,255,255,.14))",
   borderRadius: "9999px",
-  color: "#ffffff",
+  color: "var(--pill-ink, #ffffff)",
   cursor: "pointer",
   transition: "all 200ms",
   backgroundColor: "transparent",
 };
 
 const hoverStyle: React.CSSProperties = {
-  backgroundColor: "#ffffff",
-  color: "#050505",
+  backgroundColor: "var(--pill-hover-bg, #ffffff)",
+  color: "var(--pill-hover-ink, #050505)",
 };
 
 export default function PillButton({

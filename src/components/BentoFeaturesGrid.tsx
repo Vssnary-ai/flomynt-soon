@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import SectionLabel from "./SectionLabel";
+import Reveal from "./Reveal";
 import TalkToBuildDemo from "./demos/TalkToBuildDemo";
 import SelfHealingDemo from "./demos/SelfHealingDemo";
 import SmartRoutingDemo from "./demos/SmartRoutingDemo";
@@ -59,71 +60,70 @@ function BentoCard({
   };
 
   return (
+    <motion.div
+      initial={{ opacity: 0, y: 60, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className={colSpanDesktop}
+    >
     <div
       ref={cardRef}
       id={`bento-${id}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative rounded-2xl border transition-all duration-300 flex flex-col justify-between overflow-hidden p-6 sm:p-8 ${colSpanDesktop} ${
-        isHovered
-          ? "border-[#e9b45b]/50 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_24px_rgba(233,180,91,0.18)] -translate-y-1"
-          : "border-white/[0.12] bg-[#0c0c0e]/80 shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
-      }`}
-      style={{
-        backdropFilter: "blur(24px)",
-        WebkitBackdropFilter: "blur(24px)",
-      }}
+      className="group b-card relative h-full rounded-[28px] flex flex-col justify-between overflow-hidden p-5 sm:p-7"
     >
       {/* Dynamic Cursor Spotlight Effect */}
       {isHovered && (
         <div
-          className="pointer-events-none absolute -inset-px transition-opacity duration-300 rounded-2xl opacity-100"
+          className="pointer-events-none absolute -inset-px transition-opacity duration-300 rounded-[28px] opacity-100"
           style={{
-            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(233, 180, 91, 0.12), transparent 80%)`,
+            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(109, 76, 255, 0.13), transparent 80%)`,
           }}
         />
       )}
 
       {/* Top Specular Inner Hairline Highlight */}
-      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent" />
 
       {/* Card Content Top: Step Badge & Tag */}
       <div className="relative z-10 mb-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[11px] px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/[0.08] text-[#e9b45b] font-medium">
+            <span className="font-mono text-[11px] px-2 py-0.5 rounded-full bg-[#6d4cff]/10 border border-[#6d4cff]/20 text-[#6d4cff] font-medium">
               {stepNumber}
             </span>
-            <span className="font-mono text-[11px] text-[#e9b45b] tracking-wider uppercase">
+            <span className="font-mono text-[11px] text-[#14122b]/60 tracking-wider uppercase">
               [ {tag} ]
             </span>
           </div>
           {/* Wire connection node indicator */}
-          <div className="w-2.5 h-2.5 rounded-full border border-[#e9b45b]/50 bg-[#e9b45b]/20 flex items-center justify-center">
-            <div className="w-1 h-1 rounded-full bg-[#e9b45b] animate-ping" />
+          <div className="w-2.5 h-2.5 rounded-full border border-[#6d4cff]/50 bg-[#6d4cff]/20 flex items-center justify-center">
+            <div className="w-1 h-1 rounded-full bg-[#6d4cff] animate-ping" />
           </div>
         </div>
 
-        <h3 className="font-normal text-xl sm:text-2xl text-white tracking-[-0.02em] leading-snug mb-2">
+        <h3 className="font-normal text-xl sm:text-2xl text-[#14122b] tracking-[-0.02em] leading-snug mb-2">
           {title}
         </h3>
-        <p className="text-[#a8a8a8] text-sm sm:text-[15px] leading-relaxed line-clamp-3">
+        <p className="text-[#4a4766] text-sm sm:text-[15px] leading-relaxed line-clamp-3">
           {description}
         </p>
       </div>
 
       {/* Card Interactive Live Mini-Demo */}
-      <div className="relative z-10 my-4 flex-1 min-h-[170px] sm:min-h-[190px]">
-        {demoComponent}
+      <div className="relative z-10 my-4 flex-1 min-h-[170px] sm:min-h-[190px] b-screen p-2 sm:p-2.5">
+        <div className="relative h-full">{demoComponent}</div>
       </div>
 
       {/* Card Footer: 44px Min Height Action Pill Button */}
-      <div className="relative z-10 pt-4 mt-2 border-t border-white/[0.06] flex items-center justify-between">
+      <div className="relative z-10 pt-4 mt-2 border-t border-[#14122b]/[0.08] flex items-center justify-between">
         <button
           onClick={() => scrollToChapter(chapterId)}
           aria-label={`Explore details for ${title}`}
-          className="min-h-[44px] px-4 py-2 rounded-full border border-white/[0.14] hover:border-[#e9b45b] bg-white/[0.03] hover:bg-white text-white hover:text-black font-mono text-xs uppercase tracking-wider transition-all duration-200 flex items-center gap-2 group/btn cursor-pointer"
+          className="min-h-[44px] px-4 py-2 rounded-full border border-[#14122b]/[0.14] hover:border-transparent bg-white/70 hover:bg-[#14122b] text-[#14122b] hover:text-white font-mono text-xs uppercase tracking-wider transition-all duration-200 flex items-center gap-2 group/btn cursor-pointer"
         >
           <span>SEE HOW IT WORKS</span>
           <span className="transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">
@@ -131,11 +131,12 @@ function BentoCard({
           </span>
         </button>
 
-        <span className="font-mono text-[11px] text-white/30 hidden sm:inline-block">
+        <span className="font-mono text-[11px] text-[#14122b]/35 hidden sm:inline-block">
           Autonomous Node
         </span>
       </div>
     </div>
+    </motion.div>
   );
 }
 
@@ -167,49 +168,52 @@ export default function BentoFeaturesGrid() {
     <section
       id="features"
       ref={containerRef}
-      className="relative w-full bg-[#050505] py-24 sm:py-32 px-4 sm:px-8 lg:px-12 border-t border-white/[0.12] overflow-hidden"
+      className="relative w-full py-24 sm:py-32 px-4 sm:px-8 lg:px-12 overflow-hidden"
     >
       {/* Background Radial Glow */}
-      <div className="absolute top-1/4 -right-20 w-[550px] h-[550px] rounded-full bg-[#e9b45b]/[0.03] blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-20 w-[550px] h-[550px] rounded-full bg-[#e9b45b]/[0.02] blur-[140px] pointer-events-none" />
+      <motion.div
+        aria-hidden="true"
+        className="absolute left-1/2 -translate-x-1/2 top-[22%] w-[2px] h-[70%] origin-top pointer-events-none hidden opacity-40"
+        style={{ scaleY: smoothScroll, background: "linear-gradient(to bottom,#6d4cff,#2f8cff,#ff5fa8)", filter: "blur(1px)" }}
+      />
 
       <div className="max-w-[1360px] mx-auto relative">
         {/* Section Header */}
-        <div className="mb-14 sm:mb-20">
+        <Reveal className="mb-14 sm:mb-20">
           <SectionLabel text="FEATURES" />
-          <h2 className="mt-4 font-light text-3xl sm:text-5xl lg:text-6xl text-white tracking-[-0.03em] leading-[1.1] max-w-[920px]">
-            Autonomous systems built for modern agencies.
+          <h2 className="mt-4 font-light text-3xl sm:text-5xl lg:text-6xl text-[#14122b] tracking-[-0.035em] leading-[1.08] max-w-[920px]">
+            Autonomous systems built for <span className="b-grad-text">modern agencies.</span>
           </h2>
-          <p className="mt-4 text-[#a8a8a8] text-base sm:text-lg max-w-[680px] leading-relaxed">
+          <p className="mt-4 text-[#4a4766] text-base sm:text-lg max-w-[680px] leading-relaxed">
             Turn plain English into resilient workflows, white-label them into client apps, and let autonomous agents fix runtime errors before your clients even notice.
           </p>
 
           {/* Lifecycle sequence ribbon */}
-          <div className="mt-6 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-white/50">
-            <span className="text-[#e9b45b] font-medium flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#e9b45b] animate-pulse" />
+          <div className="mt-6 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-[#14122b]/45 px-4 py-2.5 rounded-full b-glass w-fit max-w-full">
+            <span className="text-[#6d4cff] font-medium flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#6d4cff] animate-pulse" />
               The Flomynt Wire:
             </span>
-            <span className="text-white/80">Talk-to-Build</span>
+            <span className="text-[#14122b]/80">Talk-to-Build</span>
             <span>→</span>
-            <span className="text-white/80">Sandbox</span>
+            <span className="text-[#14122b]/80">Sandbox</span>
             <span>→</span>
-            <span className="text-white/80">Routing</span>
+            <span className="text-[#14122b]/80">Routing</span>
             <span>→</span>
-            <span className="text-white/80">Self-Healing</span>
+            <span className="text-[#14122b]/80">Self-Healing</span>
             <span>→</span>
-            <span className="text-white/80">White-Label</span>
+            <span className="text-[#14122b]/80">White-Label</span>
             <span>→</span>
-            <span className="text-white/80">Zero-Trust</span>
+            <span className="text-[#14122b]/80">Zero-Trust</span>
             <span>→</span>
-            <span className="text-white/80">Marketplace</span>
+            <span className="text-[#14122b]/80">Marketplace</span>
           </div>
-        </div>
+        </Reveal>
 
         {/* Bento Grid Container */}
         <div className="relative">
           {/* Mobile Glowing Left Spine */}
-          <div className="lg:hidden absolute left-2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#e9b45b] via-white/20 to-[#e9b45b]/40 pointer-events-none shadow-[0_0_8px_#e9b45b]" />
+          <div className="lg:hidden absolute left-2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#6d4cff] via-[#2f8cff]/40 to-[#ff5fa8]/50 pointer-events-none shadow-[0_0_8px_#6d4cff]" />
 
           {/* 12-Column Responsive Bento Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6 pl-5 lg:pl-0">
@@ -309,3 +313,4 @@ export default function BentoFeaturesGrid() {
     </section>
   );
 }
+

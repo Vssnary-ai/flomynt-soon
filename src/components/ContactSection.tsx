@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import SectionLabel from "./SectionLabel";
+import Reveal from "./Reveal";
 
 export default function ContactSection() {
   const [name, setName] = useState("");
@@ -43,49 +44,49 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative w-full bg-[#050505] py-28 px-6 sm:px-10 border-t border-white/[0.14]"
+      className="relative w-full py-28 sm:py-36 px-5 sm:px-10"
     >
       <div className="max-w-[1340px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Context & Details */}
           <div className="lg:col-span-5">
             <SectionLabel text="CONTACT" />
-            <h2 className="mt-4 font-light text-3xl sm:text-5xl text-white tracking-[-0.03em] leading-tight">
-              Direct Engineering Inquiries
+            <h2 className="mt-4 font-light text-3xl sm:text-5xl text-[#14122b] tracking-[-0.035em] leading-[1.08]">
+              Direct <span className="b-grad-text">Engineering</span> Inquiries
             </h2>
-            <p className="mt-6 text-[#8a8a8a] text-sm sm:text-base leading-relaxed">
+            <p className="mt-6 text-[#4a4766] text-sm sm:text-base leading-relaxed">
               Have inquiries regarding custom enterprise enclaves, agency white-label licensing, or private AI infrastructure? Speak directly with our core engineering team.
             </p>
 
-            <div className="mt-10 space-y-6 border-t border-white/[0.08] pt-8 text-xs font-mono">
+            <div className="mt-10 space-y-6 border-t border-[#14122b]/10 pt-8 text-xs font-mono">
               <div>
-                <p className="text-white/40 uppercase mb-1">HEADQUARTERS</p>
-                <p className="text-white">San Francisco, CA · Remote First</p>
+                <p className="text-[#14122b]/45 uppercase mb-1">HEADQUARTERS</p>
+                <p className="text-[#14122b]">San Francisco, CA · Remote First</p>
               </div>
 
               <div>
-                <p className="text-white/40 uppercase mb-1">COMMUNICATION</p>
-                <p className="text-white">team@flomynt.com</p>
+                <p className="text-[#14122b]/45 uppercase mb-1">COMMUNICATION</p>
+                <p className="text-[#14122b]">team@flomynt.com</p>
               </div>
 
               <div>
-                <p className="text-white/40 uppercase mb-1">AVAILABILITY</p>
-                <p className="text-[#e9b45b]">Private Beta Wave 1 · Q2 2026</p>
+                <p className="text-[#14122b]/45 uppercase mb-1">AVAILABILITY</p>
+                <p className="text-[#6d4cff]">Private Beta Wave 1 · Q2 2026</p>
               </div>
             </div>
           </div>
 
           {/* Right Column: Hairline Glass Form */}
-          <div className="lg:col-span-7 glass-card rounded-2xl p-6 sm:p-10">
+          <Reveal className="lg:col-span-7 b-glass rounded-[32px] p-6 sm:p-10">
             {submitted ? (
               <div className="text-center py-12 space-y-4">
-                <div className="w-12 h-12 rounded-full border border-[#e9b45b] text-[#e9b45b] flex items-center justify-center mx-auto text-xl font-mono">
+                <div className="w-12 h-12 rounded-full border border-[#6d4cff] text-[#6d4cff] flex items-center justify-center mx-auto text-xl font-mono">
                   ✓
                 </div>
-                <h3 className="text-2xl font-light text-white">
+                <h3 className="text-2xl font-light text-[#14122b]">
                   Message Dispatched
                 </h3>
-                <p className="text-sm text-[#8a8a8a] max-w-[360px] mx-auto leading-relaxed">
+                <p className="text-sm text-[#4a4766] max-w-[360px] mx-auto leading-relaxed">
                   Thank you, {name}. Our engineering lead will respond to {email} within 24 hours.
                 </p>
                 <button
@@ -101,7 +102,7 @@ export default function ContactSection() {
                   <div>
                     <label
                       htmlFor="contact-name"
-                      className="block mono-label text-[10px] text-white/50 mb-2"
+                      className="block mono-label text-[10px] mb-2"
                     >
                       FULL NAME *
                     </label>
@@ -112,14 +113,14 @@ export default function ContactSection() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Jane Doe"
-                      className="w-full bg-black/60 border border-white/[0.14] focus:border-white/50 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors"
+                      className="w-full bg-white/70 border border-[#14122b]/[0.12] focus:border-[#6d4cff] focus:shadow-[0_0_0_4px_rgba(109,76,255,0.14)] rounded-xl px-4 py-3 text-sm text-[#14122b] placeholder:text-[#14122b]/30 outline-none transition-all"
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="contact-email"
-                      className="block mono-label text-[10px] text-white/50 mb-2"
+                      className="block mono-label text-[10px] mb-2"
                     >
                       WORK EMAIL *
                     </label>
@@ -130,7 +131,7 @@ export default function ContactSection() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="jane@agency.com"
-                      className="w-full bg-black/60 border border-white/[0.14] focus:border-white/50 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors"
+                      className="w-full bg-white/70 border border-[#14122b]/[0.12] focus:border-[#6d4cff] focus:shadow-[0_0_0_4px_rgba(109,76,255,0.14)] rounded-xl px-4 py-3 text-sm text-[#14122b] placeholder:text-[#14122b]/30 outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -138,7 +139,7 @@ export default function ContactSection() {
                 <div>
                   <label
                     htmlFor="contact-agency"
-                    className="block mono-label text-[10px] text-white/50 mb-2"
+                    className="block mono-label text-[10px] mb-2"
                   >
                     AGENCY OR ORGANIZATION
                   </label>
@@ -148,14 +149,14 @@ export default function ContactSection() {
                     value={agency}
                     onChange={(e) => setAgency(e.target.value)}
                     placeholder="Apex Automation Partners"
-                    className="w-full bg-black/60 border border-white/[0.14] focus:border-white/50 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors"
+                    className="w-full bg-white/70 border border-[#14122b]/[0.12] focus:border-[#6d4cff] focus:shadow-[0_0_0_4px_rgba(109,76,255,0.14)] rounded-xl px-4 py-3 text-sm text-[#14122b] placeholder:text-[#14122b]/30 outline-none transition-all"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="contact-message"
-                    className="block mono-label text-[10px] text-white/50 mb-2"
+                    className="block mono-label text-[10px] mb-2"
                   >
                     MESSAGE OR WORKFLOW SPEC *
                   </label>
@@ -166,7 +167,7 @@ export default function ContactSection() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Tell us about the workflows you're building, clients you serve, or specific integration requirements..."
-                    className="w-full bg-black/60 border border-white/[0.14] focus:border-white/50 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 outline-none transition-colors resize-none"
+                    className="w-full bg-white/70 border border-[#14122b]/[0.12] focus:border-[#6d4cff] focus:shadow-[0_0_0_4px_rgba(109,76,255,0.14)] rounded-xl px-4 py-3 text-sm text-[#14122b] placeholder:text-[#14122b]/30 outline-none transition-all resize-none"
                   />
                 </div>
 
@@ -174,14 +175,14 @@ export default function ContactSection() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full sm:w-auto pill-btn py-3 px-8 text-xs font-semibold hover:bg-white hover:text-black transition-all"
+                    className="w-full sm:w-auto b-btn-primary font-mono uppercase tracking-wider !text-xs disabled:opacity-70"
                   >
                     {loading ? "TRANSMITTING..." : "TRANSMIT INQUIRY ↗"}
                   </button>
                 </div>
               </form>
             )}
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

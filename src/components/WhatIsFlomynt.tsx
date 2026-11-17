@@ -3,6 +3,8 @@
 import React from "react";
 import SectionLabel from "./SectionLabel";
 import PillButton from "./PillButton";
+import Reveal from "./Reveal";
+import { motion, useScroll, useSpring } from "framer-motion";
 import {
   PrivacyDemo,
   WhiteLabelDemo,
@@ -89,6 +91,9 @@ const CHAPTERS: Chapter[] = [
 ];
 
 export default function WhatIsFlomynt() {
+  const timelineRef = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: timelineRef, offset: ["start 70%", "end 60%"] });
+  const lineScale = useSpring(scrollYProgress, { stiffness: 90, damping: 28 });
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -97,17 +102,17 @@ export default function WhatIsFlomynt() {
   return (
     <section
       id="what"
-      className="relative w-full bg-[#050505] py-28 px-6 sm:px-10 border-t border-white/[0.14]"
+      className="relative w-full py-28 sm:py-36 px-5 sm:px-10"
     >
       <div className="max-w-[1340px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Sticky Summary Panel */}
           <div className="lg:col-span-5 lg:sticky lg:top-28">
             <SectionLabel text="WHAT IS FLOMYNT" />
-            <h2 className="mt-4 font-light text-3xl sm:text-4xl lg:text-5xl text-white tracking-[-0.03em] leading-tight">
+            <h2 className="mt-4 font-light text-3xl sm:text-4xl lg:text-5xl text-[#14122b] tracking-[-0.035em] leading-[1.08]">
               Autonomous Workflows That Build, Verify, and Heal Themselves.
             </h2>
-            <p className="mt-6 text-[#8a8a8a] text-sm sm:text-base leading-relaxed">
+            <p className="mt-6 text-[#4a4766] text-sm sm:text-base leading-relaxed">
               The AI-native automation platform built for modern agencies. Turn plain English into resilient workflows, white-label them into client apps, and let autonomous agents fix runtime errors before your clients even notice.
             </p>
 
@@ -122,8 +127,8 @@ export default function WhatIsFlomynt() {
             </div>
 
             {/* Quick Chapter Navigation */}
-            <div className="mt-12 hidden lg:block border-t border-white/[0.08] pt-6">
-              <p className="mono-label text-[10px] text-white/40 mb-3">
+            <div className="mt-12 hidden lg:block b-glass rounded-3xl p-6">
+              <p className="mono-label text-[10px] mb-3">
                 CHAPTER DIRECTORY
               </p>
               <div className="space-y-1.5">
@@ -134,9 +139,9 @@ export default function WhatIsFlomynt() {
                       const el = document.getElementById(`chapter-${ch.id}`);
                       if (el) el.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="w-full text-left font-mono text-[11px] text-[#8a8a8a] hover:text-white transition-colors flex items-center gap-2 py-1"
+                    className="w-full text-left font-mono text-[11px] text-[#4a4766] hover:text-[#6d4cff] hover:translate-x-1 transition-all flex items-center gap-2 py-1"
                   >
-                    <span className="text-white/30">{ch.number}</span>
+                    <span className="text-[#6d4cff]/60">{ch.number}</span>
                     <span className="truncate">{ch.title}</span>
                   </button>
                 ))}
@@ -147,42 +152,45 @@ export default function WhatIsFlomynt() {
           {/* Right Column: Scrolling Chapters Timeline */}
           <div className="lg:col-span-7 space-y-16 relative">
             {/* Timeline Vertical Track */}
-            <div className="absolute left-0 top-4 bottom-4 w-px bg-white/[0.08] hidden sm:block" />
+            <div ref={timelineRef} className="absolute left-0 top-4 bottom-4 w-[2px] bg-[#14122b]/[0.08] hidden sm:block rounded-full overflow-hidden">
+              <motion.div className="w-full h-full origin-top" style={{ scaleY: lineScale, background: "linear-gradient(to bottom,#6d4cff,#2f8cff,#ff5fa8)" }} />
+            </div>
 
             {CHAPTERS.map((ch) => {
               const DemoComponent = ch.demo;
               return (
-                <div
+                <Reveal
                   key={ch.id}
-                  id={`chapter-${ch.id}`}
                   className="relative sm:pl-8 group"
                 >
+                <div id={`chapter-${ch.id}`} className="scroll-mt-28">
                   {/* Timeline Node Dot */}
-                  <div className="absolute -left-[4px] top-2 w-[9px] height-[9px] rounded-full bg-[#050505] border border-white/[0.3] group-hover:border-[#e9b45b] transition-colors hidden sm:block" />
+                  <div className="absolute -left-[6px] top-2 w-[14px] h-[14px] rounded-full bg-white border-2 border-[#6d4cff]/40 group-hover:border-[#6d4cff] group-hover:shadow-[0_0_0_6px_rgba(109,76,255,0.15)] transition-all hidden sm:block" />
 
                   {/* Header Row */}
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="mono-label text-[#e9b45b] text-[10px]">
+                    <span className="mono-label !text-[#6d4cff] text-[10px]">
                       {ch.number} // {ch.tag}
                     </span>
                   </div>
 
-                  <h3 className="font-light text-2xl sm:text-3xl text-white tracking-[-0.02em] leading-snug">
+                  <h3 className="font-light text-2xl sm:text-3xl text-[#14122b] tracking-[-0.025em] leading-snug">
                     {ch.title}
                   </h3>
 
-                  <p className="mt-3 text-[#8a8a8a] text-sm leading-relaxed mb-6">
+                  <p className="mt-3 text-[#4a4766] text-sm leading-relaxed mb-6">
                     {ch.description}
                   </p>
 
                   {/* Interactive Visual Mini-Demo */}
-                  <div className="mb-8">
-                    <DemoComponent />
+                  <div className="mb-8 b-screen p-1.5 sm:p-2">
+                    <div className="relative"><DemoComponent /></div>
                   </div>
 
                   {/* Hairline chapter divider */}
-                  <div className="w-full h-px bg-white/[0.08]" />
+                  <div className="w-full h-px bg-gradient-to-r from-[#6d4cff]/25 via-[#14122b]/10 to-transparent" />
                 </div>
+                </Reveal>
               );
             })}
           </div>

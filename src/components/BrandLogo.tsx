@@ -30,7 +30,7 @@ export default function BrandLogo({
       </div>
 
       {showText && (
-        <span className="font-light tracking-[-0.03em] text-[19px] text-white">
+        <span className="font-light tracking-[-0.03em] text-[19px]" style={{ color: "var(--brand-ink, #ffffff)" }}>
           Flomynt
         </span>
       )}

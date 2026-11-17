@@ -89,3 +89,4 @@ export default function WhiteLabelDemo({ isPowered = true }: { isPowered?: boole
     </div>
   );
 }
+
