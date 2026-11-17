@@ -50,12 +50,14 @@ function BentoCard({
   };
 
   const scrollToChapter = (targetId: string) => {
+    // chapterId pointed at the (removed) WhatIsFlomynt timeline; fall back to the
+    // card's own bento tile so SEE HOW IT WORKS still has an anchor.
     const el = document.getElementById(targetId);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     } else {
-      const whatEl = document.getElementById("what");
-      if (whatEl) whatEl.scrollIntoView({ behavior: "smooth" });
+      const wishlistEl = document.getElementById("wishlist");
+      if (wishlistEl) wishlistEl.scrollIntoView({ behavior: "smooth" });
     }
   };
 

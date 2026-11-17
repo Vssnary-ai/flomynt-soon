@@ -7,7 +7,6 @@ import BrandLogo from "./BrandLogo";
 const NAV_LINKS = [
   { name: "HOME", href: "#home" },
   { name: "FEATURES", href: "#features" },
-  { name: "WHAT IS FLOMYNT", href: "#what" },
   { name: "WHY FLOMYNT", href: "#why" },
   { name: "WISHLIST", href: "#wishlist" },
 ];
@@ -21,7 +20,7 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
 
-      const sectionIds = ["home", "features", "what", "why", "wishlist", "contact"];
+      const sectionIds = ["home", "features", "why", "wishlist", "contact"];
       const scrollPosition = window.scrollY + 200;
 
       for (let i = sectionIds.length - 1; i >= 0; i--) {

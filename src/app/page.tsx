@@ -6,7 +6,6 @@ import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import FeaturesGrid from "@/components/FeaturesGrid";
-import WhatIsFlomynt from "@/components/WhatIsFlomynt";
 import WhyFlomynt from "@/components/WhyFlomynt";
 import WishlistSection from "@/components/WishlistSection";
 import ContactSection from "@/components/ContactSection";
@@ -49,13 +48,11 @@ export default function Home() {
         {/* 1. Hero (#home) with giant ghosted wordmark and amber light beam */}
         <Hero />
 
-        {/* 2. Features Grid (#features) with 7 cards & wireframe SVGs */}
+        {/* 2. Features (#features) — bento grid with live demos. This is the single
+             source of truth for feature storytelling; the earlier timeline duplicated it. */}
         <FeaturesGrid />
 
-        {/* 3. What Is Flomynt (#what) sticky left & timeline with 7 chapters */}
-        <WhatIsFlomynt />
-
-        {/* 4. Why Flomynt (#why) legacy vs autonomous comparison table */}
+        {/* 3. Why Flomynt (#why) legacy vs autonomous comparison */}
         <WhyFlomynt />
 
         {/* 5. Wishlist Section (#wishlist) with 16:10 carousel & signup form */}
