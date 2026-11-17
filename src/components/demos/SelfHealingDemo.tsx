@@ -33,7 +33,7 @@ export default function SelfHealingDemo({ isPowered = true }: { isPowered?: bool
                 ? "bg-emerald-400"
                 : status === "broken"
                 ? "bg-red-400 animate-ping"
-                : "bg-[#e9b45b] animate-spin"
+                : "bg-[#bff02e] animate-spin"
             }`}
           />
           <span className="font-mono text-[11px] text-white/80 uppercase tracking-wider font-medium">
@@ -47,7 +47,7 @@ export default function SelfHealingDemo({ isPowered = true }: { isPowered?: bool
         <button
           onClick={simulateIncident}
           aria-label="Simulate runtime failure"
-          className="px-2.5 py-1 rounded-full font-mono text-[10px] text-[#e9b45b] border border-[#e9b45b]/40 bg-[#e9b45b]/10 hover:bg-[#e9b45b]/20 transition-all flex items-center gap-1 cursor-pointer active:scale-95"
+          className="px-2.5 py-1 rounded-full font-mono text-[10px] text-[#bff02e] border border-[#bff02e]/40 bg-[#bff02e]/10 hover:bg-[#bff02e]/20 transition-all flex items-center gap-1 cursor-pointer active:scale-95"
         >
           <span>Simulate Error</span>
           <span className="text-xs">⚡</span>
@@ -89,10 +89,10 @@ export default function SelfHealingDemo({ isPowered = true }: { isPowered?: bool
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-xs text-[#e9b45b] font-mono space-y-1"
+                className="text-xs text-[#bff02e] font-mono space-y-1"
               >
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 border-2 border-[#e9b45b] border-t-transparent rounded-full animate-spin" />
+                  <div className="w-3 h-3 border-2 border-[#bff02e] border-t-transparent rounded-full animate-spin" />
                   <span>Replaying payload with Claude 3.5 Sonnet</span>
                 </div>
                 <div className="text-[11px] text-white/50">Synthetic validation: 100% test passed</div>
@@ -108,7 +108,7 @@ export default function SelfHealingDemo({ isPowered = true }: { isPowered?: bool
                   <span className="text-emerald-400 flex items-center gap-1.5">
                     <span>✓</span> Automated Failover Verified
                   </span>
-                  <span className="text-[#e9b45b] text-[10px]">{healTime}ms resolve</span>
+                  <span className="text-[#bff02e] text-[10px]">{healTime}ms resolve</span>
                 </div>
                 <div className="text-[11px] text-white/50 truncate">
                   Prompt payload re-routed with zero client impact.

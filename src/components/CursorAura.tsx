@@ -49,14 +49,14 @@ export default function CursorAura() {
         className="absolute top-0 left-0 w-[520px] h-[520px] rounded-full will-change-transform"
         style={{
           background:
-            "radial-gradient(circle, rgba(109,76,255,0.16) 0%, rgba(255,95,168,0.08) 40%, transparent 70%)",
+            "radial-gradient(circle, rgba(31,111,235,0.16) 0%, rgba(24,198,180,0.08) 40%, transparent 70%)",
           mixBlendMode: "multiply",
         }}
       />
       <div
         ref={ring}
         className="absolute top-0 left-0 w-8 h-8 rounded-full will-change-transform transition-[opacity] duration-200"
-        style={{ border: "1.5px solid rgba(109,76,255,0.7)", boxShadow: "0 0 18px rgba(109,76,255,0.35)" }}
+        style={{ border: "1.5px solid rgba(31,111,235,0.7)", boxShadow: "0 0 18px rgba(31,111,235,0.35)" }}
       />
     </div>
   );

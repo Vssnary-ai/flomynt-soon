@@ -31,7 +31,7 @@ export default function ZeroTrustDemo({ isPowered = true }: { isPowered?: boolea
             className="p-2 rounded bg-white/[0.02] border border-white/[0.05] flex items-center justify-between font-mono text-[10px]"
           >
             <div className="flex items-center gap-2 truncate">
-              <span className="text-[#e9b45b] shrink-0">{item.hash}</span>
+              <span className="text-[#bff02e] shrink-0">{item.hash}</span>
               <span className="text-white/70 truncate">{item.action}</span>
             </div>
             <span className="text-[9px] text-white/30 shrink-0 ml-2">{item.time}</span>
@@ -41,7 +41,7 @@ export default function ZeroTrustDemo({ isPowered = true }: { isPowered?: boolea
 
       {/* Key & Security Badges */}
       <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between font-mono text-[9px] text-white/40">
-        <span className="flex items-center gap-1 text-[#e9b45b]">
+        <span className="flex items-center gap-1 text-[#bff02e]">
           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
           </svg>

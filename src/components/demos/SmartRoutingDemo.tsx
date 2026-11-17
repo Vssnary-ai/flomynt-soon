@@ -53,7 +53,7 @@ export default function SmartRoutingDemo({ isPowered = true }: { isPowered?: boo
               }}
               className={`px-2 py-0.5 rounded text-[10px] font-mono capitalize transition-all cursor-pointer ${
                 activeTier === tier
-                  ? "bg-[#e9b45b] text-black font-semibold shadow-[0_0_10px_rgba(233,180,91,0.3)]"
+                  ? "bg-[#bff02e] text-black font-semibold shadow-[0_0_10px_rgba(191,240,46,0.3)]"
                   : "text-white/60 hover:text-white"
               }`}
             >
@@ -66,7 +66,7 @@ export default function SmartRoutingDemo({ isPowered = true }: { isPowered?: boo
       {/* Active Route Highlight Box */}
       <div className="my-3 p-3 rounded-lg bg-white/[0.03] border border-white/[0.08]">
         <div className="flex items-center justify-between mb-1.5">
-          <span className="font-mono text-xs text-[#e9b45b] font-medium truncate">
+          <span className="font-mono text-xs text-[#bff02e] font-medium truncate">
             {current.name}
           </span>
           <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
@@ -79,11 +79,11 @@ export default function SmartRoutingDemo({ isPowered = true }: { isPowered?: boo
 
       {/* 5 Provider status indicators */}
       <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between font-mono text-[9px] text-white/40">
-        <span className={activeTier === "speed" ? "text-[#e9b45b]" : ""}>Groq</span>
+        <span className={activeTier === "speed" ? "text-[#bff02e]" : ""}>Groq</span>
         <span>•</span>
-        <span className={activeTier === "accuracy" ? "text-[#e9b45b]" : ""}>Anthropic</span>
+        <span className={activeTier === "accuracy" ? "text-[#bff02e]" : ""}>Anthropic</span>
         <span>•</span>
-        <span className={activeTier === "cost" ? "text-[#e9b45b]" : ""}>Gemini</span>
+        <span className={activeTier === "cost" ? "text-[#bff02e]" : ""}>Gemini</span>
         <span>•</span>
         <span>OpenAI</span>
         <span>•</span>

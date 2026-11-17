@@ -51,27 +51,27 @@ export default function ContactSection() {
           {/* Left Column: Context & Details */}
           <div className="lg:col-span-5">
             <SectionLabel text="CONTACT" />
-            <h2 className="mt-4 font-light text-3xl sm:text-5xl text-[#14122b] tracking-[-0.035em] leading-[1.08]">
+            <h2 className="mt-4 font-light text-3xl sm:text-5xl text-[#0b1b3a] tracking-[-0.035em] leading-[1.08]">
               Direct <span className="b-grad-text">Engineering</span> Inquiries
             </h2>
-            <p className="mt-6 text-[#4a4766] text-sm sm:text-base leading-relaxed">
+            <p className="mt-6 text-[#3d4f6b] text-sm sm:text-base leading-relaxed">
               Have inquiries regarding custom enterprise enclaves, agency white-label licensing, or private AI infrastructure? Speak directly with our core engineering team.
             </p>
 
-            <div className="mt-10 space-y-6 border-t border-[#14122b]/10 pt-8 text-xs font-mono">
+            <div className="mt-10 space-y-6 border-t border-[#0b1b3a]/10 pt-8 text-xs font-mono">
               <div>
-                <p className="text-[#14122b]/45 uppercase mb-1">HEADQUARTERS</p>
-                <p className="text-[#14122b]">San Francisco, CA · Remote First</p>
+                <p className="text-[#0b1b3a]/45 uppercase mb-1">HEADQUARTERS</p>
+                <p className="text-[#0b1b3a]">San Francisco, CA · Remote First</p>
               </div>
 
               <div>
-                <p className="text-[#14122b]/45 uppercase mb-1">COMMUNICATION</p>
-                <p className="text-[#14122b]">team@flomynt.com</p>
+                <p className="text-[#0b1b3a]/45 uppercase mb-1">COMMUNICATION</p>
+                <p className="text-[#0b1b3a]">team@flomynt.com</p>
               </div>
 
               <div>
-                <p className="text-[#14122b]/45 uppercase mb-1">AVAILABILITY</p>
-                <p className="text-[#6d4cff]">Private Beta Wave 1 · Q2 2026</p>
+                <p className="text-[#0b1b3a]/45 uppercase mb-1">AVAILABILITY</p>
+                <p className="text-[#1f6feb]">Private Beta Wave 1 · Q2 2026</p>
               </div>
             </div>
           </div>
@@ -80,13 +80,13 @@ export default function ContactSection() {
           <Reveal className="lg:col-span-7 b-glass rounded-[32px] p-6 sm:p-10">
             {submitted ? (
               <div className="text-center py-12 space-y-4">
-                <div className="w-12 h-12 rounded-full border border-[#6d4cff] text-[#6d4cff] flex items-center justify-center mx-auto text-xl font-mono">
+                <div className="w-12 h-12 rounded-full border border-[#1f6feb] text-[#1f6feb] flex items-center justify-center mx-auto text-xl font-mono">
                   ✓
                 </div>
-                <h3 className="text-2xl font-light text-[#14122b]">
+                <h3 className="text-2xl font-light text-[#0b1b3a]">
                   Message Dispatched
                 </h3>
-                <p className="text-sm text-[#4a4766] max-w-[360px] mx-auto leading-relaxed">
+                <p className="text-sm text-[#3d4f6b] max-w-[360px] mx-auto leading-relaxed">
                   Thank you, {name}. Our engineering lead will respond to {email} within 24 hours.
                 </p>
                 <button
@@ -113,7 +113,7 @@ export default function ContactSection() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Jane Doe"
-                      className="w-full bg-white/70 border border-[#14122b]/[0.12] focus:border-[#6d4cff] focus:shadow-[0_0_0_4px_rgba(109,76,255,0.14)] rounded-xl px-4 py-3 text-sm text-[#14122b] placeholder:text-[#14122b]/30 outline-none transition-all"
+                      className="w-full bg-white/70 border border-[#0b1b3a]/[0.12] focus:border-[#1f6feb] focus:shadow-[0_0_0_4px_rgba(31,111,235,0.14)] rounded-xl px-4 py-3 text-sm text-[#0b1b3a] placeholder:text-[#0b1b3a]/30 outline-none transition-all"
                     />
                   </div>
 
@@ -131,7 +131,7 @@ export default function ContactSection() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="jane@agency.com"
-                      className="w-full bg-white/70 border border-[#14122b]/[0.12] focus:border-[#6d4cff] focus:shadow-[0_0_0_4px_rgba(109,76,255,0.14)] rounded-xl px-4 py-3 text-sm text-[#14122b] placeholder:text-[#14122b]/30 outline-none transition-all"
+                      className="w-full bg-white/70 border border-[#0b1b3a]/[0.12] focus:border-[#1f6feb] focus:shadow-[0_0_0_4px_rgba(31,111,235,0.14)] rounded-xl px-4 py-3 text-sm text-[#0b1b3a] placeholder:text-[#0b1b3a]/30 outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export default function ContactSection() {
                     value={agency}
                     onChange={(e) => setAgency(e.target.value)}
                     placeholder="Apex Automation Partners"
-                    className="w-full bg-white/70 border border-[#14122b]/[0.12] focus:border-[#6d4cff] focus:shadow-[0_0_0_4px_rgba(109,76,255,0.14)] rounded-xl px-4 py-3 text-sm text-[#14122b] placeholder:text-[#14122b]/30 outline-none transition-all"
+                    className="w-full bg-white/70 border border-[#0b1b3a]/[0.12] focus:border-[#1f6feb] focus:shadow-[0_0_0_4px_rgba(31,111,235,0.14)] rounded-xl px-4 py-3 text-sm text-[#0b1b3a] placeholder:text-[#0b1b3a]/30 outline-none transition-all"
                   />
                 </div>
 
@@ -167,7 +167,7 @@ export default function ContactSection() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Tell us about the workflows you're building, clients you serve, or specific integration requirements..."
-                    className="w-full bg-white/70 border border-[#14122b]/[0.12] focus:border-[#6d4cff] focus:shadow-[0_0_0_4px_rgba(109,76,255,0.14)] rounded-xl px-4 py-3 text-sm text-[#14122b] placeholder:text-[#14122b]/30 outline-none transition-all resize-none"
+                    className="w-full bg-white/70 border border-[#0b1b3a]/[0.12] focus:border-[#1f6feb] focus:shadow-[0_0_0_4px_rgba(31,111,235,0.14)] rounded-xl px-4 py-3 text-sm text-[#0b1b3a] placeholder:text-[#0b1b3a]/30 outline-none transition-all resize-none"
                   />
                 </div>
 

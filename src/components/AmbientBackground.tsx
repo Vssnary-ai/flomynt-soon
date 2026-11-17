@@ -30,7 +30,7 @@ export default function AmbientBackground() {
       <div
         className="absolute inset-0 opacity-[0.5]"
         style={{
-          backgroundImage: "radial-gradient(circle, rgba(109,76,255,0.22) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, rgba(31,111,235,0.22) 1px, transparent 1px)",
           backgroundSize: "30px 30px",
           maskImage: "radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%)",
           WebkitMaskImage: "radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%)",
@@ -40,15 +40,15 @@ export default function AmbientBackground() {
         <>
           <motion.div
             style={{ y: y1, filter }}
-            className="absolute -top-[10%] -left-[10%] w-[55vw] max-w-[760px] aspect-square rounded-full bg-[#b9a6ff]/60"
+            className="absolute -top-[10%] -left-[10%] w-[55vw] max-w-[760px] aspect-square rounded-full bg-[#a9d1ff]/60"
           />
           <motion.div
             style={{ y: y2, filter }}
-            className="absolute top-[40%] -right-[12%] w-[50vw] max-w-[700px] aspect-square rounded-full bg-[#ffc6a0]/55"
+            className="absolute top-[40%] -right-[12%] w-[50vw] max-w-[700px] aspect-square rounded-full bg-[#d6ebff]/55"
           />
           <motion.div
             style={{ y: y3, filter }}
-            className="absolute top-[85%] left-[20%] w-[55vw] max-w-[760px] aspect-square rounded-full bg-[#9fd8ff]/55"
+            className="absolute top-[85%] left-[20%] w-[55vw] max-w-[760px] aspect-square rounded-full bg-[#bfe6ff]/55"
           />
         </>
       )}

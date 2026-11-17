@@ -27,7 +27,7 @@ export default function MarketplaceDemo({ isPowered = true }: { isPowered?: bool
           aria-label="Toggle template publishing"
           className={`px-2.5 py-1 rounded-full font-mono text-[10px] transition-all cursor-pointer ${
             isPublished
-              ? "bg-[#e9b45b] text-black font-semibold shadow-[0_0_12px_rgba(233,180,91,0.3)]"
+              ? "bg-[#bff02e] text-black font-semibold shadow-[0_0_12px_rgba(191,240,46,0.3)]"
               : "bg-white/[0.08] text-white/70 hover:text-white"
           }`}
         >
@@ -39,13 +39,13 @@ export default function MarketplaceDemo({ isPowered = true }: { isPowered?: bool
       <div className="my-3 p-3.5 rounded-lg bg-white/[0.03] border border-white/[0.08]">
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs font-medium text-white">Client Onboarding &amp; Stripe Billing</span>
-          <span className="font-mono text-[10px] text-[#e9b45b] font-semibold">$35/mo</span>
+          <span className="font-mono text-[10px] text-[#bff02e] font-semibold">$35/mo</span>
         </div>
 
         {/* Security Auto-Redaction Feature */}
         <div className="p-2 rounded bg-black/50 border border-white/[0.06] flex items-center justify-between font-mono text-[10px]">
           <span className="text-white/40">Private Stripe Secret:</span>
-          <span className="px-2 py-0.5 rounded bg-amber-500/10 text-[#e9b45b] border border-amber-500/20 flex items-center gap-1">
+          <span className="px-2 py-0.5 rounded bg-amber-500/10 text-[#bff02e] border border-amber-500/20 flex items-center gap-1">
             <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
@@ -57,7 +57,7 @@ export default function MarketplaceDemo({ isPowered = true }: { isPowered?: bool
       {/* Footer Metrics */}
       <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between font-mono text-[10px] text-white/40">
         <span>{clones} Agency Clones</span>
-        <span className="text-[#e9b45b] font-medium">$4,480 Recurring Revenue</span>
+        <span className="text-[#bff02e] font-medium">$4,480 Recurring Revenue</span>
       </div>
     </div>
   );

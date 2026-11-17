@@ -27,7 +27,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="theme-bright relative min-h-screen overflow-x-clip selection:bg-[#6d4cff]/25 selection:text-[#14122b]">
+    <div className="theme-bright relative min-h-screen overflow-x-clip selection:bg-[#1f6feb]/25 selection:text-[#0b1b3a]">
       {/* Ambient background with aurora blobs, mouse spotlight, particles, dot grid & grain */}
       <AmbientBackground />
 

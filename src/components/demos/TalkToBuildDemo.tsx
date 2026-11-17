@@ -53,8 +53,8 @@ export default function TalkToBuildDemo({ isPowered = true }: { isPowered?: bool
       {/* Top Bar: Live Waveform & Status */}
       <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-[#e9b45b] animate-pulse" />
-          <span className="font-mono text-[11px] text-[#e9b45b] tracking-wider uppercase font-medium">
+          <div className="w-2 h-2 rounded-full bg-[#bff02e] animate-pulse" />
+          <span className="font-mono text-[11px] text-[#bff02e] tracking-wider uppercase font-medium">
             AI Architect Active
           </span>
         </div>
@@ -64,7 +64,7 @@ export default function TalkToBuildDemo({ isPowered = true }: { isPowered?: bool
           {[40, 80, 50, 100, 65, 90, 45].map((h, i) => (
             <motion.div
               key={i}
-              className="w-[3px] bg-[#e9b45b] rounded-full"
+              className="w-[3px] bg-[#bff02e] rounded-full"
               animate={isPowered ? { height: [`${h * 0.3}%`, `${h}%`, `${h * 0.4}%`] } : { height: "20%" }}
               transition={{ repeat: Infinity, duration: 0.8 + i * 0.1, ease: "easeInOut" }}
             />
@@ -75,12 +75,12 @@ export default function TalkToBuildDemo({ isPowered = true }: { isPowered?: bool
       {/* Voice / Text Prompt Input */}
       <div className="my-3 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 overflow-hidden flex-1">
-          <svg className="w-4 h-4 text-[#e9b45b] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-4 h-4 text-[#bff02e] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
           </svg>
           <p className="font-mono text-xs text-white/90 truncate">
             {displayedText}
-            {isTyping && <span className="inline-block w-1.5 h-3.5 bg-[#e9b45b] ml-1 animate-pulse" />}
+            {isTyping && <span className="inline-block w-1.5 h-3.5 bg-[#bff02e] ml-1 animate-pulse" />}
           </p>
         </div>
         <button
@@ -99,10 +99,10 @@ export default function TalkToBuildDemo({ isPowered = true }: { isPowered?: bool
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: activeStep >= 1 ? 1 : 0.3, y: 0 }}
           className={`flex-1 p-2.5 rounded-lg border text-center transition-all ${
-            activeStep >= 1 ? "bg-white/[0.06] border-[#e9b45b]/50 shadow-[0_0_15px_rgba(233,180,91,0.15)]" : "border-white/[0.06] bg-transparent"
+            activeStep >= 1 ? "bg-white/[0.06] border-[#bff02e]/50 shadow-[0_0_15px_rgba(191,240,46,0.15)]" : "border-white/[0.06] bg-transparent"
           }`}
         >
-          <div className="font-mono text-[9px] text-[#e9b45b] uppercase tracking-wider mb-1">Trigger</div>
+          <div className="font-mono text-[9px] text-[#bff02e] uppercase tracking-wider mb-1">Trigger</div>
           <div className="text-xs font-medium text-white truncate">Stripe Refund</div>
         </motion.div>
 
@@ -110,7 +110,7 @@ export default function TalkToBuildDemo({ isPowered = true }: { isPowered?: bool
         <div className="w-4 sm:w-6 h-[1px] relative bg-white/[0.1] shrink-0">
           {activeStep >= 2 && (
             <motion.div
-              className="absolute inset-0 bg-[#e9b45b] shadow-[0_0_8px_#e9b45b]"
+              className="absolute inset-0 bg-[#bff02e] shadow-[0_0_8px_#bff02e]"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.3 }}
@@ -123,7 +123,7 @@ export default function TalkToBuildDemo({ isPowered = true }: { isPowered?: bool
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: activeStep >= 2 ? 1 : 0.3, y: 0 }}
           className={`flex-1 p-2.5 rounded-lg border text-center transition-all ${
-            activeStep >= 2 ? "bg-white/[0.06] border-[#e9b45b]/50 shadow-[0_0_15px_rgba(233,180,91,0.15)]" : "border-white/[0.06] bg-transparent"
+            activeStep >= 2 ? "bg-white/[0.06] border-[#bff02e]/50 shadow-[0_0_15px_rgba(191,240,46,0.15)]" : "border-white/[0.06] bg-transparent"
           }`}
         >
           <div className="font-mono text-[9px] text-white/50 uppercase tracking-wider mb-1">Logic</div>
@@ -134,7 +134,7 @@ export default function TalkToBuildDemo({ isPowered = true }: { isPowered?: bool
         <div className="w-4 sm:w-6 h-[1px] relative bg-white/[0.1] shrink-0">
           {activeStep >= 3 && (
             <motion.div
-              className="absolute inset-0 bg-[#e9b45b] shadow-[0_0_8px_#e9b45b]"
+              className="absolute inset-0 bg-[#bff02e] shadow-[0_0_8px_#bff02e]"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.3 }}
@@ -147,10 +147,10 @@ export default function TalkToBuildDemo({ isPowered = true }: { isPowered?: bool
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: activeStep >= 3 ? 1 : 0.3, y: 0 }}
           className={`flex-1 p-2.5 rounded-lg border text-center transition-all ${
-            activeStep >= 3 ? "bg-white/[0.06] border-[#e9b45b]/50 shadow-[0_0_15px_rgba(233,180,91,0.15)]" : "border-white/[0.06] bg-transparent"
+            activeStep >= 3 ? "bg-white/[0.06] border-[#bff02e]/50 shadow-[0_0_15px_rgba(191,240,46,0.15)]" : "border-white/[0.06] bg-transparent"
           }`}
         >
-          <div className="font-mono text-[9px] text-[#e9b45b] uppercase tracking-wider mb-1">Action</div>
+          <div className="font-mono text-[9px] text-[#bff02e] uppercase tracking-wider mb-1">Action</div>
           <div className="text-xs font-medium text-white truncate">Slack + Notion</div>
         </motion.div>
       </div>
@@ -158,7 +158,7 @@ export default function TalkToBuildDemo({ isPowered = true }: { isPowered?: bool
       {/* Footer Meta */}
       <div className="mt-2 flex items-center justify-between font-mono text-[10px] text-white/40">
         <span>Latency: 280ms</span>
-        <span className="text-[#e9b45b]">Canvas verified ✓</span>
+        <span className="text-[#bff02e]">Canvas verified ✓</span>
       </div>
     </div>
   );

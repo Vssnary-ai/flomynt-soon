@@ -175,7 +175,7 @@ export function SelfHealingWireframe({ className = "" }: WireframeProps) {
       <rect x="45" y="25" width="70" height="115" rx="10" stroke="white" strokeOpacity="0.3" />
       <line x1="68" y1="32" x2="92" y2="32" stroke="white" strokeOpacity="0.4" strokeWidth="1.5" />
       {/* Alert banner inside phone */}
-      <rect x="52" y="44" width="56" height="34" rx="4" stroke="rgba(255,255,255,0.2)" fill="rgba(233,180,91,0.08)" />
+      <rect x="52" y="44" width="56" height="34" rx="4" stroke="rgba(255,255,255,0.2)" fill="rgba(191,240,46,0.08)" />
       <text x="56" y="55" fill="var(--accent)" fontSize="6" fontFamily="var(--font-mono)" stroke="none">ERROR CAUGHT</text>
       <text x="56" y="64" fill="white" fontSize="5" fontFamily="var(--font-mono)" stroke="none" opacity="0.7">API 429 Throttle</text>
       {/* Auto-handle action button inside phone */}

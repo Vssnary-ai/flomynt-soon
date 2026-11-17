@@ -55,7 +55,7 @@ export default function SandboxDemo({ isPowered = true }: { isPowered?: boolean 
             e.stopPropagation();
             runVerification();
           }}
-          className="text-[10px] font-mono text-[#e9b45b] hover:text-white px-2 py-0.5 rounded bg-white/[0.05] hover:bg-white/[0.1] transition-colors cursor-pointer"
+          className="text-[10px] font-mono text-[#bff02e] hover:text-white px-2 py-0.5 rounded bg-white/[0.05] hover:bg-white/[0.1] transition-colors cursor-pointer"
         >
           Re-Test
         </button>
@@ -74,7 +74,7 @@ export default function SandboxDemo({ isPowered = true }: { isPowered?: boolean 
               d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
             />
             <motion.path
-              className="text-[#e9b45b]"
+              className="text-[#bff02e]"
               strokeDasharray={`${score}, 100`}
               strokeWidth="3.5"
               strokeLinecap="round"
@@ -88,7 +88,7 @@ export default function SandboxDemo({ isPowered = true }: { isPowered?: boolean 
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="font-mono text-sm font-semibold text-white">{score}%</span>
-            <span className="text-[7px] font-mono text-[#e9b45b]">READY</span>
+            <span className="text-[7px] font-mono text-[#bff02e]">READY</span>
           </div>
         </div>
 

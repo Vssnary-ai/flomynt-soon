@@ -83,13 +83,13 @@ export default function Navbar() {
                     scrollTo(link.href);
                   }}
                   className={`relative mono-label px-3.5 py-2 rounded-full transition-colors duration-200 ${
-                    isActive ? "!text-[#14122b]" : "hover:!text-[#14122b]"
+                    isActive ? "!text-[#0b1b3a]" : "hover:!text-[#0b1b3a]"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-full bg-white shadow-[0_4px_14px_-4px_rgba(109,76,255,0.4)]"
+                      className="absolute inset-0 rounded-full bg-white shadow-[0_4px_14px_-4px_rgba(31,111,235,0.4)]"
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
                   )}
@@ -114,7 +114,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2.5 mr-1 rounded-full text-[#14122b] hover:bg-white/70 focus:outline-none"
+            className="md:hidden p-2.5 mr-1 rounded-full text-[#0b1b3a] hover:bg-white/70 focus:outline-none"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
           >
@@ -131,7 +131,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-[#f6f5ff]/90 backdrop-blur-2xl flex flex-col justify-between px-8 py-28 md:hidden"
+            className="fixed inset-0 z-40 bg-[#f2f8ff]/90 backdrop-blur-2xl flex flex-col justify-between px-8 py-28 md:hidden"
           >
             <nav className="flex flex-col gap-2">
               {NAV_LINKS.map((link, i) => (
@@ -145,7 +145,7 @@ export default function Navbar() {
                     e.preventDefault();
                     scrollTo(link.href);
                   }}
-                  className="text-3xl font-light tracking-tight text-[#14122b] py-3 border-b border-[#14122b]/10"
+                  className="text-3xl font-light tracking-tight text-[#0b1b3a] py-3 border-b border-[#0b1b3a]/10"
                 >
                   {link.name.charAt(0) + link.name.slice(1).toLowerCase()}
                 </motion.a>

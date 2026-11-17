@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 const SWATCHES = [
-  { name: "Flomynt Amber", color: "#e9b45b", border: "rgba(233,180,91,0.5)" },
+  { name: "Flomynt Amber", color: "#bff02e", border: "rgba(191,240,46,0.5)" },
   { name: "Cobalt Blue", color: "#38bdf8", border: "rgba(56,189,248,0.5)" },
   { name: "Emerald Green", color: "#34d399", border: "rgba(52,211,153,0.5)" },
   { name: "Electric Violet", color: "#c084fc", border: "rgba(192,132,252,0.5)" },
@@ -24,7 +24,7 @@ export default function WhiteLabelDemo({ isPowered = true }: { isPowered?: boole
             type="text"
             value={agencyName}
             onChange={(e) => setAgencyName(e.target.value)}
-            className="bg-white/[0.05] border border-white/[0.1] rounded px-2 py-0.5 font-mono text-xs text-white focus:outline-none focus:border-[#e9b45b] w-full max-w-[150px]"
+            className="bg-white/[0.05] border border-white/[0.1] rounded px-2 py-0.5 font-mono text-xs text-white focus:outline-none focus:border-[#bff02e] w-full max-w-[150px]"
           />
         </div>
 

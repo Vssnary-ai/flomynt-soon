@@ -327,20 +327,20 @@ textarea:-webkit-autofill {
    private /admin portal keeps its dark look)
    ========================================================= */
 .theme-bright {
-  --b-bg: #f6f5ff;
-  --b-ink: #14122b;
-  --b-ink-2: #4a4766;
-  --b-ink-3: #7b7899;
-  --b-violet: #6d4cff;
-  --b-blue: #2f8cff;
-  --b-pink: #ff5fa8;
-  --b-amber: #ffb340;
-  --b-mint: #2fd4b0;
-  --b-line: rgba(30, 20, 90, 0.10);
+  --b-bg: #f2f8ff;
+  --b-ink: #0b1b3a;
+  --b-ink-2: #3d4f6b;
+  --b-ink-3: #6b7c99;
+  --b-violet: #1f6feb;
+  --b-blue: #2a93ff;
+  --b-pink: #18c6b4;
+  --b-amber: #bff02e;
+  --b-mint: #18c6b4;
+  --b-line: rgba(11, 27, 58, 0.10);
   --b-glass: rgba(255, 255, 255, 0.62);
   --b-glass-strong: rgba(255, 255, 255, 0.82);
-  --b-shadow: 0 10px 40px -12px rgba(80, 50, 200, 0.25), 0 2px 6px rgba(30, 20, 90, 0.05);
-  --b-grad: linear-gradient(120deg, #6d4cff 0%, #2f8cff 45%, #ff5fa8 100%);
+  --b-shadow: 0 10px 40px -12px rgba(20, 70, 180, 0.25), 0 2px 6px rgba(11, 27, 58, 0.05);
+  --b-grad: linear-gradient(120deg, #1f6feb 0%, #2a93ff 45%, #18c6b4 100%);
   background: var(--b-bg);
   color: var(--b-ink);
   /* remap the legacy tokens used by shared bits (SectionLabel, mono-label, pill-btn) */
@@ -349,9 +349,9 @@ textarea:-webkit-autofill {
   --border: var(--b-line);
   --accent: var(--b-violet);
 }
-html:has(.theme-bright) { background: #f6f5ff; color-scheme: light; }
-html:has(.theme-bright) ::-webkit-scrollbar-track { background: #f6f5ff; }
-html:has(.theme-bright) ::-webkit-scrollbar-thumb { background: rgba(109, 76, 255, 0.35); }
+html:has(.theme-bright) { background: #f2f8ff; color-scheme: light; }
+html:has(.theme-bright) ::-webkit-scrollbar-track { background: #f2f8ff; }
+html:has(.theme-bright) ::-webkit-scrollbar-thumb { background: rgba(31, 111, 235, 0.35); }
 
 .theme-bright .pill-btn { color: var(--b-ink); border-color: var(--b-line); }
 .theme-bright .pill-btn:hover { background: var(--b-ink); color: #fff; border-color: var(--b-ink); }
@@ -382,17 +382,17 @@ html:has(.theme-bright) ::-webkit-scrollbar-thumb { background: rgba(109, 76, 25
 }
 .b-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 30px 70px -20px rgba(109, 76, 255, 0.38), 0 0 0 1px rgba(109, 76, 255, 0.2), inset 0 1px 0 #fff;
+  box-shadow: 0 30px 70px -20px rgba(31, 111, 235, 0.38), 0 0 0 1px rgba(31, 111, 235, 0.2), inset 0 1px 0 #fff;
 }
 .b-btn-primary {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 12px 24px; border-radius: 9999px; font-weight: 500; font-size: 14px;
   color: #fff; background: var(--b-grad); background-size: 200% 200%;
-  box-shadow: 0 10px 30px -8px rgba(109, 76, 255, 0.6), inset 0 1px 0 rgba(255,255,255,.35);
+  box-shadow: 0 10px 30px -8px rgba(31, 111, 235, 0.6), inset 0 1px 0 rgba(255,255,255,.35);
   transition: transform .2s ease, box-shadow .2s ease, background-position .6s ease;
   cursor: pointer; border: 0; text-decoration: none;
 }
-.b-btn-primary:hover { transform: translateY(-2px) scale(1.02); background-position: 100% 50%; box-shadow: 0 16px 40px -8px rgba(109,76,255,.7), inset 0 1px 0 rgba(255,255,255,.4); }
+.b-btn-primary:hover { transform: translateY(-2px) scale(1.02); background-position: 100% 50%; box-shadow: 0 16px 40px -8px rgba(31,111,235,.7), inset 0 1px 0 rgba(255,255,255,.4); }
 .b-btn-ghost {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 12px 22px; border-radius: 9999px; font-weight: 500; font-size: 14px;
@@ -411,7 +411,7 @@ html:has(.theme-bright) ::-webkit-scrollbar-thumb { background: rgba(109, 76, 25
 }
 .b-screen::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(500px 200px at 20% -10%, rgba(109,76,255,.35), transparent 70%);
+  background: radial-gradient(500px 200px at 20% -10%, rgba(31,111,235,.35), transparent 70%);
 }
 
 @keyframes b-grad-shift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
@@ -428,7 +428,7 @@ html:has(.theme-bright) ::-webkit-scrollbar-thumb { background: rgba(109, 76, 25
 
 .theme-bright {
   --pill-ink: var(--b-ink);
-  --pill-line: rgba(30, 20, 90, 0.18);
+  --pill-line: rgba(11, 27, 58, 0.18);
   --pill-hover-bg: var(--b-ink);
   --pill-hover-ink: #ffffff;
   --brand-ink: var(--b-ink);
@@ -442,9 +442,22 @@ html:has(.theme-bright) ::-webkit-scrollbar-thumb { background: rgba(109, 76, 25
 }
 
 .theme-bright .shimmer-active {
-  background: linear-gradient(90deg, rgba(109,76,255,.08) 0%, rgba(255,95,168,.28) 50%, rgba(109,76,255,.08) 100%);
+  background: linear-gradient(90deg, rgba(31,111,235,.08) 0%, rgba(24,198,180,.28) 50%, rgba(31,111,235,.08) 100%);
   background-size: 200% 100%;
   animation: shimmer-bar 1.2s ease-in-out;
 }
-.theme-bright input:-webkit-autofill { -webkit-box-shadow: 0 0 0 50px #fff inset !important; -webkit-text-fill-color: #14122b !important; }
+.theme-bright input:-webkit-autofill { -webkit-box-shadow: 0 0 0 50px #fff inset !important; -webkit-text-fill-color: #0b1b3a !important; }
 .theme-bright .b-dark-panel input:-webkit-autofill { -webkit-box-shadow: 0 0 0 50px #0a0a0a inset !important; -webkit-text-fill-color: #fff !important; }
+
+/* ---- Sky & Lime refinement ---- */
+.theme-bright .b-btn-primary {
+  color: #0b1b3a; font-weight: 600;
+  background: linear-gradient(180deg, #d4f85a 0%, #bff02e 100%);
+  box-shadow: 0 10px 28px -8px rgba(150, 200, 20, 0.65), inset 0 1px 0 rgba(255,255,255,.6);
+}
+.theme-bright .b-btn-primary:hover {
+  background: linear-gradient(180deg, #dcfb6e 0%, #c8f43a 100%);
+  box-shadow: 0 16px 36px -8px rgba(150, 200, 20, 0.8), inset 0 1px 0 rgba(255,255,255,.7);
+}
+.theme-bright .b-grad-text { background-image: linear-gradient(120deg, #0b4fd1 0%, #1f8bff 55%, #18c6b4 100%); }
+@keyframes b-cloud-drift { 0% { transform: translateX(-4%); } 100% { transform: translateX(4%); } }

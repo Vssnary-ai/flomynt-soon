@@ -243,9 +243,9 @@ export default function WishlistSection() {
       id="wishlist"
       className="b-dark-panel relative w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-[1500px] mx-auto bg-[#07060f] rounded-[32px] sm:rounded-[56px] py-24 sm:py-32 px-5 sm:px-10 overflow-hidden shadow-[0_60px_140px_-40px_rgba(60,30,200,0.7)]"
     >
-      <div className="pointer-events-none absolute -top-40 left-1/4 w-[620px] h-[620px] rounded-full bg-[#6d4cff]/35 blur-[150px]" aria-hidden="true" />
-      <div className="pointer-events-none absolute -bottom-48 right-0 w-[560px] h-[560px] rounded-full bg-[#ff5fa8]/20 blur-[150px]" aria-hidden="true" />
-      <div className="pointer-events-none absolute -bottom-32 left-0 w-[420px] h-[420px] rounded-full bg-[#e9b45b]/15 blur-[130px]" aria-hidden="true" />
+      <div className="pointer-events-none absolute -top-40 left-1/4 w-[620px] h-[620px] rounded-full bg-[#1f6feb]/35 blur-[150px]" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-48 right-0 w-[560px] h-[560px] rounded-full bg-[#18c6b4]/20 blur-[150px]" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-32 left-0 w-[420px] h-[420px] rounded-full bg-[#bff02e]/15 blur-[130px]" aria-hidden="true" />
       <div className="max-w-[1340px] mx-auto relative">
         {/* Section Header */}
         <div className="mb-14 sm:mb-20 text-center max-w-[720px] mx-auto">
@@ -263,7 +263,7 @@ export default function WishlistSection() {
           {/* Left Column: Redesigned Glass Showcase of Core Pillars */}
           <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
             <div className="flex items-center justify-between pb-2">
-              <span className="mono-label text-[11px] text-[#e9b45b]">
+              <span className="mono-label text-[11px] text-[#bff02e]">
                 [ ARCHITECTURE PILLARS ]
               </span>
               <span className="font-mono text-xs text-white/40">
@@ -282,13 +282,13 @@ export default function WishlistSection() {
                     onClick={() => setActivePillar(pillar.id)}
                     className={`glass-card text-left p-5 sm:p-6 rounded-2xl flex flex-col justify-between cursor-pointer transition-all ${
                       isSelected
-                        ? "border-[#e9b45b]/60 bg-white/[0.08] shadow-[0_0_30px_rgba(233,180,91,0.12)]"
+                        ? "border-[#bff02e]/60 bg-white/[0.08] shadow-[0_0_30px_rgba(191,240,46,0.12)]"
                         : "border-white/[0.12] hover:border-white/30"
                     } ${idx === 4 ? "sm:col-span-2" : ""}`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <span className="mono-label text-[10px] text-[#e9b45b]">
+                        <span className="mono-label text-[10px] text-[#bff02e]">
                           {pillar.tag}
                         </span>
                         {/* 1px line wireframe SVG icon */}
@@ -301,7 +301,7 @@ export default function WishlistSection() {
                           strokeWidth="1.4"
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          className={isSelected ? "text-[#e9b45b]" : "text-white/40"}
+                          className={isSelected ? "text-[#bff02e]" : "text-white/40"}
                         >
                           <path d={pillar.iconPath} />
                         </svg>
@@ -327,7 +327,7 @@ export default function WishlistSection() {
 
                     <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono">
                       <span className="text-white/40">STATUS</span>
-                      <span className={isSelected ? "text-[#e9b45b]" : "text-white/60"}>
+                      <span className={isSelected ? "text-[#bff02e]" : "text-white/60"}>
                         {isSelected ? "ACTIVE FOCUS" : "DEPLOYED"}
                       </span>
                     </div>
@@ -341,7 +341,7 @@ export default function WishlistSection() {
           <div className="lg:col-span-5 glass-card rounded-2xl p-6 sm:p-10 flex flex-col justify-center">
             {formState === "success" || formState === "already" ? (
               <div className="text-center py-8 space-y-4">
-                <div className="w-14 h-14 rounded-full border border-[#e9b45b] text-[#e9b45b] flex items-center justify-center mx-auto text-2xl font-mono shadow-[0_0_20px_rgba(233,180,91,0.25)]">
+                <div className="w-14 h-14 rounded-full border border-[#bff02e] text-[#bff02e] flex items-center justify-center mx-auto text-2xl font-mono shadow-[0_0_20px_rgba(191,240,46,0.25)]">
                   ✓
                 </div>
                 <h3 className="text-2xl font-light text-white">
@@ -350,13 +350,13 @@ export default function WishlistSection() {
                     : "You're on the Wishlist!"}
                 </h3>
                 {position && formState === "success" && (
-                  <p className="font-mono text-xs text-[#e9b45b]">
+                  <p className="font-mono text-xs text-[#bff02e]">
                     PRIORITY QUEUE POSITION #{position}
                   </p>
                 )}
                 {idea && (
                   <div className="bg-black/50 p-3 rounded-lg border border-white/[0.08] text-left">
-                    <p className="mono-label text-[9px] text-[#e9b45b] mb-1">
+                    <p className="mono-label text-[9px] text-[#bff02e] mb-1">
                       LOGGED WORKFLOW SPEC:
                     </p>
                     <p className="text-xs text-white/80 italic">&ldquo;{idea}&rdquo;</p>
@@ -471,7 +471,7 @@ export default function WishlistSection() {
                   <button
                     type="submit"
                     disabled={formState === "loading"}
-                    className="w-full py-3 bg-white hover:bg-[#e9b45b] text-black font-semibold rounded-xl text-xs font-mono tracking-wider uppercase transition-colors disabled:opacity-50 cursor-pointer min-h-[44px]"
+                    className="w-full py-3 bg-white hover:bg-[#bff02e] text-black font-semibold rounded-xl text-xs font-mono tracking-wider uppercase transition-colors disabled:opacity-50 cursor-pointer min-h-[44px]"
                   >
                     {formState === "loading"
                       ? "RESERVING..."

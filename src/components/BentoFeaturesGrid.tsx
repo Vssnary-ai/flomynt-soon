@@ -80,7 +80,7 @@ function BentoCard({
         <div
           className="pointer-events-none absolute -inset-px transition-opacity duration-300 rounded-[28px] opacity-100"
           style={{
-            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(109, 76, 255, 0.13), transparent 80%)`,
+            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(31, 111, 235, 0.13), transparent 80%)`,
           }}
         />
       )}
@@ -92,23 +92,23 @@ function BentoCard({
       <div className="relative z-10 mb-4">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[11px] px-2 py-0.5 rounded-full bg-[#6d4cff]/10 border border-[#6d4cff]/20 text-[#6d4cff] font-medium">
+            <span className="font-mono text-[11px] px-2 py-0.5 rounded-full bg-[#1f6feb]/10 border border-[#1f6feb]/20 text-[#1f6feb] font-medium">
               {stepNumber}
             </span>
-            <span className="font-mono text-[11px] text-[#14122b]/60 tracking-wider uppercase">
+            <span className="font-mono text-[11px] text-[#0b1b3a]/60 tracking-wider uppercase">
               [ {tag} ]
             </span>
           </div>
           {/* Wire connection node indicator */}
-          <div className="w-2.5 h-2.5 rounded-full border border-[#6d4cff]/50 bg-[#6d4cff]/20 flex items-center justify-center">
-            <div className="w-1 h-1 rounded-full bg-[#6d4cff] animate-ping" />
+          <div className="w-2.5 h-2.5 rounded-full border border-[#1f6feb]/50 bg-[#1f6feb]/20 flex items-center justify-center">
+            <div className="w-1 h-1 rounded-full bg-[#1f6feb] animate-ping" />
           </div>
         </div>
 
-        <h3 className="font-normal text-xl sm:text-2xl text-[#14122b] tracking-[-0.02em] leading-snug mb-2">
+        <h3 className="font-normal text-xl sm:text-2xl text-[#0b1b3a] tracking-[-0.02em] leading-snug mb-2">
           {title}
         </h3>
-        <p className="text-[#4a4766] text-sm sm:text-[15px] leading-relaxed line-clamp-3">
+        <p className="text-[#3d4f6b] text-sm sm:text-[15px] leading-relaxed line-clamp-3">
           {description}
         </p>
       </div>
@@ -119,11 +119,11 @@ function BentoCard({
       </div>
 
       {/* Card Footer: 44px Min Height Action Pill Button */}
-      <div className="relative z-10 pt-4 mt-2 border-t border-[#14122b]/[0.08] flex items-center justify-between">
+      <div className="relative z-10 pt-4 mt-2 border-t border-[#0b1b3a]/[0.08] flex items-center justify-between">
         <button
           onClick={() => scrollToChapter(chapterId)}
           aria-label={`Explore details for ${title}`}
-          className="min-h-[44px] px-4 py-2 rounded-full border border-[#14122b]/[0.14] hover:border-transparent bg-white/70 hover:bg-[#14122b] text-[#14122b] hover:text-white font-mono text-xs uppercase tracking-wider transition-all duration-200 flex items-center gap-2 group/btn cursor-pointer"
+          className="min-h-[44px] px-4 py-2 rounded-full border border-[#0b1b3a]/[0.14] hover:border-transparent bg-white/70 hover:bg-[#0b1b3a] text-[#0b1b3a] hover:text-white font-mono text-xs uppercase tracking-wider transition-all duration-200 flex items-center gap-2 group/btn cursor-pointer"
         >
           <span>SEE HOW IT WORKS</span>
           <span className="transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5">
@@ -131,7 +131,7 @@ function BentoCard({
           </span>
         </button>
 
-        <span className="font-mono text-[11px] text-[#14122b]/35 hidden sm:inline-block">
+        <span className="font-mono text-[11px] text-[#0b1b3a]/35 hidden sm:inline-block">
           Autonomous Node
         </span>
       </div>
@@ -174,46 +174,46 @@ export default function BentoFeaturesGrid() {
       <motion.div
         aria-hidden="true"
         className="absolute left-1/2 -translate-x-1/2 top-[22%] w-[2px] h-[70%] origin-top pointer-events-none hidden opacity-40"
-        style={{ scaleY: smoothScroll, background: "linear-gradient(to bottom,#6d4cff,#2f8cff,#ff5fa8)", filter: "blur(1px)" }}
+        style={{ scaleY: smoothScroll, background: "linear-gradient(to bottom,#1f6feb,#2a93ff,#18c6b4)", filter: "blur(1px)" }}
       />
 
       <div className="max-w-[1360px] mx-auto relative">
         {/* Section Header */}
         <Reveal className="mb-14 sm:mb-20">
           <SectionLabel text="FEATURES" />
-          <h2 className="mt-4 font-light text-3xl sm:text-5xl lg:text-6xl text-[#14122b] tracking-[-0.035em] leading-[1.08] max-w-[920px]">
+          <h2 className="mt-4 font-light text-3xl sm:text-5xl lg:text-6xl text-[#0b1b3a] tracking-[-0.035em] leading-[1.08] max-w-[920px]">
             Autonomous systems built for <span className="b-grad-text">modern agencies.</span>
           </h2>
-          <p className="mt-4 text-[#4a4766] text-base sm:text-lg max-w-[680px] leading-relaxed">
+          <p className="mt-4 text-[#3d4f6b] text-base sm:text-lg max-w-[680px] leading-relaxed">
             Turn plain English into resilient workflows, white-label them into client apps, and let autonomous agents fix runtime errors before your clients even notice.
           </p>
 
           {/* Lifecycle sequence ribbon */}
-          <div className="mt-6 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-[#14122b]/45 px-4 py-2.5 rounded-full b-glass w-fit max-w-full">
-            <span className="text-[#6d4cff] font-medium flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#6d4cff] animate-pulse" />
+          <div className="mt-6 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-[#0b1b3a]/45 px-4 py-2.5 rounded-full b-glass w-fit max-w-full">
+            <span className="text-[#1f6feb] font-medium flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#1f6feb] animate-pulse" />
               The Flomynt Wire:
             </span>
-            <span className="text-[#14122b]/80">Talk-to-Build</span>
+            <span className="text-[#0b1b3a]/80">Talk-to-Build</span>
             <span>→</span>
-            <span className="text-[#14122b]/80">Sandbox</span>
+            <span className="text-[#0b1b3a]/80">Sandbox</span>
             <span>→</span>
-            <span className="text-[#14122b]/80">Routing</span>
+            <span className="text-[#0b1b3a]/80">Routing</span>
             <span>→</span>
-            <span className="text-[#14122b]/80">Self-Healing</span>
+            <span className="text-[#0b1b3a]/80">Self-Healing</span>
             <span>→</span>
-            <span className="text-[#14122b]/80">White-Label</span>
+            <span className="text-[#0b1b3a]/80">White-Label</span>
             <span>→</span>
-            <span className="text-[#14122b]/80">Zero-Trust</span>
+            <span className="text-[#0b1b3a]/80">Zero-Trust</span>
             <span>→</span>
-            <span className="text-[#14122b]/80">Marketplace</span>
+            <span className="text-[#0b1b3a]/80">Marketplace</span>
           </div>
         </Reveal>
 
         {/* Bento Grid Container */}
         <div className="relative">
           {/* Mobile Glowing Left Spine */}
-          <div className="lg:hidden absolute left-2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#6d4cff] via-[#2f8cff]/40 to-[#ff5fa8]/50 pointer-events-none shadow-[0_0_8px_#6d4cff]" />
+          <div className="lg:hidden absolute left-2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#1f6feb] via-[#2a93ff]/40 to-[#18c6b4]/50 pointer-events-none shadow-[0_0_8px_#1f6feb]" />
 
           {/* 12-Column Responsive Bento Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6 pl-5 lg:pl-0">

@@ -109,10 +109,10 @@ export default function WhatIsFlomynt() {
           {/* Left Column: Sticky Summary Panel */}
           <div className="lg:col-span-5 lg:sticky lg:top-28">
             <SectionLabel text="WHAT IS FLOMYNT" />
-            <h2 className="mt-4 font-light text-3xl sm:text-4xl lg:text-5xl text-[#14122b] tracking-[-0.035em] leading-[1.08]">
+            <h2 className="mt-4 font-light text-3xl sm:text-4xl lg:text-5xl text-[#0b1b3a] tracking-[-0.035em] leading-[1.08]">
               Autonomous Workflows That Build, Verify, and Heal Themselves.
             </h2>
-            <p className="mt-6 text-[#4a4766] text-sm sm:text-base leading-relaxed">
+            <p className="mt-6 text-[#3d4f6b] text-sm sm:text-base leading-relaxed">
               The AI-native automation platform built for modern agencies. Turn plain English into resilient workflows, white-label them into client apps, and let autonomous agents fix runtime errors before your clients even notice.
             </p>
 
@@ -139,9 +139,9 @@ export default function WhatIsFlomynt() {
                       const el = document.getElementById(`chapter-${ch.id}`);
                       if (el) el.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="w-full text-left font-mono text-[11px] text-[#4a4766] hover:text-[#6d4cff] hover:translate-x-1 transition-all flex items-center gap-2 py-1"
+                    className="w-full text-left font-mono text-[11px] text-[#3d4f6b] hover:text-[#1f6feb] hover:translate-x-1 transition-all flex items-center gap-2 py-1"
                   >
-                    <span className="text-[#6d4cff]/60">{ch.number}</span>
+                    <span className="text-[#1f6feb]/60">{ch.number}</span>
                     <span className="truncate">{ch.title}</span>
                   </button>
                 ))}
@@ -152,8 +152,8 @@ export default function WhatIsFlomynt() {
           {/* Right Column: Scrolling Chapters Timeline */}
           <div className="lg:col-span-7 space-y-16 relative">
             {/* Timeline Vertical Track */}
-            <div ref={timelineRef} className="absolute left-0 top-4 bottom-4 w-[2px] bg-[#14122b]/[0.08] hidden sm:block rounded-full overflow-hidden">
-              <motion.div className="w-full h-full origin-top" style={{ scaleY: lineScale, background: "linear-gradient(to bottom,#6d4cff,#2f8cff,#ff5fa8)" }} />
+            <div ref={timelineRef} className="absolute left-0 top-4 bottom-4 w-[2px] bg-[#0b1b3a]/[0.08] hidden sm:block rounded-full overflow-hidden">
+              <motion.div className="w-full h-full origin-top" style={{ scaleY: lineScale, background: "linear-gradient(to bottom,#1f6feb,#2a93ff,#18c6b4)" }} />
             </div>
 
             {CHAPTERS.map((ch) => {
@@ -165,20 +165,20 @@ export default function WhatIsFlomynt() {
                 >
                 <div id={`chapter-${ch.id}`} className="scroll-mt-28">
                   {/* Timeline Node Dot */}
-                  <div className="absolute -left-[6px] top-2 w-[14px] h-[14px] rounded-full bg-white border-2 border-[#6d4cff]/40 group-hover:border-[#6d4cff] group-hover:shadow-[0_0_0_6px_rgba(109,76,255,0.15)] transition-all hidden sm:block" />
+                  <div className="absolute -left-[6px] top-2 w-[14px] h-[14px] rounded-full bg-white border-2 border-[#1f6feb]/40 group-hover:border-[#1f6feb] group-hover:shadow-[0_0_0_6px_rgba(31,111,235,0.15)] transition-all hidden sm:block" />
 
                   {/* Header Row */}
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="mono-label !text-[#6d4cff] text-[10px]">
+                    <span className="mono-label !text-[#1f6feb] text-[10px]">
                       {ch.number} // {ch.tag}
                     </span>
                   </div>
 
-                  <h3 className="font-light text-2xl sm:text-3xl text-[#14122b] tracking-[-0.025em] leading-snug">
+                  <h3 className="font-light text-2xl sm:text-3xl text-[#0b1b3a] tracking-[-0.025em] leading-snug">
                     {ch.title}
                   </h3>
 
-                  <p className="mt-3 text-[#4a4766] text-sm leading-relaxed mb-6">
+                  <p className="mt-3 text-[#3d4f6b] text-sm leading-relaxed mb-6">
                     {ch.description}
                   </p>
 
@@ -188,7 +188,7 @@ export default function WhatIsFlomynt() {
                   </div>
 
                   {/* Hairline chapter divider */}
-                  <div className="w-full h-px bg-gradient-to-r from-[#6d4cff]/25 via-[#14122b]/10 to-transparent" />
+                  <div className="w-full h-px bg-gradient-to-r from-[#1f6feb]/25 via-[#0b1b3a]/10 to-transparent" />
                 </div>
                 </Reveal>
               );

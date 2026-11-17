@@ -11,12 +11,12 @@ export function PrivacyDemo() {
     <div className="bg-[#0a0a0a] border border-white/[0.14] rounded-lg p-5 text-left font-mono text-xs">
       <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] mb-3">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#e9b45b] animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-[#bff02e] animate-pulse" />
           <span className="text-white text-[11px]">AUDIT VAULT & LOGS</span>
         </div>
         <button
           onClick={() => setShowDecrypted(!showDecrypted)}
-          className="text-[10px] text-[#e9b45b] hover:text-white border border-[#e9b45b]/40 rounded px-2 py-0.5 transition-colors"
+          className="text-[10px] text-[#bff02e] hover:text-white border border-[#bff02e]/40 rounded px-2 py-0.5 transition-colors"
         >
           {showDecrypted ? "MASK KEYS" : "VERIFY ENCRYPTION"}
         </button>
@@ -39,7 +39,7 @@ export function PrivacyDemo() {
 
         <div className="pt-2 text-[10px] text-white/50 border-t border-white/[0.06] flex items-center justify-between">
           <span>Zero External Model Training</span>
-          <span className="text-[#e9b45b]">PASSED (SHA-256 SIGNED)</span>
+          <span className="text-[#bff02e]">PASSED (SHA-256 SIGNED)</span>
         </div>
       </div>
     </div>
@@ -66,7 +66,7 @@ export function WhiteLabelDemo() {
           <button
             onClick={() => setIsClientMode(true)}
             className={`px-3 py-1 rounded-full text-[10px] transition-all ${
-              isClientMode ? "bg-[#e9b45b] text-black font-semibold" : "text-white/60 hover:text-white"
+              isClientMode ? "bg-[#bff02e] text-black font-semibold" : "text-white/60 hover:text-white"
             }`}
           >
             CLIENT PORTAL
@@ -79,7 +79,7 @@ export function WhiteLabelDemo() {
           <div className="flex items-center gap-2">
             <div
               className="w-3 h-3 rounded"
-              style={{ backgroundColor: isClientMode ? "#e9b45b" : "#ffffff" }}
+              style={{ backgroundColor: isClientMode ? "#bff02e" : "#ffffff" }}
             />
             <span className="text-white font-medium text-xs">
               {isClientMode ? "AcmeGrowth Automation Hub" : "Flomynt Engine v2.1"}
@@ -97,7 +97,7 @@ export function WhiteLabelDemo() {
           </div>
           <div className="bg-white/[0.03] p-2.5 rounded border border-white/[0.04]">
             <p className="text-white/50">Client Health Score</p>
-            <p className="text-[#e9b45b] text-sm font-semibold mt-1">99.8% Uptime</p>
+            <p className="text-[#bff02e] text-sm font-semibold mt-1">99.8% Uptime</p>
           </div>
         </div>
       </div>
@@ -119,19 +119,19 @@ export function TalkToBuildDemo() {
     <div className="bg-[#0a0a0a] border border-white/[0.14] rounded-lg p-5 text-left font-mono text-xs">
       <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] mb-3">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#e9b45b] animate-ping" />
+          <span className="w-2 h-2 rounded-full bg-[#bff02e] animate-ping" />
           <span className="text-white text-[11px]">JARVIS VOICE CANVAS</span>
         </div>
         <button
           onClick={() => setActiveStep((prev) => (prev + 1) % steps.length)}
-          className="text-[10px] text-[#e9b45b] hover:text-white border border-[#e9b45b]/40 rounded px-2 py-0.5 transition-colors"
+          className="text-[10px] text-[#bff02e] hover:text-white border border-[#bff02e]/40 rounded px-2 py-0.5 transition-colors"
         >
           NEXT PROMPT
         </button>
       </div>
 
       <div className="bg-black/60 p-3 rounded border border-white/[0.06] mb-3">
-        <p className="text-[10px] text-[#e9b45b] mb-1">VOICE INPUT CAPTURE:</p>
+        <p className="text-[10px] text-[#bff02e] mb-1">VOICE INPUT CAPTURE:</p>
         <p className="text-white text-xs leading-relaxed italic">
           &ldquo;{steps[activeStep].voice}&rdquo;
         </p>
@@ -185,12 +185,12 @@ export function RoutingDemo() {
         <div
           className={`flex items-center justify-between p-2.5 rounded border transition-all ${
             isFailed
-              ? "bg-[#e9b45b]/10 border-[#e9b45b]/40 text-[#e9b45b]"
+              ? "bg-[#bff02e]/10 border-[#bff02e]/40 text-[#bff02e]"
               : "bg-black/40 border-white/[0.04] text-[#8a8a8a]"
           }`}
         >
           <div className="flex items-center gap-2">
-            <span className={`w-1.5 h-1.5 rounded-full ${isFailed ? "bg-[#e9b45b] animate-pulse" : "bg-white/20"}`} />
+            <span className={`w-1.5 h-1.5 rounded-full ${isFailed ? "bg-[#bff02e] animate-pulse" : "bg-white/20"}`} />
             <span>Gemini 1.5 Flash (Instant Failover)</span>
           </div>
           <span className="text-[10px]">
@@ -248,7 +248,7 @@ export function SelfHealingDemo() {
         <button
           onClick={handleHeal}
           disabled={healing}
-          className="w-full py-2 bg-[#e9b45b] hover:bg-white text-black font-semibold rounded text-[11px] tracking-wider uppercase transition-all flex items-center justify-center gap-2"
+          className="w-full py-2 bg-[#bff02e] hover:bg-white text-black font-semibold rounded text-[11px] tracking-wider uppercase transition-all flex items-center justify-center gap-2"
         >
           {healing ? "REPLAYING FIX & VERIFYING..." : "⚡ TAP AUTO-HANDLE (1-CLICK)"}
         </button>
@@ -288,7 +288,7 @@ export function VerificationDemo() {
         <button
           onClick={runTest}
           disabled={running}
-          className="text-[10px] text-[#e9b45b] hover:text-white border border-[#e9b45b]/40 rounded px-2 py-0.5 transition-colors"
+          className="text-[10px] text-[#bff02e] hover:text-white border border-[#bff02e]/40 rounded px-2 py-0.5 transition-colors"
         >
           {running ? "TESTING EDGE CASES..." : "RE-RUN AUDIT"}
         </button>
@@ -301,7 +301,7 @@ export function VerificationDemo() {
             {score}%
           </p>
         </div>
-        <div className="text-right text-[10px] text-[#e9b45b]">
+        <div className="text-right text-[10px] text-[#bff02e]">
           <p>✓ 10,000 SYNTHETIC CALLS</p>
           <p>✓ ZERO MEMORY LEAKS</p>
         </div>
@@ -329,7 +329,7 @@ export function MarketplaceDemo() {
     <div className="bg-[#0a0a0a] border border-white/[0.14] rounded-lg p-5 text-left font-mono text-xs">
       <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] mb-3">
         <span className="text-white text-[11px]">CROSS-WORKSPACE EXPORT</span>
-        <span className="text-[10px] text-[#e9b45b]">PUBLIC READY</span>
+        <span className="text-[10px] text-[#bff02e]">PUBLIC READY</span>
       </div>
 
       <div className="bg-black/60 p-3 rounded border border-white/[0.06] mb-3">
