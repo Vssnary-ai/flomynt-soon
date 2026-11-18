@@ -139,20 +139,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ============ GIANT GHOSTED WORDMARK ============ */}
-        <div className="pt-6 select-none overflow-hidden flex justify-center items-center opacity-90">
-          <p
-            className="font-light tracking-[-0.04em] leading-[0.8] text-transparent text-center select-none"
-            style={{
-              fontSize: "clamp(64px, 18vw, 240px)",
-              backgroundImage: "linear-gradient(90deg, #1f6feb 0%, #2a93ff 45%, #18c6b4 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            FLOMYNT
-          </p>
-        </div>
       </div>
     </footer>
   );

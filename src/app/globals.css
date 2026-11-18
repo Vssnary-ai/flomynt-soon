@@ -1976,10 +1976,6 @@
   .text-\[32px\] {
     font-size: 32px;
   }
-  .leading-\[0\.8\] {
-    --tw-leading: 0.8;
-    line-height: 0.8;
-  }
   .leading-\[1\.08\] {
     --tw-leading: 1.08;
     line-height: 1.08;
@@ -2023,10 +2019,6 @@
   .tracking-\[-0\.03em\] {
     --tw-tracking: -0.03em;
     letter-spacing: -0.03em;
-  }
-  .tracking-\[-0\.04em\] {
-    --tw-tracking: -0.04em;
-    letter-spacing: -0.04em;
   }
   .tracking-\[-0\.025em\] {
     --tw-tracking: -0.025em;
@@ -2166,9 +2158,6 @@
   .text-sky-400 {
     color: var(--color-sky-400);
   }
-  .text-transparent {
-    color: transparent;
-  }
   .text-white {
     color: var(--color-white);
   }
@@ -2286,9 +2275,6 @@
   }
   .opacity-75 {
     opacity: 75%;
-  }
-  .opacity-90 {
-    opacity: 90%;
   }
   .opacity-100 {
     opacity: 100%;
