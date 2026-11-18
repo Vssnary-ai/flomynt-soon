@@ -1,4 +1,12 @@
 import { getAdminDb, isAdminConfigured } from "@/lib/firebaseAdmin";
+import { db, isFirebaseConfigured } from "@/lib/firebase";
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { demoLeads, demoWishlist, type Lead, type WishlistEntry } from "@/lib/adminAuth";
 import {
   getStoredLeads,
@@ -11,23 +19,34 @@ import {
 export type DataSource = "firestore" | "live" | "demo";
 
 function toIso(value: unknown): string {
-  if (value && typeof value === "object" && "toDate" in value) {
-    try {
-      return (value as { toDate: () => Date }).toDate().toISOString();
-    } catch {
-      /* fall through */
-    }
-  }
+  if (!value) return new Date().toISOString();
   if (value instanceof Date) return value.toISOString();
   if (typeof value === "string") return value;
+  if (typeof value === "object") {
+    // Firestore Timestamp instance with .toDate()
+    if ("toDate" in value && typeof (value as { toDate: () => unknown }).toDate === "function") {
+      try {
+        const d = (value as { toDate: () => Date }).toDate();
+        if (d instanceof Date && !isNaN(d.getTime())) return d.toISOString();
+      } catch {
+        /* fall through */
+      }
+    }
+    // Firestore Timestamp serialized JSON with seconds
+    if ("seconds" in value && typeof (value as { seconds: unknown }).seconds === "number") {
+      const s = (value as { seconds: number }).seconds;
+      return new Date(s * 1000).toISOString();
+    }
+  }
   return new Date().toISOString();
 }
 
-/** Reads leads newest-first from local store + Firestore Admin */
+/** Reads leads newest-first from Firestore (Admin or Client SDK) + local store */
 export async function fetchLeads(): Promise<{ leads: Lead[]; source: DataSource }> {
   const localLeads = await getStoredLeads();
   let firestoreLeads: Lead[] = [];
 
+  // 1. Try Firebase Admin SDK if configured
   if (isAdminConfigured()) {
     const adminDb = getAdminDb();
     if (adminDb) {
@@ -55,15 +74,36 @@ export async function fetchLeads(): Promise<{ leads: Lead[]; source: DataSource 
     }
   }
 
-  // Merge Firestore + local storage (deduplicate by id or email+createdAt)
+  // 2. Fallback to Client Firestore SDK if Admin SDK was not configured or returned nothing
+  if (firestoreLeads.length === 0 && isFirebaseConfigured()) {
+    try {
+      const snap = await getDocs(collection(db, "leads"));
+      firestoreLeads = snap.docs.map((d) => {
+        const data = d.data();
+        return {
+          id: d.id,
+          name: data.name || "Unknown",
+          email: data.email || "",
+          agency: data.agency || undefined,
+          message: data.message || "",
+          status: (data.status as Lead["status"]) || "new",
+          createdAt: toIso(data.createdAt),
+        };
+      });
+    } catch (err) {
+      console.error("Failed to read leads from Client Firestore SDK:", err);
+    }
+  }
+
+  // Merge Firestore + local storage (deduplicate by id or email+message)
   const combinedMap = new Map<string, Lead>();
 
-  // Add local stored leads
+  // Add local stored leads first
   for (const l of localLeads) {
     combinedMap.set(l.id, l);
   }
 
-  // Add Firestore leads
+  // Add Firestore leads (Firestore is the source of truth)
   for (const f of firestoreLeads) {
     combinedMap.set(f.id, f);
   }
@@ -103,6 +143,16 @@ export async function updateLead(
     }
   }
 
+  // Update in Client Firestore SDK
+  if (isFirebaseConfigured()) {
+    try {
+      await updateDoc(doc(db, "leads", id), { status });
+      return { success: true, source: "firestore" };
+    } catch (err) {
+      console.error("Failed to update lead in Client Firestore:", err);
+    }
+  }
+
   // Fallback to in-memory demo array
   const lead = demoLeads.find((l) => l.id === id);
   if (lead) {
@@ -130,6 +180,16 @@ export async function deleteLead(id: string): Promise<{ success: boolean; source
     }
   }
 
+  // Delete from Client Firestore SDK
+  if (isFirebaseConfigured()) {
+    try {
+      await deleteDoc(doc(db, "leads", id));
+      return { success: true, source: "firestore" };
+    } catch (err) {
+      console.error("Failed to delete lead in Client Firestore:", err);
+    }
+  }
+
   // Fallback to in-memory demo array
   const index = demoLeads.findIndex((l) => l.id === id);
   if (index !== -1) {
@@ -145,6 +205,7 @@ export async function fetchWishlist(): Promise<{ wishlist: WishlistEntry[]; sour
   const localWishlist = await getStoredWishlist();
   let firestoreWishlist: WishlistEntry[] = [];
 
+  // 1. Try Firebase Admin SDK
   if (isAdminConfigured()) {
     const adminDb = getAdminDb();
     if (adminDb) {
@@ -171,6 +232,26 @@ export async function fetchWishlist(): Promise<{ wishlist: WishlistEntry[]; sour
     }
   }
 
+  // 2. Fallback to Client Firestore SDK
+  if (firestoreWishlist.length === 0 && isFirebaseConfigured()) {
+    try {
+      const snap = await getDocs(collection(db, "waitlist"));
+      firestoreWishlist = snap.docs.map((d, idx) => {
+        const data = d.data();
+        return {
+          id: d.id,
+          email: data.email || d.id,
+          idea: data.idea || undefined,
+          source: data.source || "email",
+          priorityPosition: idx + 1,
+          createdAt: toIso(data.createdAt),
+        };
+      });
+    } catch (err) {
+      console.error("Failed to read waitlist from Client Firestore SDK:", err);
+    }
+  }
+
   // Merge Firestore + local wishlist (deduplicate by lowercase email)
   const wishlistMap = new Map<string, WishlistEntry>();
 
@@ -182,6 +263,11 @@ export async function fetchWishlist(): Promise<{ wishlist: WishlistEntry[]; sour
     const key = f.email.toLowerCase();
     if (!wishlistMap.has(key)) {
       wishlistMap.set(key, f);
+    } else {
+      const existing = wishlistMap.get(key)!;
+      if (f.idea && !existing.idea) {
+        existing.idea = f.idea;
+      }
     }
   }
 
@@ -213,8 +299,16 @@ export async function deleteWishlistEntry(id: string): Promise<boolean> {
       try {
         await adminDb.collection("waitlist").doc(id).delete();
       } catch (err) {
-        console.error("Failed to delete waitlist doc in Firestore:", err);
+        console.error("Failed to delete waitlist doc in Firestore Admin:", err);
       }
+    }
+  }
+
+  if (isFirebaseConfigured()) {
+    try {
+      await deleteDoc(doc(db, "waitlist", id));
+    } catch (err) {
+      console.error("Failed to delete waitlist doc in Client Firestore:", err);
     }
   }
 

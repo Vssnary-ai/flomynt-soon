@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db, isFirebaseConfigured } from "@/lib/firebase";
 import { getAdminDb, isAdminConfigured } from "@/lib/firebaseAdmin";
 import { demoLeads, type Lead } from "@/lib/adminAuth";
@@ -37,8 +37,12 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     };
 
-    // 1. Immediately persist to local persistent store so it shows up in Admin Panel
-    await saveStoredLead(newLead);
+    // 1. Persist to local persistent store (for local dev environments)
+    try {
+      await saveStoredLead(newLead);
+    } catch (e) {
+      console.warn("Could not write to localStore (read-only filesystem):", e);
+    }
     demoLeads.unshift(newLead);
 
     let firestoreSaved = false;
@@ -66,7 +70,7 @@ export async function POST(req: NextRequest) {
     // 3. Try Client Firestore SDK if Admin wasn't used
     if (!firestoreSaved && isFirebaseConfigured()) {
       try {
-        await addDoc(collection(db, "leads"), {
+        await setDoc(doc(db, "leads", newLead.id), {
           name: cleanName,
           email: cleanEmail,
           agency: cleanAgency,
@@ -76,7 +80,20 @@ export async function POST(req: NextRequest) {
         });
         firestoreSaved = true;
       } catch (err) {
-        console.error("Client Firestore write failed:", err);
+        console.error("Client Firestore write failed, trying addDoc:", err);
+        try {
+          await addDoc(collection(db, "leads"), {
+            name: cleanName,
+            email: cleanEmail,
+            agency: cleanAgency,
+            message: cleanMessage,
+            status: "new",
+            createdAt: serverTimestamp(),
+          });
+          firestoreSaved = true;
+        } catch (err2) {
+          console.error("Client Firestore addDoc also failed:", err2);
+        }
       }
     }
 

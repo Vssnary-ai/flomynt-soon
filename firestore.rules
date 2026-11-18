@@ -2,38 +2,14 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Waitlist collection: allow create only, no reads, no updates, no deletes
+    // Waitlist collection: allow read and write
     match /waitlist/{email} {
-      allow create: if
-        // Must be a new document
-        !exists(/databases/$(database)/documents/waitlist/$(email))
-        // Required fields
-        && request.resource.data.keys().hasAll(['email', 'source', 'createdAt'])
-        // Email must be a string
-        && request.resource.data.email is string
-        && request.resource.data.email.size() > 0
-        && request.resource.data.email.size() < 320
-        // Source must be 'email' or 'google'
-        && request.resource.data.source in ['email', 'google']
-        // createdAt must be a server timestamp
-        && request.resource.data.createdAt == request.time;
-
-      // Allow reads only for checking duplicate (getDoc)
-      allow get: if true;
-
-      // Deny list, update, delete
-      allow list: if false;
-      allow update: if false;
-      allow delete: if false;
+      allow read, write: if true;
     }
 
-    // Leads collection: allow create for contact inquiries
+    // Leads collection: allow read, write, update, delete
     match /leads/{leadId} {
-      allow create: if
-        request.resource.data.keys().hasAll(['name', 'email', 'message', 'createdAt'])
-        && request.resource.data.email is string
-        && request.resource.data.name is string;
-      allow read, update, delete: if false;
+      allow read, write: if true;
     }
 
     // Deny everything else
@@ -42,4 +18,3 @@ service cloud.firestore {
     }
   }
 }
-

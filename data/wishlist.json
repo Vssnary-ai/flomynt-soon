@@ -6,5 +6,13 @@
     "source": "email",
     "priorityPosition": 1,
     "createdAt": "2026-11-18T14:28:27.239Z"
+  },
+  {
+    "id": "wish-1795015779884-i6wk",
+    "email": "sarah@growthflow.agency",
+    "idea": "Telegram alerts on Stripe dispute with auto webhook retry",
+    "source": "email",
+    "priorityPosition": 2,
+    "createdAt": "2026-11-18T15:29:39.884Z"
   }
 ]

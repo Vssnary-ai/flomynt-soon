@@ -40,7 +40,11 @@ export async function POST(req: NextRequest) {
     };
 
     // 1. Persist to local storage for Admin Panel
-    await saveStoredWishlist(newEntry);
+    try {
+      await saveStoredWishlist(newEntry);
+    } catch (e) {
+      console.warn("Could not write wishlist to localStore (read-only filesystem):", e);
+    }
 
     // Also update in-memory array if not duplicate
     if (!demoWishlist.some((w) => w.email.toLowerCase() === cleanEmail)) {
