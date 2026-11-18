@@ -1,5 +1,4 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -19,6 +18,10 @@ try {
   app = getApps()[0] || initializeApp(firebaseConfig, "flomynt-fallback");
 }
 
-export const auth: Auth = getAuth(app);
-export const googleProvider: GoogleAuthProvider = new GoogleAuthProvider();
+/** True once real (non-placeholder) Firebase project credentials are configured. */
+export function isFirebaseConfigured(): boolean {
+  const key = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+  return !!key && !key.includes("Dummy");
+}
+
 export const db: Firestore = getFirestore(app);

@@ -40,6 +40,7 @@ export default function AdminPage() {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [toast, setToast] = useState("");
+  const [dataSource, setDataSource] = useState<"firestore" | "demo" | null>(null);
 
   const showToast = (msg: string) => {
     setToast(msg);
@@ -76,6 +77,7 @@ export default function AdminPage() {
       if (leadsRes.ok) {
         const leadsData = await leadsRes.json();
         setLeads(leadsData.leads || []);
+        if (leadsData.source) setDataSource(leadsData.source);
       }
       if (wishlistRes.ok) {
         const wishlistData = await wishlistRes.json();
@@ -216,7 +218,7 @@ export default function AdminPage() {
         <div
           className="pointer-events-none absolute w-[500px] h-[500px] rounded-full blur-[120px] opacity-25"
           style={{
-            background: "radial-gradient(circle, #e9b45b 0%, transparent 70%)",
+            background: "radial-gradient(circle, #bff02e 0%, transparent 70%)",
           }}
         />
 
@@ -249,7 +251,7 @@ export default function AdminPage() {
                   if (loginError) setLoginError("");
                 }}
                 placeholder="Enter password..."
-                className="w-full bg-black/60 border border-white/[0.14] focus:border-[#e9b45b]/70 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/25 outline-none transition-colors"
+                className="w-full bg-black/60 border border-white/[0.14] focus:border-[#bff02e]/70 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/25 outline-none transition-colors"
               />
               {loginError && (
                 <p className="mt-2 text-xs text-red-400 font-mono">
@@ -261,7 +263,7 @@ export default function AdminPage() {
             <button
               type="submit"
               disabled={loginLoading}
-              className="w-full py-3 bg-white hover:bg-[#e9b45b] text-black font-semibold rounded-xl text-xs font-mono tracking-wider uppercase transition-colors disabled:opacity-50 min-h-[44px] cursor-pointer"
+              className="w-full py-3 bg-white hover:bg-[#bff02e] text-black font-semibold rounded-xl text-xs font-mono tracking-wider uppercase transition-colors disabled:opacity-50 min-h-[44px] cursor-pointer"
             >
               {loginLoading ? "AUTHENTICATING..." : "VERIFY CREDENTIALS ↗"}
             </button>
@@ -269,7 +271,7 @@ export default function AdminPage() {
 
           <div className="mt-8 pt-6 border-t border-white/[0.08] flex items-center justify-between text-[10px] font-mono text-white/40">
             <span>TIMING-SAFE BCRYPT</span>
-            <span className="text-[#e9b45b]">AES-256 VAULT</span>
+            <span className="text-[#bff02e]">AES-256 VAULT</span>
           </div>
         </div>
       </div>
@@ -286,7 +288,7 @@ export default function AdminPage() {
         <div className="max-w-[1400px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <BrandLogo size={22} />
-            <span className="mono-label text-[10px] px-2 py-0.5 rounded border border-[#e9b45b]/40 text-[#e9b45b] bg-[#e9b45b]/10">
+            <span className="mono-label text-[10px] px-2 py-0.5 rounded border border-[#bff02e]/40 text-[#bff02e] bg-[#bff02e]/10">
               CONSOLE
             </span>
             <span className="hidden sm:inline text-xs text-white/30 font-mono">
@@ -300,7 +302,7 @@ export default function AdminPage() {
               onClick={() => setAutoRefresh(!autoRefresh)}
               className={`mono-label text-[10px] px-3 py-1.5 rounded-full border transition-all ${
                 autoRefresh
-                  ? "border-[#e9b45b]/50 text-[#e9b45b] bg-[#e9b45b]/10"
+                  ? "border-[#bff02e]/50 text-[#bff02e] bg-[#bff02e]/10"
                   : "border-white/20 text-white/40"
               }`}
             >
@@ -327,6 +329,27 @@ export default function AdminPage() {
       </header>
 
       <main className="max-w-[1400px] mx-auto px-6 sm:px-10 pt-8">
+        {/* Data Source Banner */}
+        {dataSource === "demo" && (
+          <div className="mb-6 flex items-start sm:items-center gap-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 sm:px-5 py-3.5 text-amber-200">
+            <span className="mt-0.5 sm:mt-0 text-amber-400">⚠</span>
+            <p className="text-xs leading-relaxed font-mono">
+              <span className="font-semibold">DEMO DATA</span> — Firebase Admin isn&apos;t
+              configured yet, so these are sample records, not real submissions. Add{" "}
+              <code className="px-1 py-0.5 rounded bg-black/40">FIREBASE_SERVICE_ACCOUNT_KEY</code>{" "}
+              to your environment to see live contact-form leads and wishlist signups here.
+            </p>
+          </div>
+        )}
+        {dataSource === "firestore" && (
+          <div className="mb-6 flex items-center gap-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/[0.06] px-4 py-2.5 text-emerald-300">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <p className="text-[11px] font-mono tracking-wide">
+              LIVE FIRESTORE DATA — showing real contact-form leads and wishlist signups.
+            </p>
+          </div>
+        )}
+
         {/* Stat Blocks */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="glass-card p-6 rounded-2xl">
@@ -336,7 +359,7 @@ export default function AdminPage() {
             <p className="font-sans text-3xl font-light text-white tracking-tight">
               {leads.length}
             </p>
-            <p className="text-[11px] font-mono text-[#e9b45b] mt-2">
+            <p className="text-[11px] font-mono text-[#bff02e] mt-2">
               {leads.filter((l) => l.status === "new").length} UNTOUCHED NEW
             </p>
           </div>
@@ -349,7 +372,7 @@ export default function AdminPage() {
               {wishlist.length}
             </p>
             <p className="text-[11px] font-mono text-white/40 mt-2">
-              NEXT PRIORITY POSITION #{wishlist.length + 41}
+              NEXT PRIORITY POSITION #{wishlist.length + 1}
             </p>
           </div>
 
@@ -360,7 +383,7 @@ export default function AdminPage() {
             <p className="font-sans text-3xl font-light text-white tracking-tight">
               &lt;1.2s
             </p>
-            <p className="text-[11px] font-mono text-[#e9b45b] mt-2">
+            <p className="text-[11px] font-mono text-[#bff02e] mt-2">
               99.9% AUTONOMOUS PASS
             </p>
           </div>
@@ -487,7 +510,7 @@ export default function AdminPage() {
                             }
                             className={`font-mono text-[10px] uppercase px-2.5 py-1 rounded-full border outline-none cursor-pointer ${
                               lead.status === "new"
-                                ? "bg-amber-500/10 border-amber-500/40 text-[#e9b45b]"
+                                ? "bg-amber-500/10 border-amber-500/40 text-[#bff02e]"
                                 : lead.status === "contacted"
                                 ? "bg-blue-500/10 border-blue-500/40 text-blue-300"
                                 : lead.status === "converted"
@@ -544,7 +567,7 @@ export default function AdminPage() {
                   <tbody className="divide-y divide-white/[0.08] text-xs">
                     {filteredWishlist.map((item) => (
                       <tr key={item.id} className="hover:bg-white/[0.03] transition-colors">
-                        <td className="py-4 px-6 font-mono text-[#e9b45b]">
+                        <td className="py-4 px-6 font-mono text-[#bff02e]">
                           #{item.priorityPosition}
                         </td>
                         <td className="py-4 px-6 font-mono text-white">
@@ -577,7 +600,7 @@ export default function AdminPage() {
               <div>
                 <div className="flex items-center justify-between pb-6 border-b border-white/[0.08] mb-6">
                   <div>
-                    <span className="mono-label text-[10px] text-[#e9b45b]">
+                    <span className="mono-label text-[10px] text-[#bff02e]">
                       LEAD INQUIRY DETAIL
                     </span>
                     <h3 className="text-xl font-light text-white mt-1">

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { verifySessionToken, demoLeads, Lead } from "@/lib/adminAuth";
+import { verifySessionToken } from "@/lib/adminAuth";
+import { fetchLeads, updateLead, deleteLead } from "@/lib/adminData";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -9,7 +10,8 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  return NextResponse.json({ leads: demoLeads });
+  const { leads, source } = await fetchLeads();
+  return NextResponse.json({ leads, source });
 }
 
 export async function PATCH(req: NextRequest) {
@@ -21,13 +23,15 @@ export async function PATCH(req: NextRequest) {
 
   try {
     const { id, status } = await req.json();
-    const lead = demoLeads.find((l) => l.id === id);
-    if (lead) {
-      lead.status = status;
-      return NextResponse.json({ success: true, lead });
+    if (!id || !status) {
+      return NextResponse.json({ error: "id and status are required" }, { status: 400 });
+    }
+    const result = await updateLead(id, status);
+    if (result.success) {
+      return NextResponse.json({ success: true });
     }
     return NextResponse.json({ error: "Lead not found" }, { status: 404 });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Failed to update lead" }, { status: 500 });
   }
 }
@@ -41,14 +45,15 @@ export async function DELETE(req: NextRequest) {
 
   try {
     const { id } = await req.json();
-    const index = demoLeads.findIndex((l) => l.id === id);
-    if (index !== -1) {
-      demoLeads.splice(index, 1);
+    if (!id) {
+      return NextResponse.json({ error: "id is required" }, { status: 400 });
+    }
+    const result = await deleteLead(id);
+    if (result.success) {
       return NextResponse.json({ success: true });
     }
     return NextResponse.json({ error: "Lead not found" }, { status: 404 });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Failed to delete lead" }, { status: 500 });
   }
 }
-

@@ -100,11 +100,35 @@ export function verifySessionToken(token?: string | null): boolean {
 }
 
 // Password verification
+//
+// IMPORTANT: a raw bcrypt hash (e.g. "$2b$12$AbCdEf...") stored directly in
+// a .env* FILE gets mangled by Next.js's local env loader (@next/env),
+// which runs dotenv-expand and treats bare "$2b", "$12", "$AbCdEf" etc. as
+// variable references — silently replacing them with empty strings. The hash still
+// looks plausible in the file, but every login then fails. This only
+// happens for .env.local/.env files; env vars set directly on a host's
+// dashboard (Vercel, etc.) are injected as real process env vars and are
+// NOT affected. To be safe in both places, we store the hash base64-encoded
+// as ADMIN_PASSWORD_B64 (no "$" characters, so nothing to mangle) and decode
+// it before comparing. ADMIN_PASSWORD (raw) is still supported as a
+// fallback for hosts/configs that set it directly.
 export async function verifyAdminPassword(password: string): Promise<boolean> {
-  const envPasswordHash = process.env.ADMIN_PASSWORD;
+  let envPasswordHash: string | undefined;
+
+  const encoded = process.env.ADMIN_PASSWORD_B64;
+  if (encoded) {
+    try {
+      envPasswordHash = Buffer.from(encoded, "base64").toString("utf8");
+    } catch (err) {
+      console.error("Failed to decode ADMIN_PASSWORD_B64:", err);
+    }
+  }
+  if (!envPasswordHash) {
+    envPasswordHash = process.env.ADMIN_PASSWORD;
+  }
 
   if (!envPasswordHash) {
-    console.error("ADMIN_PASSWORD is not set in environment");
+    console.error("Neither ADMIN_PASSWORD_B64 nor ADMIN_PASSWORD is set in environment");
     return false;
   }
 

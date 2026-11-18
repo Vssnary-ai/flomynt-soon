@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { verifySessionToken, demoLeads, demoWishlist } from "@/lib/adminAuth";
+import { verifySessionToken } from "@/lib/adminAuth";
+import { fetchLeads, fetchWishlist } from "@/lib/adminData";
+
+function csvCell(value: string): string {
+  return `"${value.replace(/"/g, '""').replace(/\n/g, " ")}"`;
+}
 
 export async function GET(req: NextRequest) {
   const cookieStore = await cookies();
@@ -12,13 +17,14 @@ export async function GET(req: NextRequest) {
   const type = req.nextUrl.searchParams.get("type") || "leads";
 
   if (type === "leads") {
+    const { leads } = await fetchLeads();
     const headers = ["ID", "Name", "Email", "Agency", "Message", "Status", "CreatedAt"];
-    const rows = demoLeads.map((l) => [
+    const rows = leads.map((l) => [
       l.id,
-      `"${l.name.replace(/"/g, '""')}"`,
-      `"${l.email.replace(/"/g, '""')}"`,
-      `"${(l.agency || "").replace(/"/g, '""')}"`,
-      `"${l.message.replace(/"/g, '""').replace(/\n/g, " ")}"`,
+      csvCell(l.name),
+      csvCell(l.email),
+      csvCell(l.agency || ""),
+      csvCell(l.message),
       l.status,
       l.createdAt,
     ]);
@@ -33,11 +39,12 @@ export async function GET(req: NextRequest) {
       },
     });
   } else {
+    const { wishlist } = await fetchWishlist();
     const headers = ["ID", "Email", "Workflow Idea", "Source", "PriorityPosition", "CreatedAt"];
-    const rows = demoWishlist.map((w) => [
+    const rows = wishlist.map((w) => [
       w.id,
-      `"${w.email.replace(/"/g, '""')}"`,
-      `"${(w.idea || "").replace(/"/g, '""').replace(/\n/g, " ")}"`,
+      csvCell(w.email),
+      csvCell(w.idea || ""),
       w.source,
       w.priorityPosition,
       w.createdAt,
@@ -54,4 +61,3 @@ export async function GET(req: NextRequest) {
     });
   }
 }
-

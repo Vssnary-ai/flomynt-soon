@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { verifySessionToken, demoWishlist } from "@/lib/adminAuth";
+import { verifySessionToken } from "@/lib/adminAuth";
+import { fetchWishlist } from "@/lib/adminData";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -9,6 +10,6 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  return NextResponse.json({ wishlist: demoWishlist });
+  const { wishlist, source } = await fetchWishlist();
+  return NextResponse.json({ wishlist, source });
 }
-
