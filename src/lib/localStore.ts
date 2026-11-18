@@ -91,11 +91,12 @@ export async function saveStoredWishlist(entry: WishlistEntry): Promise<void> {
       (w) => w.email.toLowerCase() === entry.email.toLowerCase()
     );
     if (duplicate) {
-      // Update entry if idea is now provided
-      if (entry.idea && !duplicate.idea) {
+      // Update entry if new idea or timestamp is provided
+      if (entry.idea) {
         duplicate.idea = entry.idea;
-        await fs.writeFile(WISHLIST_FILE, JSON.stringify(existing, null, 2), "utf-8");
       }
+      duplicate.createdAt = entry.createdAt || new Date().toISOString();
+      await fs.writeFile(WISHLIST_FILE, JSON.stringify(existing, null, 2), "utf-8");
       return;
     }
     existing.push(entry);

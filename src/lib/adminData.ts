@@ -235,24 +235,41 @@ export async function fetchWishlist(): Promise<{ wishlist: WishlistEntry[]; sour
   // 2. Fallback to Client Firestore SDK
   if (firestoreWishlist.length === 0 && isFirebaseConfigured()) {
     try {
-      const snap = await getDocs(collection(db, "waitlist"));
-      firestoreWishlist = snap.docs.map((d, idx) => {
+      const snapWait = await getDocs(collection(db, "waitlist"));
+      snapWait.docs.forEach((d) => {
         const data = d.data();
-        return {
+        firestoreWishlist.push({
           id: d.id,
           email: data.email || d.id,
           idea: data.idea || undefined,
           source: data.source || "email",
-          priorityPosition: idx + 1,
+          priorityPosition: 0,
           createdAt: toIso(data.createdAt),
-        };
+        });
       });
     } catch (err) {
       console.error("Failed to read waitlist from Client Firestore SDK:", err);
     }
+
+    try {
+      const snapWish = await getDocs(collection(db, "wishlist"));
+      snapWish.docs.forEach((d) => {
+        const data = d.data();
+        firestoreWishlist.push({
+          id: d.id,
+          email: data.email || d.id,
+          idea: data.idea || undefined,
+          source: data.source || "email",
+          priorityPosition: 0,
+          createdAt: toIso(data.createdAt),
+        });
+      });
+    } catch {
+      /* ignore if wishlist collection unused */
+    }
   }
 
-  // Merge Firestore + local wishlist (deduplicate by lowercase email)
+  // Merge Firestore + local wishlist (deduplicate by lowercase email, Firestore is source of truth)
   const wishlistMap = new Map<string, WishlistEntry>();
 
   for (const w of localWishlist) {
@@ -261,28 +278,31 @@ export async function fetchWishlist(): Promise<{ wishlist: WishlistEntry[]; sour
 
   for (const f of firestoreWishlist) {
     const key = f.email.toLowerCase();
-    if (!wishlistMap.has(key)) {
-      wishlistMap.set(key, f);
-    } else {
-      const existing = wishlistMap.get(key)!;
-      if (f.idea && !existing.idea) {
-        existing.idea = f.idea;
-      }
-    }
+    const existing = wishlistMap.get(key);
+    wishlistMap.set(key, {
+      ...f,
+      // If Firestore has an idea, use it; otherwise fallback to local idea if present
+      idea: f.idea || existing?.idea,
+    });
   }
 
-  const allRealWishlist = Array.from(wishlistMap.values()).sort(
+  // Calculate chronological priority positions (1st signup = #1, 2nd = #2...)
+  const chronological = Array.from(wishlistMap.values()).sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
   );
 
-  if (allRealWishlist.length > 0) {
-    // Re-index priority positions
-    allRealWishlist.forEach((entry, idx) => {
-      entry.priorityPosition = idx + 1;
-    });
+  chronological.forEach((entry, idx) => {
+    entry.priorityPosition = idx + 1;
+  });
 
+  // Sort newest-first for admin panel display so fresh signups appear at the top
+  const sortedForAdmin = [...chronological].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+
+  if (sortedForAdmin.length > 0) {
     return {
-      wishlist: allRealWishlist,
+      wishlist: sortedForAdmin,
       source: firestoreWishlist.length > 0 ? "firestore" : "live",
     };
   }
@@ -301,6 +321,11 @@ export async function deleteWishlistEntry(id: string): Promise<boolean> {
       } catch (err) {
         console.error("Failed to delete waitlist doc in Firestore Admin:", err);
       }
+      try {
+        await adminDb.collection("wishlist").doc(id).delete();
+      } catch {
+        /* ignore */
+      }
     }
   }
 
@@ -309,6 +334,11 @@ export async function deleteWishlistEntry(id: string): Promise<boolean> {
       await deleteDoc(doc(db, "waitlist", id));
     } catch (err) {
       console.error("Failed to delete waitlist doc in Client Firestore:", err);
+    }
+    try {
+      await deleteDoc(doc(db, "wishlist", id));
+    } catch {
+      /* ignore */
     }
   }
 

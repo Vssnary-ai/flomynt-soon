@@ -14,5 +14,21 @@
     "source": "email",
     "priorityPosition": 2,
     "createdAt": "2026-11-18T15:29:39.884Z"
+  },
+  {
+    "id": "wish-1795017369451-dgce",
+    "email": "test-user-123@gmail.com",
+    "idea": "testing wishlist submission",
+    "source": "email",
+    "priorityPosition": 3,
+    "createdAt": "2026-11-18T15:56:09.451Z"
+  },
+  {
+    "id": "wish-1795018269197-ud1w",
+    "email": "david.kim@apexai.agency",
+    "idea": "Automated webhook failover across Stripe and PayPal",
+    "source": "email",
+    "priorityPosition": 4,
+    "createdAt": "2026-11-18T16:11:11.536Z"
   }
 ]

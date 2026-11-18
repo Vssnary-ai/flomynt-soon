@@ -31,12 +31,12 @@ export async function POST(req: NextRequest) {
     const position = existing ? existing.priorityPosition : currentWishlist.length + 1;
 
     const newEntry: WishlistEntry = {
-      id: `wish-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      id: existing ? existing.id : `wish-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
       email: cleanEmail,
       idea: cleanIdea || existing?.idea,
       source: cleanSource,
       priorityPosition: position,
-      createdAt: existing?.createdAt || new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     };
 
     // 1. Persist to local storage for Admin Panel

@@ -114,10 +114,6 @@ export default function WishlistSection() {
 
       if (res.ok) {
         const data = await res.json();
-        if (data.alreadyExists) {
-          setFormState("already");
-          return;
-        }
         if (data.position) {
           setPosition(data.position);
         }
@@ -140,18 +136,16 @@ export default function WishlistSection() {
     }
 
     const docRef = doc(db, "waitlist", emailKey);
-    const existing = await getDoc(docRef);
-    if (existing.exists()) {
-      setFormState("already");
-      return;
-    }
-
-    await setDoc(docRef, {
-      email: emailKey,
-      ...(ideaVal && { idea: ideaVal }),
-      source: "email",
-      createdAt: serverTimestamp(),
-    });
+    await setDoc(
+      docRef,
+      {
+        email: emailKey,
+        ...(ideaVal && { idea: ideaVal }),
+        source: "email",
+        createdAt: serverTimestamp(),
+      },
+      { merge: true }
+    );
 
     try {
       const snap = await getCountFromServer(collection(db, "waitlist"));
